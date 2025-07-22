@@ -1,5 +1,5 @@
 import sys
-from PySide6.QtWidgets import QApplication, QMainWindow
+from PySide6.QtWidgets import QApplication, QMainWindow, QComboBox
 
 from ui_main import Ui_MainWindow
 
@@ -8,6 +8,11 @@ class UMVH(QMainWindow):
         super().__init__()
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
+        # Убираем белый фон у выпадающих списков
+        for combo in self.findChildren(QComboBox):
+            view = combo.view()
+            view.setStyleSheet("background: transparent;")
+            view.viewport().setAutoFillBackground(False)
         # show the first page by default
         try:
             self.ui.stackedWidget.setCurrentWidget(self.ui.page)
