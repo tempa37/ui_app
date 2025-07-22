@@ -213,7 +213,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
 /* --- контейнер всплывающего окна (Qt-5/6) --- */
 QFrame#qt_combo_box_popup {      /* &lt;&lt; ключевая строчка */
     border: none;                /* убираем рамку */
-    background: 505050;     /* или #505050 под фон формы */
+    background: transparent;     /* делаем невидимым контейнер */
 }
 
 
@@ -278,7 +278,7 @@ QComboBox QAbstractItemView {
     border: 1px solid #c8c8c8;
     border-radius: 12px;
     padding: 4px;                       /* лёгкий «отступ-рамка» внутри */
-    background: #FFFFFF;
+    background: transparent;
 
     /* отключаем стандартный dotted focus-rectangle */
     outline: 0;                         /* Qt &gt;5.12 понимает outline */
@@ -2477,7 +2477,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
 /* --- контейнер всплывающего окна (Qt-5/6) --- */
 QFrame#qt_combo_box_popup {      /* &lt;&lt; ключевая строчка */
     border: none;                /* убираем рамку */
-    background: 505050;     /* или #505050 под фон формы */
+    background: transparent;     /* делаем невидимым контейнер */
 }
 
 
@@ -2542,7 +2542,7 @@ QComboBox QAbstractItemView {
     border: 1px solid #c8c8c8;
     border-radius: 12px;
     padding: 4px;                       /* лёгкий «отступ-рамка» внутри */
-    background: #FFFFFF;
+    background: transparent;
 
     /* отключаем стандартный dotted focus-rectangle */
     outline: 0;                         /* Qt &gt;5.12 понимает outline */
@@ -3095,7 +3095,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
 /* --- контейнер всплывающего окна (Qt-5/6) --- */
 QFrame#qt_combo_box_popup {      /* &lt;&lt; ключевая строчка */
     border: none;                /* убираем рамку */
-    background: 505050;     /* или #505050 под фон формы */
+    background: transparent;     /* делаем невидимым контейнер */
 }
 
 
@@ -3159,7 +3159,7 @@ QComboBox QAbstractItemView {
     border: 1px solid #c8c8c8;
     border-radius: 12px;
     padding: 4px;                       /* лёгкий «отступ-рамка» внутри */
-    background: #FFFFFF;
+    background: transparent;
 
     /* отключаем стандартный dotted focus-rectangle */
     outline: 0;                         /* Qt &gt;5.12 понимает outline */
