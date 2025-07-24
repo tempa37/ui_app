@@ -2,6 +2,7 @@ import sys
 
 from PySide6.QtCore    import Qt
 from PySide6.QtWidgets import QApplication, QMainWindow, QComboBox
+import serial.tools.list_ports
 
 from ui_main import Ui_MainWindow
 
@@ -46,6 +47,12 @@ class UMVH(QMainWindow):
                 QListView::item:selected { background:#2d97ff; color:#ffffff; }
             """)
 
+        # --- загрузка списка COM-портов ---------------------------------
+        self.selected_port = None  # переменная для хранения выбранного порта
+        self.populate_com_ports()
+        # реагируем на смену выбора пользователем
+        self.ui.comboBox_11.currentTextChanged.connect(self.on_port_selected)
+
         # --- обычная логика вашего приложения ----------------------------
         try:
             self.ui.stackedWidget.setCurrentWidget(self.ui.page)
@@ -62,6 +69,24 @@ class UMVH(QMainWindow):
 
     def switch_to(self, page_widget):
         self.ui.stackedWidget.setCurrentWidget(page_widget)
+
+    def populate_com_ports(self):
+        """Заполняем comboBox_11 списком доступных COM портов."""
+        ports = serial.tools.list_ports.comports()
+        self.ui.comboBox_11.clear()
+        for port in ports:
+            # добавляем имя устройства, например 'COM3'
+            self.ui.comboBox_11.addItem(port.device)
+
+        # если есть хотя бы один порт, запоминаем первый из списка
+        if ports:
+            self.selected_port = ports[0].device
+        else:
+            self.selected_port = None
+
+    def on_port_selected(self, port_name: str):
+        """Слот сохранения выбранного пользователем порта."""
+        self.selected_port = port_name
 
 
 def main():
