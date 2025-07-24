@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1061</width>
-    <height>851</height>
+    <height>700</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -40,7 +40,7 @@ font-family: Noto Sans SC</string>
        <enum>QFrame::Shadow::Raised</enum>
       </property>
       <layout class="QGridLayout" name="gridLayout_4">
-       <item row="0" column="0">
+       <item row="0" column="1">
         <widget class="QStackedWidget" name="stackedWidget">
          <property name="minimumSize">
           <size>
@@ -52,11 +52,168 @@ font-family: Noto Sans SC</string>
           <enum>Qt::LayoutDirection::RightToLeft</enum>
          </property>
          <property name="currentIndex">
-          <number>2</number>
+          <number>0</number>
          </property>
          <widget class="QWidget" name="page">
           <property name="styleSheet">
-           <string notr="true">/* Нормальное состояние */
+           <string notr="true">/* ===== QComboBox: полный стиль без ресурсов ===== */
+QFrame#qt_combo_box_popup {
+    background: transparent;   /* ← фон полностью “дырявый” */
+    border: none;
+    border-radius: 12px;
+}
+
+
+/* ───────── вертикальный скроллбар внутри выпадающего списка ─────────── */
+QComboBox QAbstractItemView QScrollBar:vertical {
+    width: 12px;               /* толщина всей полосы прокрутки          */
+    margin: 0px 0px 0px 0;     /* лёгкий отступ от правой грани списка   */
+    background: #ffffff;   /* ← убираем фон самой полосы             */
+    border: none;              /* и рамку, которую Qt рисует по умолчанию*/
+}
+
+/* track (колея). Делаем её невидимой — остаётся «пустое место» */
+QComboBox QAbstractItemView QScrollBar::groove:vertical {
+    background: #ffffff;   /* никакого цвета                         */
+    border: none;
+    margin: 0;                 /* важно! убирает внутренние «поля» Qt    */
+}
+
+/* пустые участки над и под ползунком — тоже в ноль */
+QComboBox QAbstractItemView QScrollBar::add-page:vertical,
+QComboBox QAbstractItemView QScrollBar::sub-page:vertical {
+    background: #ffffff;
+    border: none;
+}
+
+/* сам ползунок («овал») -------------------------------------------------*/
+QComboBox QAbstractItemView QScrollBar::handle:vertical {
+    background: #808080;       /* цвет «таблетки»                        */
+    border-radius: 999px;        /* скругляем края по полной               */
+    min-height: 24px;          /* чтобы не исчезал при маленьком контенте*/
+    margin: 2px;               /* зазор от границ бара                   */
+}
+
+QComboBox QAbstractItemView QScrollBar::sub-line:vertical,   /* верхняя  */
+QComboBox QAbstractItemView QScrollBar::add-line:vertical {  /* нижняя   */
+    height: 0px;                /* убираем видимую часть      */
+    width:  0px;
+    border: none;
+    background: #ffffff;
+    subcontrol-origin: margin;  /* чтобы не занимали место    */
+}
+
+/* ── если вдруг появится горизонтальный скроллбар ─────────────────────*/
+QComboBox QAbstractItemView QScrollBar::sub-line:horizontal, /* левая    */
+QComboBox QAbstractItemView QScrollBar::add-line:horizontal { /* правая  */
+    width:  0px;
+    height: 0px;
+    border: none;
+    background: #ffffff;
+    subcontrol-origin: margin;
+}
+
+/* ОСНОВНОЕ ПОЛЕ -----------------------------------------------------------*/
+QComboBox {
+    border: 1px solid #b4b4b4;
+    border-radius: 12px;
+    padding: 4px 40px 4px 12px;   /* место под стрелку справа */
+    background: #f4f4f4;
+    min-height: 60px;             /* чтобы не сплющивался */
+combobox-popup: 0;   
+}
+
+/* КНОПКА ВЫПАДАНИЯ (правый сегмент) --------------------------------------*/
+QComboBox::drop-down {
+    subcontrol-origin: padding;
+    subcontrol-position: top right;
+    width: 32px;
+    border-left: 1px solid #b4b4b4;
+    border-top-right-radius: 12px;
+    border-bottom-right-radius: 12px;
+    background: #e2e2e2;
+}
+
+QComboBox::drop-down { 
+    background: #808080;   /* временно! */
+}
+
+/* СТРЕЛКА ----------------------------------------------------------------*/
+QComboBox::down-arrow {
+image: url(&quot;:/icon/arrow_drop_down_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24.png&quot;);
+    width: 24px;      /* подгони под реальный размер PNG */
+    height: 24px;
+    margin: 0 auto;   /* по центру кнопки drop‑down */
+    border: none;     /* глушим всякие старые границы */
+}
+
+/* Поворот при раскрытии --------------------------------------------------*/
+QComboBox::down-arrow:on {
+    transform: rotate(180deg);
+}
+
+
+
+
+
+/* ХОВЕР/ФОКУС -------------------------------------------------------------*/
+QComboBox:hover { background: #f9f9f9; }
+
+QComboBox:focus {
+    border: 1px solid #7aa9ff;
+    outline: none;
+}
+
+/* ВЫПАДАЮЩИЙ СПИСОК -----------------------------------------------------*/
+QComboBox QAbstractItemView {
+    /* тот же радиус, что у поля */
+    border: 1px solid #c8c8c8;
+    border-radius: 12px;
+    padding: 4px;                       /* лёгкий «отступ-рамка» внутри */
+    background: #FFFFFF;
+
+    /* отключаем стандартный dotted focus-rectangle */
+    outline: 0;                         /* Qt &gt;5.12 понимает outline */
+    /* если outline не работает в вашей версии:
+       border: none; */
+}
+
+
+QComboBox QAbstractItemView::viewport {
+    border-radius: 8px;
+    background: transparent;
+}
+
+/* строки внутри списка */
+QComboBox QAbstractItemView::item {
+    padding: 6px 12px;
+    border-radius: 6px;                 /* лёгкое скругление hover/selected */
+}
+
+/* подсветка наведения  */
+QComboBox QAbstractItemView::item:hover {
+    background: #f0f0f0;
+}
+
+/* выбранный элемент (без пунктира!) */
+QComboBox QAbstractItemView::item:selected {
+    background: #2d97ff;                /* пример активного цвета */
+    color: #ffffff;
+    outline: 0;                         /* страховка */
+    /* или border: none;  -&gt; если outline не поддерживается */
+}
+
+/* Оформление текста и рамки для QLabel и QTextBrowser */
+QLabel,
+QTextBrowser {
+    color: white;                    /* цвет шрифта */
+    border-radius: 10px;             /* скругление углов рамки */
+    padding: 6px;                    /* внутренние отступы */
+border: 2px solid #909090; 
+}
+
+
+/* Нормальное состояние */
 QPushButton {
     background-color: #404040;        /* заливка */
     color: white;                     /* цвет текста */
@@ -83,23 +240,96 @@ QLabel, QTextBrowser {
     border-radius: 10px;         /* скругление */
     padding: 6px;                /* внутренние отступы */
     color: white;              /* цвет шрифта */
-}</string>
+}
+
+/* ===== QSpinBox — стиль под QComboBox (каждый параметр подписан) ===== */
+
+/* ОСНОВНОЕ ПОЛЕ ---------------------------------------------------------*/
+QSpinBox {
+    border: 1px solid #b4b4b4;                 /* внешняя рамка виджета        */
+    border-radius: 12px;                       /* скругление всех углов        */
+
+    padding-left: 12px;                        /* отступ текста слева          */
+    padding-right: 40px;                       /* резерв под блок стрелок      */
+    background: #f4f4f4;                       /* фон поля ввода               */
+    min-height: 60px;                          /* минимальная высота контрола  */
+    color: black;                              /* цвет введённого текста       */
+
+    outline: none;                             /* убираем стандартный пунктиp  */
+}
+
+/* БЛОК СТРЕЛОК ----------------------------------------------------------*/
+/* общие параметры для обеих половинок блока */
+QSpinBox::up-button,
+QSpinBox::down-button {
+    subcontrol-origin: padding;                /* координаты от padding-box    */
+    width: 32px;                               /* ширина сегмента со стрелками */
+    border-left: 1px solid #b4b4b4;            /* линия-разделитель слева      */
+    background: #808080;                       /* фон блока стрелок            */
+}
+
+/* ↓ нижняя половина блока стрелок --------------------------------------*/
+QSpinBox::down-button {
+    subcontrol-position: bottom right;         /* привязка к правому-нижнему   */
+    height: 30%;                               /* занимаем оставшиеся 50 %     */
+    border-bottom-right-radius: 12px;          /* скругляем ТОЛЬКО низ-прав.   */
+}
+
+
+/* ↑ верхняя половина блока стрелок -------------------------------------*/
+QSpinBox::up-button {
+    subcontrol-position: top right;            /* привязка к правому-верхнему  */
+    height: 30%;                               /* занимаем ровно половину выс. */
+    border-top-right-radius: 12px;             /* скругляем ТОЛЬКО верх-прав.  */
+}
+
+/* визуальный отклик при нажатии ----------------------------------------*/
+QSpinBox::up-button:pressed,
+QSpinBox::down-button:pressed {
+    background: #6d6d6d;                       /* затемняем фон на время клика */
+}
+
+/* СТРЕЛКИ (иконки) ------------------------------------------------------*/
+QSpinBox::up-arrow {
+    image: url(&quot;:/icon/arrow_drop_up_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24.png&quot;); /* PNG/SVG ↓ */
+    width: 24px; height: 24px;                 /* габариты иконки              */
+    margin: 0 auto;                            /* центрируем в блоке           */
+	transform: rotate(180deg);
+}
+
+QSpinBox::down-arrow {
+    image: url(&quot;:/icon/arrow_drop_down_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24.png&quot;); /* PNG/SVG ↓ */
+    width: 24px; height: 24px;                 /* габариты иконки              */
+    margin: 0 auto;                            /* центрируем в блоке           */
+}
+
+
+/* отключаем кнопки и иконки при достижении min/max ---------------------*/
+QSpinBox::up-button:disabled,
+QSpinBox::down-button:disabled {
+    background: #c8c8c8;                       /* тусклый фон — кнопка неактив */
+}
+
+QSpinBox::up-arrow:disabled,
+QSpinBox::down-arrow:disabled {
+    image: none;                               /* прячем иконку у неактивной   */
+}
+
+/* ХОВЕР / ФОКУС ---------------------------------------------------------*/
+QSpinBox:hover  { background: #f9f9f9; }       /* лёгкое высветление при ховере*/
+QSpinBox:focus  { border: 1px solid #7aa9ff; } /* синяя рамка при фокусе       */
+
+/* ОТКЛЮЧЁННОЕ СОСТОЯНИЕ -------------------------------------------------*/
+QSpinBox:disabled {
+    color: #8f8f8f;                            /* приглушаем текст             */
+    background: #e0e0e0;                       /* и фон всего виджета          */
+}
+
+</string>
           </property>
-          <layout class="QVBoxLayout" name="verticalLayout_4">
-           <item>
-            <layout class="QVBoxLayout" name="verticalLayout_2">
-             <property name="leftMargin">
-              <number>100</number>
-             </property>
-             <property name="topMargin">
-              <number>50</number>
-             </property>
-             <property name="rightMargin">
-              <number>100</number>
-             </property>
-             <property name="bottomMargin">
-              <number>50</number>
-             </property>
+          <layout class="QGridLayout" name="gridLayout_9">
+           <item row="0" column="0">
+            <layout class="QVBoxLayout" name="verticalLayout">
              <item>
               <widget class="QTextBrowser" name="textBrowser">
                <property name="sizePolicy">
@@ -121,23 +351,33 @@ li.checked::marker { content: &quot;\2612&quot;; }
               </widget>
              </item>
              <item>
-              <widget class="QFrame" name="frame_2">
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(89, 89, 89);</string>
+              <widget class="QSplitter" name="splitter">
+               <property name="layoutDirection">
+                <enum>Qt::LayoutDirection::LeftToRight</enum>
                </property>
-               <property name="frameShape">
-                <enum>QFrame::Shape::StyledPanel</enum>
+               <property name="orientation">
+                <enum>Qt::Orientation::Horizontal</enum>
                </property>
-               <property name="frameShadow">
-                <enum>QFrame::Shadow::Raised</enum>
-               </property>
+               <widget class="QComboBox" name="comboBox_11">
+                <property name="layoutDirection">
+                 <enum>Qt::LayoutDirection::LeftToRight</enum>
+                </property>
+               </widget>
+               <widget class="QPushButton" name="pushButton_6">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="text">
+                 <string>Выберете COM порт</string>
+                </property>
+               </widget>
               </widget>
              </item>
              <item>
-              <widget class="QFrame" name="frame_3">
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(89, 89, 89);</string>
-               </property>
+              <widget class="QFrame" name="frame_2">
                <property name="frameShape">
                 <enum>QFrame::Shape::StyledPanel</enum>
                </property>
@@ -149,23 +389,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
              <item>
               <layout class="QHBoxLayout" name="horizontalLayout">
                <item>
-                <widget class="QPushButton" name="pushButton_2">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                 <property name="text">
-                  <string>Ручное подключение</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
                 <widget class="QFrame" name="frame_5">
-                 <property name="styleSheet">
-                  <string notr="true">background-color: rgb(89, 89, 89);</string>
-                 </property>
                  <property name="frameShape">
                   <enum>QFrame::Shape::StyledPanel</enum>
                  </property>
@@ -182,25 +406,75 @@ li.checked::marker { content: &quot;\2612&quot;; }
                    <verstretch>0</verstretch>
                   </sizepolicy>
                  </property>
+                 <property name="minimumSize">
+                  <size>
+                   <width>0</width>
+                   <height>4</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>200</width>
+                   <height>70</height>
+                  </size>
+                 </property>
                  <property name="text">
                   <string>Автоподключение</string>
                  </property>
                 </widget>
                </item>
+               <item>
+                <widget class="QFrame" name="frame_3">
+                 <property name="minimumSize">
+                  <size>
+                   <width>70</width>
+                   <height>0</height>
+                  </size>
+                 </property>
+                 <property name="frameShape">
+                  <enum>QFrame::Shape::StyledPanel</enum>
+                 </property>
+                 <property name="frameShadow">
+                  <enum>QFrame::Shadow::Raised</enum>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="pushButton_2">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="minimumSize">
+                  <size>
+                   <width>0</width>
+                   <height>0</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>200</width>
+                   <height>70</height>
+                  </size>
+                 </property>
+                 <property name="text">
+                  <string>Ручное подключение</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QFrame" name="frame_4">
+                 <property name="frameShape">
+                  <enum>QFrame::Shape::StyledPanel</enum>
+                 </property>
+                 <property name="frameShadow">
+                  <enum>QFrame::Shadow::Raised</enum>
+                 </property>
+                </widget>
+               </item>
               </layout>
-             </item>
-             <item>
-              <widget class="QFrame" name="frame_4">
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(89, 89, 89);</string>
-               </property>
-               <property name="frameShape">
-                <enum>QFrame::Shape::StyledPanel</enum>
-               </property>
-               <property name="frameShadow">
-                <enum>QFrame::Shadow::Raised</enum>
-               </property>
-              </widget>
              </item>
             </layout>
            </item>
@@ -3489,7 +3763,43 @@ li.checked::marker { content: &quot;\2612&quot;; }
          </widget>
         </widget>
        </item>
+       <item row="0" column="2">
+        <spacer name="horizontalSpacer">
+         <property name="orientation">
+          <enum>Qt::Orientation::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="1" column="1">
+        <spacer name="verticalSpacer_2">
+         <property name="orientation">
+          <enum>Qt::Orientation::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
       </layout>
+     </widget>
+    </item>
+    <item row="1" column="0">
+     <widget class="QFrame" name="frame_6">
+      <property name="frameShape">
+       <enum>QFrame::Shape::StyledPanel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Shadow::Raised</enum>
+      </property>
      </widget>
     </item>
    </layout>

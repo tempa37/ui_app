@@ -55,6 +55,11 @@ class UMVH(QMainWindow):
         self.ui.pushButton.clicked  .connect(lambda: self.switch_to(self.ui.page_2))
         self.ui.pushButton_2.clicked.connect(lambda: self.switch_to(self.ui.page_3))
 
+        # кнопка "Назад" на page_3
+        self.ui.pushButton_3.clicked.connect(lambda: self.switch_to(self.ui.page))
+        # кнопка "Назад" на page_2
+        self.ui.pushButton_5.clicked.connect(lambda: self.switch_to(self.ui.page))
+
     def switch_to(self, page_widget):
         self.ui.stackedWidget.setCurrentWidget(page_widget)
 
