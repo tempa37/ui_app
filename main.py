@@ -1,35 +1,66 @@
 import sys
+
+from PySide6.QtCore    import Qt
 from PySide6.QtWidgets import QApplication, QMainWindow, QComboBox
 
 from ui_main import Ui_MainWindow
+
 
 class UMVH(QMainWindow):
     def __init__(self):
         super().__init__()
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
-        # Убираем белый фон у выпадающих списков
+
+        # --- фикс скругления выпадающих списков --------------------------
         for combo in self.findChildren(QComboBox):
-            view = combo.view()
-            view.setStyleSheet("background: transparent;")
-            view.viewport().setAutoFillBackground(False)
-        # show the first page by default
+            # (опционально) делаем popup дочерним, а не отдельным окном
+            combo.setStyleSheet(combo.styleSheet() + "combobox-popup: 0;")
+
+            view   = combo.view()          # QListView
+            popup  = view.window()         # QComboBoxPrivateContainer (QFrame)
+
+            # 1) убираем системную рамку и тень
+            popup.setWindowFlags(Qt.Popup |
+                                 Qt.FramelessWindowHint |
+                                 Qt.NoDropShadowWindowHint)
+
+            # 2) разрешаем прозрачный фон, чтобы радиус «обрезал» углы
+            popup.setAttribute(Qt.WA_TranslucentBackground)
+
+            # 3) задаём стиль контейнеру + самому списку
+            popup.setStyleSheet("""
+                /* сам контейнер -----------------------------------------*/
+                QFrame { border:none; background:transparent; border-radius:12px; }
+
+                /* список внутри (можно скопировать ваш QSS) ------------*/
+                QListView {
+                    border:1px solid #c8c8c8;
+                    border-radius:12px;
+                    padding:4px;
+                    background:#ffffff;
+                    outline:0;
+                }
+                QListView::item          { padding:6px 12px; border-radius:6px; }
+                QListView::item:hover    { background:#f0f0f0; }
+                QListView::item:selected { background:#2d97ff; color:#ffffff; }
+            """)
+
+        # --- обычная логика вашего приложения ----------------------------
         try:
             self.ui.stackedWidget.setCurrentWidget(self.ui.page)
         except AttributeError:
-            # fallback: index 0
             self.ui.stackedWidget.setCurrentIndex(0)
-        # connect buttons to change pages
-        self.ui.pushButton.clicked.connect(lambda: self.switch_to(self.ui.page_2))
+
+        self.ui.pushButton.clicked  .connect(lambda: self.switch_to(self.ui.page_2))
         self.ui.pushButton_2.clicked.connect(lambda: self.switch_to(self.ui.page_3))
 
     def switch_to(self, page_widget):
-        """Switch stacked widget to the given page."""
         self.ui.stackedWidget.setCurrentWidget(page_widget)
 
 
 def main():
-    app = QApplication(sys.argv)
+    app    = QApplication(sys.argv)
     window = UMVH()
     window.show()
     sys.exit(app.exec())

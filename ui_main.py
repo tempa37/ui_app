@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'ui_main.ui'
+## Form generated from reading UI file 'untitled.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.9.1
 ##
@@ -159,11 +159,69 @@ class Ui_MainWindow(object):
 "/* --- \u043a\u043e\u043d\u0442\u0435\u0439\u043d\u0435\u0440 \u0432\u0441\u043f\u043b\u044b\u0432\u0430\u044e\u0449\u0435\u0433\u043e \u043e\u043a\u043d\u0430 (Qt-5/6) --- */\n"
 "QFrame#qt_combo_box_popup {      /* << \u043a\u043b\u044e\u0447\u0435\u0432\u0430\u044f \u0441\u0442\u0440\u043e\u0447\u043a\u0430 */\n"
 "    border: none;                /* \u0443\u0431\u0438\u0440\u0430\u0435\u043c \u0440\u0430\u043c\u043a\u0443 */\n"
-"    background: transparent;     /* \u0434\u0435\u043b\u0430\u0435\u043c \u043d\u0435\u0432\u0438\u0434\u0438\u043c\u043e\u0439 \u043a\u043e\u043d\u0442\u0435\u0439\u043d\u0435\u0440 */\n"
+"    background: 505050;     /* \u0438\u043b\u0438 #505050 \u043f\u043e\u0434 \u0444\u043e\u043d \u0444\u043e\u0440\u043c\u044b */\n"
 "}\n"
 "\n"
 "\n"
 "\n"
+"/* \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 \u0432\u0435\u0440\u0442\u0438\u043a\u0430\u043b\u044c\u043d\u044b\u0439 \u0441\u043a\u0440\u043e\u043b\u043b\u0431\u0430\u0440 \u0432\u043d\u0443\u0442\u0440\u0438 \u0432\u044b\u043f\u0430\u0434\u0430\u044e"
+                        "\u0449\u0435\u0433\u043e \u0441\u043f\u0438\u0441\u043a\u0430 \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 */\n"
+"QComboBox QAbstractItemView QScrollBar:vertical {\n"
+"    width: 12px;               /* \u0442\u043e\u043b\u0449\u0438\u043d\u0430 \u0432\u0441\u0435\u0439 \u043f\u043e\u043b\u043e\u0441\u044b \u043f\u0440\u043e\u043a\u0440\u0443\u0442\u043a\u0438          */\n"
+"    margin: 0px 0px 0px 0;     /* \u043b\u0451\u0433\u043a\u0438\u0439 \u043e\u0442\u0441\u0442\u0443\u043f \u043e\u0442 \u043f\u0440\u0430\u0432\u043e\u0439 \u0433\u0440\u0430\u043d\u0438 \u0441\u043f\u0438\u0441\u043a\u0430   */\n"
+"    background: #ffffff;   /* \u2190 \u0443\u0431\u0438\u0440\u0430\u0435\u043c \u0444\u043e\u043d \u0441\u0430\u043c\u043e\u0439 \u043f\u043e\u043b\u043e\u0441\u044b             */\n"
+"    border: none;              /* \u0438 \u0440\u0430\u043c\u043a\u0443, \u043a\u043e\u0442\u043e\u0440\u0443\u044e Qt \u0440\u0438\u0441\u0443\u0435\u0442 \u043f\u043e \u0443\u043c\u043e\u043b\u0447\u0430"
+                        "\u043d\u0438\u044e*/\n"
+"}\n"
+"\n"
+"/* track (\u043a\u043e\u043b\u0435\u044f). \u0414\u0435\u043b\u0430\u0435\u043c \u0435\u0451 \u043d\u0435\u0432\u0438\u0434\u0438\u043c\u043e\u0439 \u2014 \u043e\u0441\u0442\u0430\u0451\u0442\u0441\u044f \u00ab\u043f\u0443\u0441\u0442\u043e\u0435 \u043c\u0435\u0441\u0442\u043e\u00bb */\n"
+"QComboBox QAbstractItemView QScrollBar::groove:vertical {\n"
+"    background: #ffffff;   /* \u043d\u0438\u043a\u0430\u043a\u043e\u0433\u043e \u0446\u0432\u0435\u0442\u0430                         */\n"
+"    border: none;\n"
+"    margin: 0;                 /* \u0432\u0430\u0436\u043d\u043e! \u0443\u0431\u0438\u0440\u0430\u0435\u0442 \u0432\u043d\u0443\u0442\u0440\u0435\u043d\u043d\u0438\u0435 \u00ab\u043f\u043e\u043b\u044f\u00bb Qt    */\n"
+"}\n"
+"\n"
+"/* \u043f\u0443\u0441\u0442\u044b\u0435 \u0443\u0447\u0430\u0441\u0442\u043a\u0438 \u043d\u0430\u0434 \u0438 \u043f\u043e\u0434 \u043f\u043e\u043b\u0437\u0443\u043d\u043a\u043e\u043c \u2014 \u0442\u043e\u0436\u0435 \u0432 \u043d\u043e\u043b\u044c"
+                        " */\n"
+"QComboBox QAbstractItemView QScrollBar::add-page:vertical,\n"
+"QComboBox QAbstractItemView QScrollBar::sub-page:vertical {\n"
+"    background: #ffffff;\n"
+"    border: none;\n"
+"}\n"
+"\n"
+"/* \u0441\u0430\u043c \u043f\u043e\u043b\u0437\u0443\u043d\u043e\u043a (\u00ab\u043e\u0432\u0430\u043b\u00bb) -------------------------------------------------*/\n"
+"QComboBox QAbstractItemView QScrollBar::handle:vertical {\n"
+"    background: #808080;       /* \u0446\u0432\u0435\u0442 \u00ab\u0442\u0430\u0431\u043b\u0435\u0442\u043a\u0438\u00bb                        */\n"
+"    border-radius: 999px;        /* \u0441\u043a\u0440\u0443\u0433\u043b\u044f\u0435\u043c \u043a\u0440\u0430\u044f \u043f\u043e \u043f\u043e\u043b\u043d\u043e\u0439               */\n"
+"    min-height: 24px;          /* \u0447\u0442\u043e\u0431\u044b \u043d\u0435 \u0438\u0441\u0447\u0435\u0437\u0430\u043b \u043f\u0440\u0438 \u043c\u0430\u043b\u0435\u043d\u044c\u043a\u043e\u043c \u043a\u043e\u043d\u0442\u0435\u043d\u0442\u0435*/\n"
+"    margin: 2"
+                        "px;               /* \u0437\u0430\u0437\u043e\u0440 \u043e\u0442 \u0433\u0440\u0430\u043d\u0438\u0446 \u0431\u0430\u0440\u0430                   */\n"
+"}\n"
+"\n"
+"QComboBox QAbstractItemView QScrollBar::sub-line:vertical,   /* \u0432\u0435\u0440\u0445\u043d\u044f\u044f  */\n"
+"QComboBox QAbstractItemView QScrollBar::add-line:vertical {  /* \u043d\u0438\u0436\u043d\u044f\u044f   */\n"
+"    height: 0px;                /* \u0443\u0431\u0438\u0440\u0430\u0435\u043c \u0432\u0438\u0434\u0438\u043c\u0443\u044e \u0447\u0430\u0441\u0442\u044c      */\n"
+"    width:  0px;\n"
+"    border: none;\n"
+"    background: #ffffff;\n"
+"    subcontrol-origin: margin;  /* \u0447\u0442\u043e\u0431\u044b \u043d\u0435 \u0437\u0430\u043d\u0438\u043c\u0430\u043b\u0438 \u043c\u0435\u0441\u0442\u043e    */\n"
+"}\n"
+"\n"
+"/* \u2500\u2500 \u0435\u0441\u043b\u0438 \u0432\u0434\u0440\u0443\u0433 \u043f\u043e\u044f\u0432\u0438\u0442\u0441\u044f \u0433\u043e\u0440\u0438\u0437\u043e\u043d\u0442\u0430\u043b\u044c\u043d\u044b\u0439 \u0441\u043a\u0440"
+                        "\u043e\u043b\u043b\u0431\u0430\u0440 \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500*/\n"
+"QComboBox QAbstractItemView QScrollBar::sub-line:horizontal, /* \u043b\u0435\u0432\u0430\u044f    */\n"
+"QComboBox QAbstractItemView QScrollBar::add-line:horizontal { /* \u043f\u0440\u0430\u0432\u0430\u044f  */\n"
+"    width:  0px;\n"
+"    height: 0px;\n"
+"    border: none;\n"
+"    background: #ffffff;\n"
+"    subcontrol-origin: margin;\n"
+"}\n"
+"\n"
+"QComboBox QAbstractItemView::viewport {\n"
+"    border-radius: 8px;\n"
+"    background: transparent;\n"
+"}\n"
 "\n"
 "\n"
 "\n"
@@ -171,8 +229,8 @@ class Ui_MainWindow(object):
 "QComboBox {\n"
 "    border: 1px solid #b4b4b4;\n"
 "    border-radius: 12px;\n"
-"    padding: 4px 40px 4"
-                        "px 12px;   /* \u043c\u0435\u0441\u0442\u043e \u043f\u043e\u0434 \u0441\u0442\u0440\u0435\u043b\u043a\u0443 \u0441\u043f\u0440\u0430\u0432\u0430 */\n"
+"    padding: 4px 40px 4px 12px;   /* \u043c\u0435\u0441\u0442\u043e \u043f\u043e\u0434 \u0441\u0442\u0440\u0435\u043b\u043a\u0443 \u0441\u043f\u0440\u0430"
+                        "\u0432\u0430 */\n"
 "    background: #f4f4f4;\n"
 "    min-height: 30px;             /* \u0447\u0442\u043e\u0431\u044b \u043d\u0435 \u0441\u043f\u043b\u044e\u0449\u0438\u0432\u0430\u043b\u0441\u044f */\n"
 "combobox-popup: 0;   \n"
@@ -193,10 +251,10 @@ class Ui_MainWindow(object):
 "    background: #808080;   /* \u0432\u0440\u0435\u043c\u0435\u043d\u043d\u043e! */\n"
 "}\n"
 "\n"
-"/* \u0421\u0422\u0420"
-                        "\u0415\u041b\u041a\u0410 ----------------------------------------------------------------*/\n"
+"/* \u0421\u0422\u0420\u0415\u041b\u041a\u0410 ----------------------------------------------------------------*/\n"
 "QComboBox::down-arrow {\n"
-"image: url(\":/icon/arrow_drop_down_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24.png\");\n"
+"image:"
+                        " url(\":/icon/arrow_drop_down_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24.png\");\n"
 "    width: 24px;      /* \u043f\u043e\u0434\u0433\u043e\u043d\u0438 \u043f\u043e\u0434 \u0440\u0435\u0430\u043b\u044c\u043d\u044b\u0439 \u0440\u0430\u0437\u043c\u0435\u0440 PNG */\n"
 "    height: 24px;\n"
 "    margin: 0 auto;   /* \u043f\u043e \u0446\u0435\u043d\u0442\u0440\u0443 \u043a\u043d\u043e\u043f\u043a\u0438 drop\u2011down */\n"
@@ -212,9 +270,9 @@ class Ui_MainWindow(object):
 "\n"
 "\n"
 "\n"
-"/* "
-                        "\u0425\u041e\u0412\u0415\u0420/\u0424\u041e\u041a\u0423\u0421 -------------------------------------------------------------*/\n"
-"QComboBox:hover { background: #f9f9f9; }\n"
+"/* \u0425\u041e\u0412\u0415\u0420/\u0424\u041e\u041a\u0423\u0421 -------------------------------------------------------------*/\n"
+""
+                        "QComboBox:hover { background: #f9f9f9; }\n"
 "\n"
 "QComboBox:focus {\n"
 "    border: 1px solid #7aa9ff;\n"
@@ -227,11 +285,11 @@ class Ui_MainWindow(object):
 "    border: 1px solid #c8c8c8;\n"
 "    border-radius: 12px;\n"
 "    padding: 4px;                       /* \u043b\u0451\u0433\u043a\u0438\u0439 \u00ab\u043e\u0442\u0441\u0442\u0443\u043f-\u0440\u0430\u043c\u043a\u0430\u00bb \u0432\u043d\u0443\u0442\u0440\u0438 */\n"
-"    background: transparent;\n"
+"    background: #FFFFFF;\n"
 "\n"
-"    /* \u043e\u0442\u043a\u043b\u044e\u0447\u0430\u0435\u043c \u0441\u0442\u0430\u043d\u0434\u0430\u0440\u0442\u043d\u044b"
-                        "\u0439 dotted focus-rectangle */\n"
-"    outline: 0;                         /* Qt >5.12 \u043f\u043e\u043d\u0438\u043c\u0430\u0435\u0442 outline */\n"
+"    /* \u043e\u0442\u043a\u043b\u044e\u0447\u0430\u0435\u043c \u0441\u0442\u0430\u043d\u0434\u0430\u0440\u0442\u043d\u044b\u0439 dotted focus-rectangle */\n"
+"    outline: 0;                         /* Qt >5.12 \u043f\u043e\u043d\u0438\u043c\u0430\u0435"
+                        "\u0442 outline */\n"
 "    /* \u0435\u0441\u043b\u0438 outline \u043d\u0435 \u0440\u0430\u0431\u043e\u0442\u0430\u0435\u0442 \u0432 \u0432\u0430\u0448\u0435\u0439 \u0432\u0435\u0440\u0441\u0438\u0438:\n"
 "       border: none; */\n"
 "}\n"
@@ -247,9 +305,9 @@ class Ui_MainWindow(object):
 "    background: #f0f0f0;\n"
 "}\n"
 "\n"
-"/* \u0432\u044b\u0431\u0440\u0430\u043d\u043d\u044b\u0439 \u044d\u043b\u0435\u043c"
-                        "\u0435\u043d\u0442 (\u0431\u0435\u0437 \u043f\u0443\u043d\u043a\u0442\u0438\u0440\u0430!) */\n"
-"QComboBox QAbstractItemView::item:selected {\n"
+"/* \u0432\u044b\u0431\u0440\u0430\u043d\u043d\u044b\u0439 \u044d\u043b\u0435\u043c\u0435\u043d\u0442 (\u0431\u0435\u0437 \u043f\u0443\u043d\u043a\u0442\u0438\u0440\u0430!) */\n"
+"QComboBox QAbstractItemView::item:"
+                        "selected {\n"
 "    background: #2d97ff;                /* \u043f\u0440\u0438\u043c\u0435\u0440 \u0430\u043a\u0442\u0438\u0432\u043d\u043e\u0433\u043e \u0446\u0432\u0435\u0442\u0430 */\n"
 "    color: #ffffff;\n"
 "    outline: 0;                         /* \u0441\u0442\u0440\u0430\u0445\u043e\u0432\u043a\u0430 */\n"
@@ -260,9 +318,9 @@ class Ui_MainWindow(object):
 "QLabel,\n"
 "QTextBrowser {\n"
 "    color: white;                    /* \u0446\u0432\u0435\u0442 \u0448\u0440\u0438\u0444\u0442\u0430 */\n"
-"    border-radius: 10px;             /* \u0441\u043a"
-                        "\u0440\u0443\u0433\u043b\u0435\u043d\u0438\u0435 \u0443\u0433\u043b\u043e\u0432 \u0440\u0430\u043c\u043a\u0438 */\n"
-"    padding: 6px;                    /* \u0432\u043d\u0443\u0442\u0440\u0435\u043d\u043d\u0438\u0435 \u043e\u0442\u0441\u0442\u0443\u043f\u044b */\n"
+"    border-radius: 10px;             /* \u0441\u043a\u0440\u0443\u0433\u043b\u0435\u043d\u0438\u0435 \u0443\u0433\u043b\u043e\u0432 \u0440\u0430\u043c\u043a\u0438 */\n"
+"    padding: "
+                        "6px;                    /* \u0432\u043d\u0443\u0442\u0440\u0435\u043d\u043d\u0438\u0435 \u043e\u0442\u0441\u0442\u0443\u043f\u044b */\n"
 "border: 2px solid #909090; \n"
 "}\n"
 "\n"
@@ -273,11 +331,11 @@ class Ui_MainWindow(object):
 "    color: white;                     /* \u0446\u0432\u0435\u0442 \u0442\u0435\u043a\u0441\u0442\u0430 */\n"
 "    border: 2px solid #909090;        /* \u0442\u043e\u043b\u0449\u0438\u043d\u0430 \u0438 \u0446\u0432\u0435\u0442 \u043e\u0431\u0432\u043e\u0434\u043a\u0438 */\n"
 "    border-radius: 12px;              /* \u0440\u0430\u0434\u0438\u0443\u0441 \u0441\u043a\u0440\u0443\u0433\u043b\u0435\u043d\u0438\u044f */\n"
-"    padding: 6px 12px;                /* \u00ab\u0432"
-                        "\u043e\u0437\u0434\u0443\u0445\u00bb \u0432\u043d\u0443\u0442\u0440\u0438 */\n"
+"    padding: 6px 12px;                /* \u00ab\u0432\u043e\u0437\u0434\u0443\u0445\u00bb \u0432\u043d\u0443\u0442\u0440\u0438 */\n"
 "}\n"
 "\n"
-"/* \u041a\u0443\u0440\u0441\u043e\u0440 \u043d\u0430\u0432\u0435\u0434\u0451\u043d */\n"
+"/* \u041a\u0443\u0440\u0441\u043e\u0440"
+                        " \u043d\u0430\u0432\u0435\u0434\u0451\u043d */\n"
 "QPushButton:hover {\n"
 "    background-color: #505050;\n"
 "    border-color: #707070;\n"
@@ -294,11 +352,11 @@ class Ui_MainWindow(object):
 "    border: 2px solid #909090;   /* \u0442\u043e\u043b\u0449\u0438\u043d\u0430 \u0438 \u0446\u0432\u0435\u0442 */\n"
 "    border-radius: 10px;         /* \u0441\u043a\u0440\u0443\u0433\u043b\u0435\u043d\u0438\u0435 */\n"
 "    padding: 6px;                /* \u0432\u043d\u0443\u0442\u0440\u0435\u043d\u043d\u0438\u0435 \u043e\u0442\u0441\u0442\u0443\u043f\u044b */\n"
-"    color: white;              /* \u0446"
-                        "\u0432\u0435\u0442 \u0448\u0440\u0438\u0444\u0442\u0430 */\n"
+"    color: white;              /* \u0446\u0432\u0435\u0442 \u0448\u0440\u0438\u0444\u0442\u0430 */\n"
 "}\n"
 "\n"
-"/* ===== QSpinBox \u2014 \u0441\u0442\u0438\u043b\u044c \u043f\u043e\u0434 QComboBox (\u043a\u0430\u0436\u0434\u044b\u0439 \u043f\u0430\u0440\u0430\u043c\u0435\u0442\u0440 \u043f\u043e\u0434\u043f\u0438\u0441\u0430\u043d) ===== */\n"
+"/* ===== QSpinBox \u2014 \u0441\u0442\u0438\u043b\u044c"
+                        " \u043f\u043e\u0434 QComboBox (\u043a\u0430\u0436\u0434\u044b\u0439 \u043f\u0430\u0440\u0430\u043c\u0435\u0442\u0440 \u043f\u043e\u0434\u043f\u0438\u0441\u0430\u043d) ===== */\n"
 "\n"
 "/* \u041e\u0421\u041d\u041e\u0412\u041d\u041e\u0415 \u041f\u041e\u041b\u0415 ---------------------------------------------------------*/\n"
 "QSpinBox {\n"
@@ -306,8 +364,8 @@ class Ui_MainWindow(object):
 "    border-radius: 12px;                       /* \u0441\u043a\u0440\u0443\u0433\u043b\u0435\u043d\u0438\u0435 \u0432\u0441\u0435\u0445 \u0443\u0433\u043b\u043e\u0432        */\n"
 "\n"
 "    padding-left: 12px;                        /* \u043e\u0442\u0441\u0442\u0443\u043f \u0442\u0435\u043a\u0441\u0442\u0430 \u0441\u043b\u0435\u0432\u0430          */\n"
-"    padding-right"
-                        ": 40px;                       /* \u0440\u0435\u0437\u0435\u0440\u0432 \u043f\u043e\u0434 \u0431\u043b\u043e\u043a \u0441\u0442\u0440\u0435\u043b\u043e\u043a      */\n"
+"    padding-right: 40px;                       /* \u0440\u0435\u0437\u0435\u0440\u0432 \u043f\u043e\u0434 \u0431\u043b\u043e\u043a \u0441\u0442\u0440"
+                        "\u0435\u043b\u043e\u043a      */\n"
 "    background: #f4f4f4;                       /* \u0444\u043e\u043d \u043f\u043e\u043b\u044f \u0432\u0432\u043e\u0434\u0430               */\n"
 "    min-height: 40px;                          /* \u043c\u0438\u043d\u0438\u043c\u0430\u043b\u044c\u043d\u0430\u044f \u0432\u044b\u0441\u043e\u0442\u0430 \u043a\u043e\u043d\u0442\u0440\u043e\u043b\u0430  */\n"
 "    color: black;                              /* \u0446\u0432\u0435\u0442 \u0432\u0432\u0435\u0434\u0451\u043d\u043d\u043e\u0433\u043e \u0442\u0435\u043a\u0441\u0442\u0430       */\n"
@@ -315,19 +373,19 @@ class Ui_MainWindow(object):
 "    outline: none;                             /* \u0443\u0431\u0438\u0440\u0430\u0435\u043c \u0441\u0442\u0430\u043d\u0434\u0430\u0440\u0442\u043d\u044b\u0439 \u043f\u0443\u043d\u043a\u0442\u0438p  */\n"
 "}\n"
 "\n"
-"/* \u0411\u041b\u041e\u041a \u0421\u0422\u0420\u0415\u041b\u041e\u041a --------------------"
-                        "--------------------------------------*/\n"
-"/* \u043e\u0431\u0449\u0438\u0435 \u043f\u0430\u0440\u0430\u043c\u0435\u0442\u0440\u044b \u0434\u043b\u044f \u043e\u0431\u0435\u0438\u0445 \u043f\u043e\u043b\u043e\u0432\u0438\u043d\u043e\u043a \u0431\u043b\u043e\u043a\u0430 */\n"
+"/* \u0411\u041b\u041e\u041a \u0421\u0422\u0420\u0415\u041b\u041e\u041a ----------------------------------------------------------*/\n"
+"/* \u043e\u0431\u0449\u0438\u0435 \u043f\u0430\u0440\u0430\u043c\u0435\u0442\u0440\u044b"
+                        " \u0434\u043b\u044f \u043e\u0431\u0435\u0438\u0445 \u043f\u043e\u043b\u043e\u0432\u0438\u043d\u043e\u043a \u0431\u043b\u043e\u043a\u0430 */\n"
 "QSpinBox::up-button,\n"
 "QSpinBox::down-button {\n"
 "    subcontrol-origin: padding;                /* \u043a\u043e\u043e\u0440\u0434\u0438\u043d\u0430\u0442\u044b \u043e\u0442 padding-box    */\n"
 "    width: 30px;                               /* \u0448\u0438\u0440\u0438\u043d\u0430 \u0441\u0435\u0433\u043c\u0435\u043d\u0442\u0430 \u0441\u043e \u0441\u0442\u0440\u0435\u043b\u043a\u0430\u043c\u0438 */\n"
 "    border-left: 1px solid #b4b4b4;            /* \u043b\u0438\u043d\u0438\u044f-\u0440\u0430\u0437\u0434\u0435\u043b\u0438\u0442\u0435\u043b\u044c \u0441\u043b\u0435\u0432\u0430      */\n"
-"    background: #808080;                       /* \u0444\u043e\u043d \u0431\u043b\u043e\u043a\u0430 \u0441\u0442\u0440\u0435\u043b\u043e\u043a     "
-                        "       */\n"
+"    background: #808080;                       /* \u0444\u043e\u043d \u0431\u043b\u043e\u043a\u0430 \u0441\u0442\u0440\u0435\u043b\u043e\u043a            */\n"
 "}\n"
 "\n"
-"/* \u2193 \u043d\u0438\u0436\u043d\u044f\u044f \u043f\u043e\u043b\u043e\u0432\u0438\u043d\u0430 \u0431\u043b\u043e\u043a\u0430 \u0441\u0442\u0440\u0435\u043b\u043e\u043a --------------------------------------*/\n"
+"/* \u2193 \u043d\u0438\u0436\u043d\u044f\u044f \u043f\u043e\u043b\u043e\u0432\u0438\u043d\u0430 \u0431\u043b"
+                        "\u043e\u043a\u0430 \u0441\u0442\u0440\u0435\u043b\u043e\u043a --------------------------------------*/\n"
 "QSpinBox::down-button {\n"
 "    subcontrol-position: bottom right;         /* \u043f\u0440\u0438\u0432\u044f\u0437\u043a\u0430 \u043a \u043f\u0440\u0430\u0432\u043e\u043c\u0443-\u043d\u0438\u0436\u043d\u0435\u043c\u0443   */\n"
 "    height: 20%;                               /* \u0437\u0430\u043d\u0438\u043c\u0430\u0435\u043c \u043e\u0441\u0442\u0430\u0432\u0448\u0438\u0435\u0441\u044f 50 %     */\n"
@@ -335,10 +393,10 @@ class Ui_MainWindow(object):
 "}\n"
 "\n"
 "\n"
-"/* \u2191 \u0432\u0435\u0440\u0445\u043d\u044f\u044f \u043f\u043e\u043b\u043e\u0432\u0438\u043d\u0430 \u0431\u043b\u043e\u043a\u0430 \u0441\u0442\u0440\u0435\u043b\u043e"
-                        "\u043a -------------------------------------*/\n"
+"/* \u2191 \u0432\u0435\u0440\u0445\u043d\u044f\u044f \u043f\u043e\u043b\u043e\u0432\u0438\u043d\u0430 \u0431\u043b\u043e\u043a\u0430 \u0441\u0442\u0440\u0435\u043b\u043e\u043a -------------------------------------*/\n"
 "QSpinBox::up-button {\n"
-"    subcontrol-position: top right;            /* \u043f\u0440\u0438\u0432\u044f\u0437\u043a\u0430 \u043a \u043f\u0440\u0430\u0432\u043e\u043c\u0443-\u0432\u0435\u0440\u0445\u043d\u0435\u043c\u0443  */\n"
+"    subcontrol-position: top right;            /* \u043f"
+                        "\u0440\u0438\u0432\u044f\u0437\u043a\u0430 \u043a \u043f\u0440\u0430\u0432\u043e\u043c\u0443-\u0432\u0435\u0440\u0445\u043d\u0435\u043c\u0443  */\n"
 "    height: 20%;                               /* \u0437\u0430\u043d\u0438\u043c\u0430\u0435\u043c \u0440\u043e\u0432\u043d\u043e \u043f\u043e\u043b\u043e\u0432\u0438\u043d\u0443 \u0432\u044b\u0441. */\n"
 "    border-top-right-radius: 12px;             /* \u0441\u043a\u0440\u0443\u0433\u043b\u044f\u0435\u043c \u0422\u041e\u041b\u042c\u041a\u041e \u0432\u0435\u0440\u0445-\u043f\u0440\u0430\u0432.  */\n"
 "}\n"
@@ -346,8 +404,8 @@ class Ui_MainWindow(object):
 "/* \u0432\u0438\u0437\u0443\u0430\u043b\u044c\u043d\u044b\u0439 \u043e\u0442\u043a\u043b\u0438\u043a \u043f\u0440\u0438 \u043d\u0430\u0436\u0430\u0442\u0438\u0438 ----------------------------------------*/\n"
 "QSpinBox::up-button:pressed,\n"
 "QSpinBox::down-button:pressed {\n"
-"    background: #6d6d6d;                     "
-                        "  /* \u0437\u0430\u0442\u0435\u043c\u043d\u044f\u0435\u043c \u0444\u043e\u043d \u043d\u0430 \u0432\u0440\u0435\u043c\u044f \u043a\u043b\u0438\u043a\u0430 */\n"
+"    background: #6d6d6d;                       /* \u0437\u0430\u0442\u0435\u043c\u043d\u044f\u0435\u043c \u0444\u043e\u043d \u043d\u0430 \u0432\u0440\u0435\u043c\u044f \u043a\u043b"
+                        "\u0438\u043a\u0430 */\n"
 "}\n"
 "\n"
 "/* \u0421\u0422\u0420\u0415\u041b\u041a\u0418 (\u0438\u043a\u043e\u043d\u043a\u0438) ------------------------------------------------------*/\n"
@@ -360,9 +418,9 @@ class Ui_MainWindow(object):
 "\n"
 "QSpinBox::down-arrow {\n"
 "    image: url(\":/icon/arrow_drop_down_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24.png\"); /* PNG/SVG \u2193 */\n"
-"    width: 24px; height: 24px;                 /* \u0433\u0430\u0431"
-                        "\u0430\u0440\u0438\u0442\u044b \u0438\u043a\u043e\u043d\u043a\u0438              */\n"
-"    margin: 0 auto;                            /* \u0446\u0435\u043d\u0442\u0440\u0438\u0440\u0443\u0435\u043c \u0432 \u0431\u043b\u043e\u043a\u0435           */\n"
+"    width: 24px; height: 24px;                 /* \u0433\u0430\u0431\u0430\u0440\u0438\u0442\u044b \u0438\u043a\u043e\u043d\u043a\u0438              */\n"
+"    margin: 0 auto;                            "
+                        "/* \u0446\u0435\u043d\u0442\u0440\u0438\u0440\u0443\u0435\u043c \u0432 \u0431\u043b\u043e\u043a\u0435           */\n"
 "}\n"
 "\n"
 "\n"
@@ -374,25 +432,25 @@ class Ui_MainWindow(object):
 "\n"
 "QSpinBox::up-arrow:disabled,\n"
 "QSpinBox::down-arrow:disabled {\n"
-"    image: none;                               /* \u043f\u0440\u044f\u0447\u0435\u043c \u0438\u043a\u043e\u043d\u043a\u0443 \u0443 \u043d\u0435"
-                        "\u0430\u043a\u0442\u0438\u0432\u043d\u043e\u0439   */\n"
+"    image: none;                               /* \u043f\u0440\u044f\u0447\u0435\u043c \u0438\u043a\u043e\u043d\u043a\u0443 \u0443 \u043d\u0435\u0430\u043a\u0442\u0438\u0432\u043d\u043e\u0439   */\n"
 "}\n"
 "\n"
-"/* \u0425\u041e\u0412\u0415\u0420 / \u0424\u041e\u041a\u0423\u0421 ---------------------------------------------------------*/\n"
+"/* \u0425\u041e\u0412\u0415\u0420 / \u0424\u041e\u041a\u0423\u0421"
+                        " ---------------------------------------------------------*/\n"
 "QSpinBox:hover  { background: #f9f9f9; }       /* \u043b\u0451\u0433\u043a\u043e\u0435 \u0432\u044b\u0441\u0432\u0435\u0442\u043b\u0435\u043d\u0438\u0435 \u043f\u0440\u0438 \u0445\u043e\u0432\u0435\u0440\u0435*/\n"
 "QSpinBox:focus  { border: 1px solid #7aa9ff; } /* \u0441\u0438\u043d\u044f\u044f \u0440\u0430\u043c\u043a\u0430 \u043f\u0440\u0438 \u0444\u043e\u043a\u0443\u0441\u0435       */\n"
 "\n"
 "/* \u041e\u0422\u041a\u041b\u042e\u0427\u0401\u041d\u041d\u041e\u0415 \u0421\u041e\u0421\u0422\u041e\u042f\u041d\u0418\u0415 -------------------------------------------------*/\n"
 "QSpinBox:disabled {\n"
 "    color: #8f8f8f;                            /* \u043f\u0440\u0438\u0433\u043b\u0443\u0448\u0430\u0435\u043c \u0442\u0435\u043a\u0441\u0442             */\n"
-"    background: #e0e0e0;                       /* \u0438 "
-                        "\u0444\u043e\u043d \u0432\u0441\u0435\u0433\u043e \u0432\u0438\u0434\u0436\u0435\u0442\u0430          */\n"
+"    background: #e0e0e0;                       /* \u0438 \u0444\u043e\u043d \u0432\u0441\u0435\u0433\u043e \u0432\u0438\u0434\u0436\u0435\u0442\u0430          */\n"
 "}\n"
 "\n"
 "\n"
 "\n"
 "\n"
-"\n"
+""
+                        "\n"
 "\n"
 "")
         self.gridLayout_5 = QGridLayout(self.page_4)
@@ -457,46 +515,23 @@ class Ui_MainWindow(object):
         self.frame_11.setFrameShadow(QFrame.Shadow.Raised)
         self.gridLayout_8 = QGridLayout(self.frame_11)
         self.gridLayout_8.setObjectName(u"gridLayout_8")
-        self.textBrowser_63 = QTextBrowser(self.frame_11)
-        self.textBrowser_63.setObjectName(u"textBrowser_63")
-        sizePolicy2.setHeightForWidth(self.textBrowser_63.sizePolicy().hasHeightForWidth())
-        self.textBrowser_63.setSizePolicy(sizePolicy2)
-        self.textBrowser_63.setMinimumSize(QSize(97, 0))
-        self.textBrowser_63.setMaximumSize(QSize(16777215, 40))
-
-        self.gridLayout_8.addWidget(self.textBrowser_63, 2, 1, 1, 1)
-
-        self.comboBox_8 = QComboBox(self.frame_11)
-        self.comboBox_8.addItem("")
-        self.comboBox_8.addItem("")
-        self.comboBox_8.setObjectName(u"comboBox_8")
+        self.comboBox_6 = QComboBox(self.frame_11)
+        self.comboBox_6.addItem("")
+        self.comboBox_6.addItem("")
+        self.comboBox_6.setObjectName(u"comboBox_6")
         sizePolicy3 = QSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Fixed)
         sizePolicy3.setHorizontalStretch(0)
         sizePolicy3.setVerticalStretch(0)
-        sizePolicy3.setHeightForWidth(self.comboBox_8.sizePolicy().hasHeightForWidth())
-        self.comboBox_8.setSizePolicy(sizePolicy3)
-        self.comboBox_8.setMinimumSize(QSize(200, 40))
-        self.comboBox_8.setLayoutDirection(Qt.LayoutDirection.LeftToRight)
+        sizePolicy3.setHeightForWidth(self.comboBox_6.sizePolicy().hasHeightForWidth())
+        self.comboBox_6.setSizePolicy(sizePolicy3)
+        self.comboBox_6.setMinimumSize(QSize(200, 40))
+        self.comboBox_6.setLayoutDirection(Qt.LayoutDirection.LeftToRight)
 
-        self.gridLayout_8.addWidget(self.comboBox_8, 4, 0, 1, 1)
+        self.gridLayout_8.addWidget(self.comboBox_6, 2, 0, 1, 1)
 
-        self.textBrowser_65 = QTextBrowser(self.frame_11)
-        self.textBrowser_65.setObjectName(u"textBrowser_65")
-        sizePolicy2.setHeightForWidth(self.textBrowser_65.sizePolicy().hasHeightForWidth())
-        self.textBrowser_65.setSizePolicy(sizePolicy2)
-        self.textBrowser_65.setMinimumSize(QSize(97, 0))
-        self.textBrowser_65.setMaximumSize(QSize(16777215, 40))
+        self.verticalSpacer = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
 
-        self.gridLayout_8.addWidget(self.textBrowser_65, 4, 1, 1, 1)
-
-        self.textBrowser_62 = QTextBrowser(self.frame_11)
-        self.textBrowser_62.setObjectName(u"textBrowser_62")
-        sizePolicy2.setHeightForWidth(self.textBrowser_62.sizePolicy().hasHeightForWidth())
-        self.textBrowser_62.setSizePolicy(sizePolicy2)
-        self.textBrowser_62.setMinimumSize(QSize(97, 0))
-        self.textBrowser_62.setMaximumSize(QSize(16777215, 40))
-
-        self.gridLayout_8.addWidget(self.textBrowser_62, 1, 1, 1, 1)
+        self.gridLayout_8.addItem(self.verticalSpacer, 6, 0, 1, 1)
 
         self.spinBox_2 = QSpinBox(self.frame_11)
         self.spinBox_2.setObjectName(u"spinBox_2")
@@ -505,6 +540,24 @@ class Ui_MainWindow(object):
         self.spinBox_2.setMinimumSize(QSize(0, 42))
 
         self.gridLayout_8.addWidget(self.spinBox_2, 5, 0, 1, 1)
+
+        self.textBrowser_66 = QTextBrowser(self.frame_11)
+        self.textBrowser_66.setObjectName(u"textBrowser_66")
+        sizePolicy2.setHeightForWidth(self.textBrowser_66.sizePolicy().hasHeightForWidth())
+        self.textBrowser_66.setSizePolicy(sizePolicy2)
+        self.textBrowser_66.setMinimumSize(QSize(97, 0))
+        self.textBrowser_66.setMaximumSize(QSize(16777215, 40))
+
+        self.gridLayout_8.addWidget(self.textBrowser_66, 5, 1, 1, 1)
+
+        self.textBrowser_64 = QTextBrowser(self.frame_11)
+        self.textBrowser_64.setObjectName(u"textBrowser_64")
+        sizePolicy2.setHeightForWidth(self.textBrowser_64.sizePolicy().hasHeightForWidth())
+        self.textBrowser_64.setSizePolicy(sizePolicy2)
+        self.textBrowser_64.setMinimumSize(QSize(97, 0))
+        self.textBrowser_64.setMaximumSize(QSize(16777215, 40))
+
+        self.gridLayout_8.addWidget(self.textBrowser_64, 3, 1, 1, 1)
 
         self.comboBox_5 = QComboBox(self.frame_11)
         self.comboBox_5.addItem("")
@@ -530,6 +583,35 @@ class Ui_MainWindow(object):
 
         self.gridLayout_8.addWidget(self.comboBox_5, 1, 0, 1, 1)
 
+        self.textBrowser_63 = QTextBrowser(self.frame_11)
+        self.textBrowser_63.setObjectName(u"textBrowser_63")
+        sizePolicy2.setHeightForWidth(self.textBrowser_63.sizePolicy().hasHeightForWidth())
+        self.textBrowser_63.setSizePolicy(sizePolicy2)
+        self.textBrowser_63.setMinimumSize(QSize(97, 0))
+        self.textBrowser_63.setMaximumSize(QSize(16777215, 40))
+
+        self.gridLayout_8.addWidget(self.textBrowser_63, 2, 1, 1, 1)
+
+        self.comboBox_8 = QComboBox(self.frame_11)
+        self.comboBox_8.addItem("")
+        self.comboBox_8.addItem("")
+        self.comboBox_8.setObjectName(u"comboBox_8")
+        sizePolicy3.setHeightForWidth(self.comboBox_8.sizePolicy().hasHeightForWidth())
+        self.comboBox_8.setSizePolicy(sizePolicy3)
+        self.comboBox_8.setMinimumSize(QSize(200, 40))
+        self.comboBox_8.setLayoutDirection(Qt.LayoutDirection.LeftToRight)
+
+        self.gridLayout_8.addWidget(self.comboBox_8, 4, 0, 1, 1)
+
+        self.textBrowser_62 = QTextBrowser(self.frame_11)
+        self.textBrowser_62.setObjectName(u"textBrowser_62")
+        sizePolicy2.setHeightForWidth(self.textBrowser_62.sizePolicy().hasHeightForWidth())
+        self.textBrowser_62.setSizePolicy(sizePolicy2)
+        self.textBrowser_62.setMinimumSize(QSize(97, 0))
+        self.textBrowser_62.setMaximumSize(QSize(16777215, 40))
+
+        self.gridLayout_8.addWidget(self.textBrowser_62, 1, 1, 1, 1)
+
         self.textBrowser_74 = QTextBrowser(self.frame_11)
         self.textBrowser_74.setObjectName(u"textBrowser_74")
         sizePolicy2.setHeightForWidth(self.textBrowser_74.sizePolicy().hasHeightForWidth())
@@ -541,16 +623,14 @@ class Ui_MainWindow(object):
 
         self.gridLayout_8.addWidget(self.textBrowser_74, 0, 0, 1, 2)
 
-        self.comboBox_6 = QComboBox(self.frame_11)
-        self.comboBox_6.addItem("")
-        self.comboBox_6.addItem("")
-        self.comboBox_6.setObjectName(u"comboBox_6")
-        sizePolicy3.setHeightForWidth(self.comboBox_6.sizePolicy().hasHeightForWidth())
-        self.comboBox_6.setSizePolicy(sizePolicy3)
-        self.comboBox_6.setMinimumSize(QSize(200, 40))
-        self.comboBox_6.setLayoutDirection(Qt.LayoutDirection.LeftToRight)
+        self.textBrowser_65 = QTextBrowser(self.frame_11)
+        self.textBrowser_65.setObjectName(u"textBrowser_65")
+        sizePolicy2.setHeightForWidth(self.textBrowser_65.sizePolicy().hasHeightForWidth())
+        self.textBrowser_65.setSizePolicy(sizePolicy2)
+        self.textBrowser_65.setMinimumSize(QSize(97, 0))
+        self.textBrowser_65.setMaximumSize(QSize(16777215, 40))
 
-        self.gridLayout_8.addWidget(self.comboBox_6, 2, 0, 1, 1)
+        self.gridLayout_8.addWidget(self.textBrowser_65, 4, 1, 1, 1)
 
         self.comboBox_7 = QComboBox(self.frame_11)
         self.comboBox_7.addItem("")
@@ -563,28 +643,6 @@ class Ui_MainWindow(object):
         self.comboBox_7.setLayoutDirection(Qt.LayoutDirection.LeftToRight)
 
         self.gridLayout_8.addWidget(self.comboBox_7, 3, 0, 1, 1)
-
-        self.textBrowser_64 = QTextBrowser(self.frame_11)
-        self.textBrowser_64.setObjectName(u"textBrowser_64")
-        sizePolicy2.setHeightForWidth(self.textBrowser_64.sizePolicy().hasHeightForWidth())
-        self.textBrowser_64.setSizePolicy(sizePolicy2)
-        self.textBrowser_64.setMinimumSize(QSize(97, 0))
-        self.textBrowser_64.setMaximumSize(QSize(16777215, 40))
-
-        self.gridLayout_8.addWidget(self.textBrowser_64, 3, 1, 1, 1)
-
-        self.textBrowser_66 = QTextBrowser(self.frame_11)
-        self.textBrowser_66.setObjectName(u"textBrowser_66")
-        sizePolicy2.setHeightForWidth(self.textBrowser_66.sizePolicy().hasHeightForWidth())
-        self.textBrowser_66.setSizePolicy(sizePolicy2)
-        self.textBrowser_66.setMinimumSize(QSize(97, 0))
-        self.textBrowser_66.setMaximumSize(QSize(16777215, 40))
-
-        self.gridLayout_8.addWidget(self.textBrowser_66, 5, 1, 1, 1)
-
-        self.verticalSpacer = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
-
-        self.gridLayout_8.addItem(self.verticalSpacer, 6, 0, 1, 2)
 
 
         self.gridLayout_7.addWidget(self.frame_11, 0, 0, 1, 1)
@@ -1011,11 +1069,453 @@ class Ui_MainWindow(object):
         self.page_3 = QWidget()
         self.page_3.setObjectName(u"page_3")
         self.page_3.setStyleSheet(u"/* ===== QComboBox: \u043f\u043e\u043b\u043d\u044b\u0439 \u0441\u0442\u0438\u043b\u044c \u0431\u0435\u0437 \u0440\u0435\u0441\u0443\u0440\u0441\u043e\u0432 ===== */\n"
+"QFrame#qt_combo_box_popup {\n"
+"    background: transparent;   /* \u2190 \u0444\u043e\u043d \u043f\u043e\u043b\u043d\u043e\u0441\u0442\u044c\u044e \u201c\u0434\u044b\u0440\u044f\u0432\u044b\u0439\u201d */\n"
+"    border: none;\n"
+"    border-radius: 12px;\n"
+"}\n"
+"\n"
+"\n"
+"/* \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 \u0432\u0435\u0440\u0442\u0438\u043a\u0430\u043b\u044c\u043d\u044b\u0439 \u0441\u043a\u0440\u043e\u043b\u043b\u0431\u0430\u0440 \u0432\u043d\u0443\u0442\u0440\u0438 \u0432\u044b\u043f\u0430\u0434\u0430\u044e\u0449\u0435\u0433\u043e \u0441\u043f\u0438\u0441\u043a\u0430 \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 */\n"
+"QComboBox QAbstractItemView QScrollBar:vertical {\n"
+"    width: 12px;               /* \u0442\u043e\u043b\u0449\u0438\u043d\u0430 \u0432\u0441\u0435\u0439 \u043f\u043e\u043b\u043e"
+                        "\u0441\u044b \u043f\u0440\u043e\u043a\u0440\u0443\u0442\u043a\u0438          */\n"
+"    margin: 0px 0px 0px 0;     /* \u043b\u0451\u0433\u043a\u0438\u0439 \u043e\u0442\u0441\u0442\u0443\u043f \u043e\u0442 \u043f\u0440\u0430\u0432\u043e\u0439 \u0433\u0440\u0430\u043d\u0438 \u0441\u043f\u0438\u0441\u043a\u0430   */\n"
+"    background: #ffffff;   /* \u2190 \u0443\u0431\u0438\u0440\u0430\u0435\u043c \u0444\u043e\u043d \u0441\u0430\u043c\u043e\u0439 \u043f\u043e\u043b\u043e\u0441\u044b             */\n"
+"    border: none;              /* \u0438 \u0440\u0430\u043c\u043a\u0443, \u043a\u043e\u0442\u043e\u0440\u0443\u044e Qt \u0440\u0438\u0441\u0443\u0435\u0442 \u043f\u043e \u0443\u043c\u043e\u043b\u0447\u0430\u043d\u0438\u044e*/\n"
+"}\n"
+"\n"
+"/* track (\u043a\u043e\u043b\u0435\u044f). \u0414\u0435\u043b\u0430\u0435\u043c \u0435\u0451 \u043d\u0435\u0432\u0438\u0434\u0438\u043c\u043e\u0439 \u2014 \u043e\u0441\u0442\u0430\u0451\u0442\u0441\u044f \u00ab\u043f\u0443\u0441\u0442\u043e\u0435 \u043c\u0435\u0441\u0442\u043e\u00bb"
+                        " */\n"
+"QComboBox QAbstractItemView QScrollBar::groove:vertical {\n"
+"    background: #ffffff;   /* \u043d\u0438\u043a\u0430\u043a\u043e\u0433\u043e \u0446\u0432\u0435\u0442\u0430                         */\n"
+"    border: none;\n"
+"    margin: 0;                 /* \u0432\u0430\u0436\u043d\u043e! \u0443\u0431\u0438\u0440\u0430\u0435\u0442 \u0432\u043d\u0443\u0442\u0440\u0435\u043d\u043d\u0438\u0435 \u00ab\u043f\u043e\u043b\u044f\u00bb Qt    */\n"
+"}\n"
+"\n"
+"/* \u043f\u0443\u0441\u0442\u044b\u0435 \u0443\u0447\u0430\u0441\u0442\u043a\u0438 \u043d\u0430\u0434 \u0438 \u043f\u043e\u0434 \u043f\u043e\u043b\u0437\u0443\u043d\u043a\u043e\u043c \u2014 \u0442\u043e\u0436\u0435 \u0432 \u043d\u043e\u043b\u044c */\n"
+"QComboBox QAbstractItemView QScrollBar::add-page:vertical,\n"
+"QComboBox QAbstractItemView QScrollBar::sub-page:vertical {\n"
+"    background: #ffffff;\n"
+"    border: none;\n"
+"}\n"
+"\n"
+"/* \u0441\u0430\u043c \u043f\u043e\u043b\u0437\u0443\u043d\u043e\u043a (\u00ab\u043e\u0432\u0430\u043b\u00bb) --------"
+                        "-----------------------------------------*/\n"
+"QComboBox QAbstractItemView QScrollBar::handle:vertical {\n"
+"    background: #808080;       /* \u0446\u0432\u0435\u0442 \u00ab\u0442\u0430\u0431\u043b\u0435\u0442\u043a\u0438\u00bb                        */\n"
+"    border-radius: 999px;        /* \u0441\u043a\u0440\u0443\u0433\u043b\u044f\u0435\u043c \u043a\u0440\u0430\u044f \u043f\u043e \u043f\u043e\u043b\u043d\u043e\u0439               */\n"
+"    min-height: 24px;          /* \u0447\u0442\u043e\u0431\u044b \u043d\u0435 \u0438\u0441\u0447\u0435\u0437\u0430\u043b \u043f\u0440\u0438 \u043c\u0430\u043b\u0435\u043d\u044c\u043a\u043e\u043c \u043a\u043e\u043d\u0442\u0435\u043d\u0442\u0435*/\n"
+"    margin: 2px;               /* \u0437\u0430\u0437\u043e\u0440 \u043e\u0442 \u0433\u0440\u0430\u043d\u0438\u0446 \u0431\u0430\u0440\u0430                   */\n"
+"}\n"
+"\n"
+"QComboBox QAbstractItemView QScrollBar::sub-line:vertical,   /* \u0432\u0435\u0440\u0445\u043d\u044f\u044f  */\n"
+"QComboBox QAbstractItemView QScrollBa"
+                        "r::add-line:vertical {  /* \u043d\u0438\u0436\u043d\u044f\u044f   */\n"
+"    height: 0px;                /* \u0443\u0431\u0438\u0440\u0430\u0435\u043c \u0432\u0438\u0434\u0438\u043c\u0443\u044e \u0447\u0430\u0441\u0442\u044c      */\n"
+"    width:  0px;\n"
+"    border: none;\n"
+"    background: #ffffff;\n"
+"    subcontrol-origin: margin;  /* \u0447\u0442\u043e\u0431\u044b \u043d\u0435 \u0437\u0430\u043d\u0438\u043c\u0430\u043b\u0438 \u043c\u0435\u0441\u0442\u043e    */\n"
+"}\n"
+"\n"
+"/* \u2500\u2500 \u0435\u0441\u043b\u0438 \u0432\u0434\u0440\u0443\u0433 \u043f\u043e\u044f\u0432\u0438\u0442\u0441\u044f \u0433\u043e\u0440\u0438\u0437\u043e\u043d\u0442\u0430\u043b\u044c\u043d\u044b\u0439 \u0441\u043a\u0440\u043e\u043b\u043b\u0431\u0430\u0440 \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500*/\n"
+"QComboBox QAbstractItemView QScrollBar::sub-line:horizontal, /* \u043b\u0435\u0432\u0430\u044f    */\n"
+"QComboBox QAbstractItemView QScrollBa"
+                        "r::add-line:horizontal { /* \u043f\u0440\u0430\u0432\u0430\u044f  */\n"
+"    width:  0px;\n"
+"    height: 0px;\n"
+"    border: none;\n"
+"    background: #ffffff;\n"
+"    subcontrol-origin: margin;\n"
+"}\n"
+"\n"
+"/* \u041e\u0421\u041d\u041e\u0412\u041d\u041e\u0415 \u041f\u041e\u041b\u0415 -----------------------------------------------------------*/\n"
+"QComboBox {\n"
+"    border: 1px solid #b4b4b4;\n"
+"    border-radius: 12px;\n"
+"    padding: 4px 40px 4px 12px;   /* \u043c\u0435\u0441\u0442\u043e \u043f\u043e\u0434 \u0441\u0442\u0440\u0435\u043b\u043a\u0443 \u0441\u043f\u0440\u0430\u0432\u0430 */\n"
+"    background: #f4f4f4;\n"
+"    min-height: 60px;             /* \u0447\u0442\u043e\u0431\u044b \u043d\u0435 \u0441\u043f\u043b\u044e\u0449\u0438\u0432\u0430\u043b\u0441\u044f */\n"
+"combobox-popup: 0;   \n"
+"}\n"
+"\n"
+"/* \u041a\u041d\u041e\u041f\u041a\u0410 \u0412\u042b\u041f\u0410\u0414\u0410\u041d\u0418\u042f (\u043f\u0440\u0430\u0432\u044b\u0439 \u0441\u0435\u0433\u043c\u0435\u043d\u0442) ------------------"
+                        "--------------------*/\n"
+"QComboBox::drop-down {\n"
+"    subcontrol-origin: padding;\n"
+"    subcontrol-position: top right;\n"
+"    width: 32px;\n"
+"    border-left: 1px solid #b4b4b4;\n"
+"    border-top-right-radius: 12px;\n"
+"    border-bottom-right-radius: 12px;\n"
+"    background: #e2e2e2;\n"
+"}\n"
+"\n"
+"QComboBox::drop-down { \n"
+"    background: #808080;   /* \u0432\u0440\u0435\u043c\u0435\u043d\u043d\u043e! */\n"
+"}\n"
+"\n"
+"/* \u0421\u0422\u0420\u0415\u041b\u041a\u0410 ----------------------------------------------------------------*/\n"
+"QComboBox::down-arrow {\n"
+"image: url(\":/icon/arrow_drop_down_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24.png\");\n"
+"    width: 24px;      /* \u043f\u043e\u0434\u0433\u043e\u043d\u0438 \u043f\u043e\u0434 \u0440\u0435\u0430\u043b\u044c\u043d\u044b\u0439 \u0440\u0430\u0437\u043c\u0435\u0440 PNG */\n"
+"    height: 24px;\n"
+"    margin: 0 auto;   /* \u043f\u043e \u0446\u0435\u043d\u0442\u0440\u0443 \u043a\u043d\u043e\u043f\u043a\u0438 drop\u2011down */\n"
+"    border: non"
+                        "e;     /* \u0433\u043b\u0443\u0448\u0438\u043c \u0432\u0441\u044f\u043a\u0438\u0435 \u0441\u0442\u0430\u0440\u044b\u0435 \u0433\u0440\u0430\u043d\u0438\u0446\u044b */\n"
+"}\n"
+"\n"
+"/* \u041f\u043e\u0432\u043e\u0440\u043e\u0442 \u043f\u0440\u0438 \u0440\u0430\u0441\u043a\u0440\u044b\u0442\u0438\u0438 --------------------------------------------------*/\n"
+"QComboBox::down-arrow:on {\n"
+"    transform: rotate(180deg);\n"
+"}\n"
+"\n"
+"\n"
+"\n"
+"\n"
+"\n"
+"/* \u0425\u041e\u0412\u0415\u0420/\u0424\u041e\u041a\u0423\u0421 -------------------------------------------------------------*/\n"
+"QComboBox:hover { background: #f9f9f9; }\n"
+"\n"
+"QComboBox:focus {\n"
+"    border: 1px solid #7aa9ff;\n"
+"    outline: none;\n"
+"}\n"
+"\n"
+"/* \u0412\u042b\u041f\u0410\u0414\u0410\u042e\u0429\u0418\u0419 \u0421\u041f\u0418\u0421\u041e\u041a -----------------------------------------------------*/\n"
+"QComboBox QAbstractItemView {\n"
+"    /* \u0442\u043e\u0442 \u0436\u0435 \u0440\u0430\u0434\u0438\u0443\u0441, \u0447\u0442\u043e \u0443"
+                        " \u043f\u043e\u043b\u044f */\n"
+"    border: 1px solid #c8c8c8;\n"
+"    border-radius: 12px;\n"
+"    padding: 4px;                       /* \u043b\u0451\u0433\u043a\u0438\u0439 \u00ab\u043e\u0442\u0441\u0442\u0443\u043f-\u0440\u0430\u043c\u043a\u0430\u00bb \u0432\u043d\u0443\u0442\u0440\u0438 */\n"
+"    background: #FFFFFF;\n"
+"\n"
+"    /* \u043e\u0442\u043a\u043b\u044e\u0447\u0430\u0435\u043c \u0441\u0442\u0430\u043d\u0434\u0430\u0440\u0442\u043d\u044b\u0439 dotted focus-rectangle */\n"
+"    outline: 0;                         /* Qt >5.12 \u043f\u043e\u043d\u0438\u043c\u0430\u0435\u0442 outline */\n"
+"    /* \u0435\u0441\u043b\u0438 outline \u043d\u0435 \u0440\u0430\u0431\u043e\u0442\u0430\u0435\u0442 \u0432 \u0432\u0430\u0448\u0435\u0439 \u0432\u0435\u0440\u0441\u0438\u0438:\n"
+"       border: none; */\n"
+"}\n"
+"\n"
+"\n"
+"QComboBox QAbstractItemView::viewport {\n"
+"    border-radius: 8px;\n"
+"    background: transparent;\n"
+"}\n"
+"\n"
+"/* \u0441\u0442\u0440\u043e\u043a\u0438 \u0432\u043d\u0443\u0442\u0440\u0438"
+                        " \u0441\u043f\u0438\u0441\u043a\u0430 */\n"
+"QComboBox QAbstractItemView::item {\n"
+"    padding: 6px 12px;\n"
+"    border-radius: 6px;                 /* \u043b\u0451\u0433\u043a\u043e\u0435 \u0441\u043a\u0440\u0443\u0433\u043b\u0435\u043d\u0438\u0435 hover/selected */\n"
+"}\n"
+"\n"
+"/* \u043f\u043e\u0434\u0441\u0432\u0435\u0442\u043a\u0430 \u043d\u0430\u0432\u0435\u0434\u0435\u043d\u0438\u044f  */\n"
+"QComboBox QAbstractItemView::item:hover {\n"
+"    background: #f0f0f0;\n"
+"}\n"
+"\n"
+"/* \u0432\u044b\u0431\u0440\u0430\u043d\u043d\u044b\u0439 \u044d\u043b\u0435\u043c\u0435\u043d\u0442 (\u0431\u0435\u0437 \u043f\u0443\u043d\u043a\u0442\u0438\u0440\u0430!) */\n"
+"QComboBox QAbstractItemView::item:selected {\n"
+"    background: #2d97ff;                /* \u043f\u0440\u0438\u043c\u0435\u0440 \u0430\u043a\u0442\u0438\u0432\u043d\u043e\u0433\u043e \u0446\u0432\u0435\u0442\u0430 */\n"
+"    color: #ffffff;\n"
+"    outline: 0;                         /* \u0441\u0442\u0440\u0430\u0445\u043e\u0432\u043a\u0430 */\n"
+"  "
+                        "  /* \u0438\u043b\u0438 border: none;  -> \u0435\u0441\u043b\u0438 outline \u043d\u0435 \u043f\u043e\u0434\u0434\u0435\u0440\u0436\u0438\u0432\u0430\u0435\u0442\u0441\u044f */\n"
+"}\n"
+"\n"
+"/* \u041e\u0444\u043e\u0440\u043c\u043b\u0435\u043d\u0438\u0435 \u0442\u0435\u043a\u0441\u0442\u0430 \u0438 \u0440\u0430\u043c\u043a\u0438 \u0434\u043b\u044f QLabel \u0438 QTextBrowser */\n"
+"QLabel,\n"
+"QTextBrowser {\n"
+"    color: white;                    /* \u0446\u0432\u0435\u0442 \u0448\u0440\u0438\u0444\u0442\u0430 */\n"
+"    border-radius: 10px;             /* \u0441\u043a\u0440\u0443\u0433\u043b\u0435\u043d\u0438\u0435 \u0443\u0433\u043b\u043e\u0432 \u0440\u0430\u043c\u043a\u0438 */\n"
+"    padding: 6px;                    /* \u0432\u043d\u0443\u0442\u0440\u0435\u043d\u043d\u0438\u0435 \u043e\u0442\u0441\u0442\u0443\u043f\u044b */\n"
+"border: 2px solid #909090; \n"
+"}\n"
+"\n"
+"\n"
+"/* \u041d\u043e\u0440\u043c\u0430\u043b\u044c\u043d\u043e\u0435 \u0441\u043e\u0441\u0442\u043e\u044f\u043d\u0438\u0435 */\n"
+"QPushBu"
+                        "tton {\n"
+"    background-color: #404040;        /* \u0437\u0430\u043b\u0438\u0432\u043a\u0430 */\n"
+"    color: white;                     /* \u0446\u0432\u0435\u0442 \u0442\u0435\u043a\u0441\u0442\u0430 */\n"
+"    border: 2px solid #909090;        /* \u0442\u043e\u043b\u0449\u0438\u043d\u0430 \u0438 \u0446\u0432\u0435\u0442 \u043e\u0431\u0432\u043e\u0434\u043a\u0438 */\n"
+"    border-radius: 12px;              /* \u0440\u0430\u0434\u0438\u0443\u0441 \u0441\u043a\u0440\u0443\u0433\u043b\u0435\u043d\u0438\u044f */\n"
+"    padding: 6px 12px;                /* \u00ab\u0432\u043e\u0437\u0434\u0443\u0445\u00bb \u0432\u043d\u0443\u0442\u0440\u0438 */\n"
+"}\n"
+"\n"
+"/* \u041a\u0443\u0440\u0441\u043e\u0440 \u043d\u0430\u0432\u0435\u0434\u0451\u043d */\n"
+"QPushButton:hover {\n"
+"    background-color: #505050;\n"
+"    border-color: #707070;\n"
+"}\n"
+"\n"
+"/* \u041a\u043d\u043e\u043f\u043a\u0430 \u043d\u0430\u0436\u0430\u0442\u0430 (\u0443\u0434\u0435\u0440\u0436\u0438\u0432\u0430\u0435\u0442\u0441\u044f) */\n"
+"QPushB"
+                        "utton:pressed {\n"
+"    background-color: #909090;\n"
+"    border-color: #909090;\n"
+"}\n"
+"\n"
+"/* QLabel \u0438\u043b\u0438 QTextBrowser */\n"
+"QLabel, QTextBrowser {\n"
+"    border: 2px solid #909090;   /* \u0442\u043e\u043b\u0449\u0438\u043d\u0430 \u0438 \u0446\u0432\u0435\u0442 */\n"
+"    border-radius: 10px;         /* \u0441\u043a\u0440\u0443\u0433\u043b\u0435\u043d\u0438\u0435 */\n"
+"    padding: 6px;                /* \u0432\u043d\u0443\u0442\u0440\u0435\u043d\u043d\u0438\u0435 \u043e\u0442\u0441\u0442\u0443\u043f\u044b */\n"
+"    color: white;              /* \u0446\u0432\u0435\u0442 \u0448\u0440\u0438\u0444\u0442\u0430 */\n"
+"}\n"
+"\n"
+"/* ===== QSpinBox \u2014 \u0441\u0442\u0438\u043b\u044c \u043f\u043e\u0434 QComboBox (\u043a\u0430\u0436\u0434\u044b\u0439 \u043f\u0430\u0440\u0430\u043c\u0435\u0442\u0440 \u043f\u043e\u0434\u043f\u0438\u0441\u0430\u043d) ===== */\n"
+"\n"
+"/* \u041e\u0421\u041d\u041e\u0412\u041d\u041e\u0415 \u041f\u041e\u041b\u0415 ----------------------------------------------------"
+                        "-----*/\n"
+"QSpinBox {\n"
+"    border: 1px solid #b4b4b4;                 /* \u0432\u043d\u0435\u0448\u043d\u044f\u044f \u0440\u0430\u043c\u043a\u0430 \u0432\u0438\u0434\u0436\u0435\u0442\u0430        */\n"
+"    border-radius: 12px;                       /* \u0441\u043a\u0440\u0443\u0433\u043b\u0435\u043d\u0438\u0435 \u0432\u0441\u0435\u0445 \u0443\u0433\u043b\u043e\u0432        */\n"
+"\n"
+"    padding-left: 12px;                        /* \u043e\u0442\u0441\u0442\u0443\u043f \u0442\u0435\u043a\u0441\u0442\u0430 \u0441\u043b\u0435\u0432\u0430          */\n"
+"    padding-right: 40px;                       /* \u0440\u0435\u0437\u0435\u0440\u0432 \u043f\u043e\u0434 \u0431\u043b\u043e\u043a \u0441\u0442\u0440\u0435\u043b\u043e\u043a      */\n"
+"    background: #f4f4f4;                       /* \u0444\u043e\u043d \u043f\u043e\u043b\u044f \u0432\u0432\u043e\u0434\u0430               */\n"
+"    min-height: 60px;                          /* \u043c\u0438\u043d\u0438\u043c\u0430\u043b\u044c\u043d\u0430\u044f \u0432\u044b"
+                        "\u0441\u043e\u0442\u0430 \u043a\u043e\u043d\u0442\u0440\u043e\u043b\u0430  */\n"
+"    color: black;                              /* \u0446\u0432\u0435\u0442 \u0432\u0432\u0435\u0434\u0451\u043d\u043d\u043e\u0433\u043e \u0442\u0435\u043a\u0441\u0442\u0430       */\n"
+"\n"
+"    outline: none;                             /* \u0443\u0431\u0438\u0440\u0430\u0435\u043c \u0441\u0442\u0430\u043d\u0434\u0430\u0440\u0442\u043d\u044b\u0439 \u043f\u0443\u043d\u043a\u0442\u0438p  */\n"
+"}\n"
+"\n"
+"/* \u0411\u041b\u041e\u041a \u0421\u0422\u0420\u0415\u041b\u041e\u041a ----------------------------------------------------------*/\n"
+"/* \u043e\u0431\u0449\u0438\u0435 \u043f\u0430\u0440\u0430\u043c\u0435\u0442\u0440\u044b \u0434\u043b\u044f \u043e\u0431\u0435\u0438\u0445 \u043f\u043e\u043b\u043e\u0432\u0438\u043d\u043e\u043a \u0431\u043b\u043e\u043a\u0430 */\n"
+"QSpinBox::up-button,\n"
+"QSpinBox::down-button {\n"
+"    subcontrol-origin: padding;                /* \u043a\u043e\u043e\u0440\u0434\u0438\u043d\u0430\u0442\u044b \u043e"
+                        "\u0442 padding-box    */\n"
+"    width: 32px;                               /* \u0448\u0438\u0440\u0438\u043d\u0430 \u0441\u0435\u0433\u043c\u0435\u043d\u0442\u0430 \u0441\u043e \u0441\u0442\u0440\u0435\u043b\u043a\u0430\u043c\u0438 */\n"
+"    border-left: 1px solid #b4b4b4;            /* \u043b\u0438\u043d\u0438\u044f-\u0440\u0430\u0437\u0434\u0435\u043b\u0438\u0442\u0435\u043b\u044c \u0441\u043b\u0435\u0432\u0430      */\n"
+"    background: #808080;                       /* \u0444\u043e\u043d \u0431\u043b\u043e\u043a\u0430 \u0441\u0442\u0440\u0435\u043b\u043e\u043a            */\n"
+"}\n"
+"\n"
+"/* \u2193 \u043d\u0438\u0436\u043d\u044f\u044f \u043f\u043e\u043b\u043e\u0432\u0438\u043d\u0430 \u0431\u043b\u043e\u043a\u0430 \u0441\u0442\u0440\u0435\u043b\u043e\u043a --------------------------------------*/\n"
+"QSpinBox::down-button {\n"
+"    subcontrol-position: bottom right;         /* \u043f\u0440\u0438\u0432\u044f\u0437\u043a\u0430 \u043a \u043f\u0440\u0430\u0432\u043e\u043c\u0443-\u043d\u0438\u0436\u043d\u0435"
+                        "\u043c\u0443   */\n"
+"    height: 30%;                               /* \u0437\u0430\u043d\u0438\u043c\u0430\u0435\u043c \u043e\u0441\u0442\u0430\u0432\u0448\u0438\u0435\u0441\u044f 50 %     */\n"
+"    border-bottom-right-radius: 12px;          /* \u0441\u043a\u0440\u0443\u0433\u043b\u044f\u0435\u043c \u0422\u041e\u041b\u042c\u041a\u041e \u043d\u0438\u0437-\u043f\u0440\u0430\u0432.   */\n"
+"}\n"
+"\n"
+"\n"
+"/* \u2191 \u0432\u0435\u0440\u0445\u043d\u044f\u044f \u043f\u043e\u043b\u043e\u0432\u0438\u043d\u0430 \u0431\u043b\u043e\u043a\u0430 \u0441\u0442\u0440\u0435\u043b\u043e\u043a -------------------------------------*/\n"
+"QSpinBox::up-button {\n"
+"    subcontrol-position: top right;            /* \u043f\u0440\u0438\u0432\u044f\u0437\u043a\u0430 \u043a \u043f\u0440\u0430\u0432\u043e\u043c\u0443-\u0432\u0435\u0440\u0445\u043d\u0435\u043c\u0443  */\n"
+"    height: 30%;                               /* \u0437\u0430\u043d\u0438\u043c\u0430\u0435\u043c \u0440\u043e\u0432\u043d\u043e \u043f\u043e\u043b\u043e\u0432\u0438"
+                        "\u043d\u0443 \u0432\u044b\u0441. */\n"
+"    border-top-right-radius: 12px;             /* \u0441\u043a\u0440\u0443\u0433\u043b\u044f\u0435\u043c \u0422\u041e\u041b\u042c\u041a\u041e \u0432\u0435\u0440\u0445-\u043f\u0440\u0430\u0432.  */\n"
+"}\n"
+"\n"
+"/* \u0432\u0438\u0437\u0443\u0430\u043b\u044c\u043d\u044b\u0439 \u043e\u0442\u043a\u043b\u0438\u043a \u043f\u0440\u0438 \u043d\u0430\u0436\u0430\u0442\u0438\u0438 ----------------------------------------*/\n"
+"QSpinBox::up-button:pressed,\n"
+"QSpinBox::down-button:pressed {\n"
+"    background: #6d6d6d;                       /* \u0437\u0430\u0442\u0435\u043c\u043d\u044f\u0435\u043c \u0444\u043e\u043d \u043d\u0430 \u0432\u0440\u0435\u043c\u044f \u043a\u043b\u0438\u043a\u0430 */\n"
+"}\n"
+"\n"
+"/* \u0421\u0422\u0420\u0415\u041b\u041a\u0418 (\u0438\u043a\u043e\u043d\u043a\u0438) ------------------------------------------------------*/\n"
+"QSpinBox::up-arrow {\n"
+"    image: url(\":/icon/arrow_drop_up_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24.png\"); /* PNG/SVG \u2193 */\n"
+""
+                        "    width: 24px; height: 24px;                 /* \u0433\u0430\u0431\u0430\u0440\u0438\u0442\u044b \u0438\u043a\u043e\u043d\u043a\u0438              */\n"
+"    margin: 0 auto;                            /* \u0446\u0435\u043d\u0442\u0440\u0438\u0440\u0443\u0435\u043c \u0432 \u0431\u043b\u043e\u043a\u0435           */\n"
+"	transform: rotate(180deg);\n"
+"}\n"
+"\n"
+"QSpinBox::down-arrow {\n"
+"    image: url(\":/icon/arrow_drop_down_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24.png\"); /* PNG/SVG \u2193 */\n"
+"    width: 24px; height: 24px;                 /* \u0433\u0430\u0431\u0430\u0440\u0438\u0442\u044b \u0438\u043a\u043e\u043d\u043a\u0438              */\n"
+"    margin: 0 auto;                            /* \u0446\u0435\u043d\u0442\u0440\u0438\u0440\u0443\u0435\u043c \u0432 \u0431\u043b\u043e\u043a\u0435           */\n"
+"}\n"
+"\n"
+"\n"
+"/* \u043e\u0442\u043a\u043b\u044e\u0447\u0430\u0435\u043c \u043a\u043d\u043e\u043f\u043a\u0438 \u0438 \u0438\u043a\u043e\u043d\u043a\u0438 \u043f\u0440\u0438 \u0434\u043e\u0441\u0442\u0438"
+                        "\u0436\u0435\u043d\u0438\u0438 min/max ---------------------*/\n"
+"QSpinBox::up-button:disabled,\n"
+"QSpinBox::down-button:disabled {\n"
+"    background: #c8c8c8;                       /* \u0442\u0443\u0441\u043a\u043b\u044b\u0439 \u0444\u043e\u043d \u2014 \u043a\u043d\u043e\u043f\u043a\u0430 \u043d\u0435\u0430\u043a\u0442\u0438\u0432 */\n"
+"}\n"
+"\n"
+"QSpinBox::up-arrow:disabled,\n"
+"QSpinBox::down-arrow:disabled {\n"
+"    image: none;                               /* \u043f\u0440\u044f\u0447\u0435\u043c \u0438\u043a\u043e\u043d\u043a\u0443 \u0443 \u043d\u0435\u0430\u043a\u0442\u0438\u0432\u043d\u043e\u0439   */\n"
+"}\n"
+"\n"
+"/* \u0425\u041e\u0412\u0415\u0420 / \u0424\u041e\u041a\u0423\u0421 ---------------------------------------------------------*/\n"
+"QSpinBox:hover  { background: #f9f9f9; }       /* \u043b\u0451\u0433\u043a\u043e\u0435 \u0432\u044b\u0441\u0432\u0435\u0442\u043b\u0435\u043d\u0438\u0435 \u043f\u0440\u0438 \u0445\u043e\u0432\u0435\u0440\u0435*/\n"
+"QSpinBox:focus  { border: 1px solid #7aa9f"
+                        "f; } /* \u0441\u0438\u043d\u044f\u044f \u0440\u0430\u043c\u043a\u0430 \u043f\u0440\u0438 \u0444\u043e\u043a\u0443\u0441\u0435       */\n"
+"\n"
+"/* \u041e\u0422\u041a\u041b\u042e\u0427\u0401\u041d\u041d\u041e\u0415 \u0421\u041e\u0421\u0422\u041e\u042f\u041d\u0418\u0415 -------------------------------------------------*/\n"
+"QSpinBox:disabled {\n"
+"    color: #8f8f8f;                            /* \u043f\u0440\u0438\u0433\u043b\u0443\u0448\u0430\u0435\u043c \u0442\u0435\u043a\u0441\u0442             */\n"
+"    background: #e0e0e0;                       /* \u0438 \u0444\u043e\u043d \u0432\u0441\u0435\u0433\u043e \u0432\u0438\u0434\u0436\u0435\u0442\u0430          */\n"
+"}\n"
+"\n"
+"")
+        self.gridLayout_2 = QGridLayout(self.page_3)
+        self.gridLayout_2.setObjectName(u"gridLayout_2")
+        self.frame_7 = QFrame(self.page_3)
+        self.frame_7.setObjectName(u"frame_7")
+        self.frame_7.setFrameShape(QFrame.Shape.StyledPanel)
+        self.frame_7.setFrameShadow(QFrame.Shadow.Raised)
+
+        self.gridLayout_2.addWidget(self.frame_7, 6, 0, 1, 1)
+
+        self.comboBox_2 = QComboBox(self.page_3)
+        self.comboBox_2.addItem("")
+        self.comboBox_2.addItem("")
+        self.comboBox_2.setObjectName(u"comboBox_2")
+        sizePolicy5 = QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Maximum)
+        sizePolicy5.setHorizontalStretch(0)
+        sizePolicy5.setVerticalStretch(0)
+        sizePolicy5.setHeightForWidth(self.comboBox_2.sizePolicy().hasHeightForWidth())
+        self.comboBox_2.setSizePolicy(sizePolicy5)
+        self.comboBox_2.setMinimumSize(QSize(0, 70))
+        self.comboBox_2.setFont(font)
+        self.comboBox_2.setLayoutDirection(Qt.LayoutDirection.LeftToRight)
+
+        self.gridLayout_2.addWidget(self.comboBox_2, 2, 1, 1, 1)
+
+        self.frame_8 = QFrame(self.page_3)
+        self.frame_8.setObjectName(u"frame_8")
+        self.frame_8.setMinimumSize(QSize(400, 60))
+        self.frame_8.setFrameShape(QFrame.Shape.StyledPanel)
+        self.frame_8.setFrameShadow(QFrame.Shadow.Raised)
+
+        self.gridLayout_2.addWidget(self.frame_8, 6, 1, 1, 1)
+
+        self.spinBox = QSpinBox(self.page_3)
+        self.spinBox.setObjectName(u"spinBox")
+        sizePolicy6 = QSizePolicy(QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Maximum)
+        sizePolicy6.setHorizontalStretch(0)
+        sizePolicy6.setVerticalStretch(0)
+        sizePolicy6.setHeightForWidth(self.spinBox.sizePolicy().hasHeightForWidth())
+        self.spinBox.setSizePolicy(sizePolicy6)
+        self.spinBox.setMinimumSize(QSize(0, 62))
+        self.spinBox.setFont(font)
+        self.spinBox.setLayoutDirection(Qt.LayoutDirection.LeftToRight)
+        self.spinBox.setStyleSheet(u"")
+
+        self.gridLayout_2.addWidget(self.spinBox, 5, 1, 1, 1)
+
+        self.textBrowser_5 = QTextBrowser(self.page_3)
+        self.textBrowser_5.setObjectName(u"textBrowser_5")
+
+        self.gridLayout_2.addWidget(self.textBrowser_5, 1, 0, 1, 1)
+
+        self.pushButton_3 = QPushButton(self.page_3)
+        self.pushButton_3.setObjectName(u"pushButton_3")
+        sizePolicy6.setHeightForWidth(self.pushButton_3.sizePolicy().hasHeightForWidth())
+        self.pushButton_3.setSizePolicy(sizePolicy6)
+        self.pushButton_3.setMinimumSize(QSize(0, 60))
+        self.pushButton_3.setFont(font)
+
+        self.gridLayout_2.addWidget(self.pushButton_3, 7, 1, 1, 1)
+
+        self.textBrowser_9 = QTextBrowser(self.page_3)
+        self.textBrowser_9.setObjectName(u"textBrowser_9")
+
+        self.gridLayout_2.addWidget(self.textBrowser_9, 2, 0, 1, 1)
+
+        self.comboBox = QComboBox(self.page_3)
+        self.comboBox.addItem("")
+        self.comboBox.addItem("")
+        self.comboBox.addItem("")
+        self.comboBox.addItem("")
+        self.comboBox.addItem("")
+        self.comboBox.addItem("")
+        self.comboBox.addItem("")
+        self.comboBox.addItem("")
+        self.comboBox.addItem("")
+        self.comboBox.addItem("")
+        self.comboBox.addItem("")
+        self.comboBox.addItem("")
+        self.comboBox.addItem("")
+        self.comboBox.addItem("")
+        self.comboBox.addItem("")
+        self.comboBox.setObjectName(u"comboBox")
+        sizePolicy5.setHeightForWidth(self.comboBox.sizePolicy().hasHeightForWidth())
+        self.comboBox.setSizePolicy(sizePolicy5)
+        self.comboBox.setMinimumSize(QSize(0, 70))
+        self.comboBox.setFont(font)
+        self.comboBox.setLayoutDirection(Qt.LayoutDirection.LeftToRight)
+        self.comboBox.setStyleSheet(u"QLabel { font-size: 14pt; }")
+
+        self.gridLayout_2.addWidget(self.comboBox, 1, 1, 1, 1)
+
+        self.comboBox_3 = QComboBox(self.page_3)
+        self.comboBox_3.addItem("")
+        self.comboBox_3.addItem("")
+        self.comboBox_3.setObjectName(u"comboBox_3")
+        sizePolicy5.setHeightForWidth(self.comboBox_3.sizePolicy().hasHeightForWidth())
+        self.comboBox_3.setSizePolicy(sizePolicy5)
+        self.comboBox_3.setMinimumSize(QSize(0, 70))
+        self.comboBox_3.setFont(font)
+        self.comboBox_3.setLayoutDirection(Qt.LayoutDirection.LeftToRight)
+
+        self.gridLayout_2.addWidget(self.comboBox_3, 4, 1, 1, 1)
+
+        self.comboBox_4 = QComboBox(self.page_3)
+        self.comboBox_4.addItem("")
+        self.comboBox_4.addItem("")
+        self.comboBox_4.addItem("")
+        self.comboBox_4.setObjectName(u"comboBox_4")
+        sizePolicy5.setHeightForWidth(self.comboBox_4.sizePolicy().hasHeightForWidth())
+        self.comboBox_4.setSizePolicy(sizePolicy5)
+        self.comboBox_4.setMinimumSize(QSize(0, 70))
+        self.comboBox_4.setFont(font)
+        self.comboBox_4.setLayoutDirection(Qt.LayoutDirection.LeftToRight)
+
+        self.gridLayout_2.addWidget(self.comboBox_4, 3, 1, 1, 1)
+
+        self.textBrowser_7 = QTextBrowser(self.page_3)
+        self.textBrowser_7.setObjectName(u"textBrowser_7")
+
+        self.gridLayout_2.addWidget(self.textBrowser_7, 3, 0, 1, 1)
+
+        self.textBrowser_4 = QTextBrowser(self.page_3)
+        self.textBrowser_4.setObjectName(u"textBrowser_4")
+
+        self.gridLayout_2.addWidget(self.textBrowser_4, 0, 0, 1, 2)
+
+        self.textBrowser_8 = QTextBrowser(self.page_3)
+        self.textBrowser_8.setObjectName(u"textBrowser_8")
+
+        self.gridLayout_2.addWidget(self.textBrowser_8, 5, 0, 1, 1)
+
+        self.textBrowser_6 = QTextBrowser(self.page_3)
+        self.textBrowser_6.setObjectName(u"textBrowser_6")
+
+        self.gridLayout_2.addWidget(self.textBrowser_6, 4, 0, 1, 1)
+
+        self.pushButton_11 = QPushButton(self.page_3)
+        self.pushButton_11.setObjectName(u"pushButton_11")
+        sizePolicy6.setHeightForWidth(self.pushButton_11.sizePolicy().hasHeightForWidth())
+        self.pushButton_11.setSizePolicy(sizePolicy6)
+        self.pushButton_11.setMinimumSize(QSize(0, 60))
+        self.pushButton_11.setFont(font)
+
+        self.gridLayout_2.addWidget(self.pushButton_11, 7, 0, 1, 1)
+
+        self.stackedWidget.addWidget(self.page_3)
+        self.page_2 = QWidget()
+        self.page_2.setObjectName(u"page_2")
+        font1 = QFont()
+        font1.setFamilies([u"Noto Sans SC"])
+        font1.setBold(True)
+        self.page_2.setFont(font1)
+        self.page_2.setStyleSheet(u"/* ===== QComboBox: \u043f\u043e\u043b\u043d\u044b\u0439 \u0441\u0442\u0438\u043b\u044c \u0431\u0435\u0437 \u0440\u0435\u0441\u0443\u0440\u0441\u043e\u0432 ===== */\n"
 "\n"
 "/* --- \u043a\u043e\u043d\u0442\u0435\u0439\u043d\u0435\u0440 \u0432\u0441\u043f\u043b\u044b\u0432\u0430\u044e\u0449\u0435\u0433\u043e \u043e\u043a\u043d\u0430 (Qt-5/6) --- */\n"
 "QFrame#qt_combo_box_popup {      /* << \u043a\u043b\u044e\u0447\u0435\u0432\u0430\u044f \u0441\u0442\u0440\u043e\u0447\u043a\u0430 */\n"
 "    border: none;                /* \u0443\u0431\u0438\u0440\u0430\u0435\u043c \u0440\u0430\u043c\u043a\u0443 */\n"
-"    background: transparent;     /* \u0434\u0435\u043b\u0430\u0435\u043c \u043d\u0435\u0432\u0438\u0434\u0438\u043c\u043e\u0439 \u043a\u043e\u043d\u0442\u0435\u0439\u043d\u0435\u0440 */\n"
+"    background: 505050;     /* \u0438\u043b\u0438 #505050 \u043f\u043e\u0434 \u0444\u043e\u043d \u0444\u043e\u0440\u043c\u044b */\n"
 "}\n"
 "\n"
 "\n"
@@ -1083,13 +1583,19 @@ class Ui_MainWindow(object):
 "    border: 1px solid #c8c8c8;\n"
 "    border-radius: 12px;\n"
 "    padding: 4px;                       /* \u043b\u0451\u0433\u043a\u0438\u0439 \u00ab\u043e\u0442\u0441\u0442\u0443\u043f-\u0440\u0430\u043c\u043a\u0430\u00bb \u0432\u043d\u0443\u0442\u0440\u0438 */\n"
-"    background: transparent;\n"
+"    background: #FFFFFF;\n"
 "\n"
 "    /* \u043e\u0442\u043a\u043b\u044e\u0447\u0430\u0435\u043c \u0441\u0442\u0430\u043d\u0434\u0430\u0440\u0442\u043d\u044b"
                         "\u0439 dotted focus-rectangle */\n"
 "    outline: 0;                         /* Qt >5.12 \u043f\u043e\u043d\u0438\u043c\u0430\u0435\u0442 outline */\n"
 "    /* \u0435\u0441\u043b\u0438 outline \u043d\u0435 \u0440\u0430\u0431\u043e\u0442\u0430\u0435\u0442 \u0432 \u0432\u0430\u0448\u0435\u0439 \u0432\u0435\u0440\u0441\u0438\u0438:\n"
 "       border: none; */\n"
+"}\n"
+"\n"
+"\n"
+"QComboBox QAbstractItemView::viewport {\n"
+"    border-radius: 8px;\n"
+"    background: transparent;\n"
 "}\n"
 "\n"
 "/* \u0441\u0442\u0440\u043e\u043a\u0438 \u0432\u043d\u0443\u0442\u0440\u0438 \u0441\u043f\u0438\u0441\u043a\u0430 */\n"
@@ -1100,11 +1606,11 @@ class Ui_MainWindow(object):
 "\n"
 "/* \u043f\u043e\u0434\u0441\u0432\u0435\u0442\u043a\u0430 \u043d\u0430\u0432\u0435\u0434\u0435\u043d\u0438\u044f  */\n"
 "QComboBox QAbstractItemView::item:hover {\n"
-"    background: #f0f0f0;\n"
+" "
+                        "   background: #f0f0f0;\n"
 "}\n"
 "\n"
-"/* \u0432\u044b\u0431\u0440\u0430\u043d\u043d\u044b\u0439 \u044d\u043b\u0435\u043c"
-                        "\u0435\u043d\u0442 (\u0431\u0435\u0437 \u043f\u0443\u043d\u043a\u0442\u0438\u0440\u0430!) */\n"
+"/* \u0432\u044b\u0431\u0440\u0430\u043d\u043d\u044b\u0439 \u044d\u043b\u0435\u043c\u0435\u043d\u0442 (\u0431\u0435\u0437 \u043f\u0443\u043d\u043a\u0442\u0438\u0440\u0430!) */\n"
 "QComboBox QAbstractItemView::item:selected {\n"
 "    background: #2d97ff;                /* \u043f\u0440\u0438\u043c\u0435\u0440 \u0430\u043a\u0442\u0438\u0432\u043d\u043e\u0433\u043e \u0446\u0432\u0435\u0442\u0430 */\n"
 "    color: #ffffff;\n"
@@ -1115,9 +1621,9 @@ class Ui_MainWindow(object):
 "/* \u041e\u0444\u043e\u0440\u043c\u043b\u0435\u043d\u0438\u0435 \u0442\u0435\u043a\u0441\u0442\u0430 \u0438 \u0440\u0430\u043c\u043a\u0438 \u0434\u043b\u044f QLabel \u0438 QTextBrowser */\n"
 "QLabel,\n"
 "QTextBrowser {\n"
-"    color: white;                    /* \u0446\u0432\u0435\u0442 \u0448\u0440\u0438\u0444\u0442\u0430 */\n"
-"    border-radius: 10px;             /* \u0441\u043a"
-                        "\u0440\u0443\u0433\u043b\u0435\u043d\u0438\u0435 \u0443\u0433\u043b\u043e\u0432 \u0440\u0430\u043c\u043a\u0438 */\n"
+"    color: white;                    /* "
+                        "\u0446\u0432\u0435\u0442 \u0448\u0440\u0438\u0444\u0442\u0430 */\n"
+"    border-radius: 10px;             /* \u0441\u043a\u0440\u0443\u0433\u043b\u0435\u043d\u0438\u0435 \u0443\u0433\u043b\u043e\u0432 \u0440\u0430\u043c\u043a\u0438 */\n"
 "    padding: 6px;                    /* \u0432\u043d\u0443\u0442\u0440\u0435\u043d\u043d\u0438\u0435 \u043e\u0442\u0441\u0442\u0443\u043f\u044b */\n"
 "border: 2px solid #909090; \n"
 "}\n"
@@ -1128,9 +1634,9 @@ class Ui_MainWindow(object):
 "    background-color: #404040;        /* \u0437\u0430\u043b\u0438\u0432\u043a\u0430 */\n"
 "    color: white;                     /* \u0446\u0432\u0435\u0442 \u0442\u0435\u043a\u0441\u0442\u0430 */\n"
 "    border: 2px solid #909090;        /* \u0442\u043e\u043b\u0449\u0438\u043d\u0430 \u0438 \u0446\u0432\u0435\u0442 \u043e\u0431\u0432\u043e\u0434\u043a\u0438 */\n"
-"    border-radius: 12px;              /* \u0440\u0430\u0434\u0438\u0443\u0441 \u0441\u043a\u0440\u0443\u0433\u043b\u0435\u043d\u0438\u044f */\n"
-"    padding: 6px 12px;                /* \u00ab\u0432"
-                        "\u043e\u0437\u0434\u0443\u0445\u00bb \u0432\u043d\u0443\u0442\u0440\u0438 */\n"
+"    border-radius: 12px;              /* \u0440\u0430\u0434\u0438\u0443\u0441"
+                        " \u0441\u043a\u0440\u0443\u0433\u043b\u0435\u043d\u0438\u044f */\n"
+"    padding: 6px 12px;                /* \u00ab\u0432\u043e\u0437\u0434\u0443\u0445\u00bb \u0432\u043d\u0443\u0442\u0440\u0438 */\n"
 "}\n"
 "\n"
 "/* \u041a\u0443\u0440\u0441\u043e\u0440 \u043d\u0430\u0432\u0435\u0434\u0451\u043d */\n"
@@ -1149,9 +1655,9 @@ class Ui_MainWindow(object):
 "QLabel, QTextBrowser {\n"
 "    border: 2px solid #909090;   /* \u0442\u043e\u043b\u0449\u0438\u043d\u0430 \u0438 \u0446\u0432\u0435\u0442 */\n"
 "    border-radius: 10px;         /* \u0441\u043a\u0440\u0443\u0433\u043b\u0435\u043d\u0438\u0435 */\n"
-"    padding: 6px;                /* \u0432\u043d\u0443\u0442\u0440\u0435\u043d\u043d\u0438\u0435 \u043e\u0442\u0441\u0442\u0443\u043f\u044b */\n"
-"    color: white;              /* \u0446"
-                        "\u0432\u0435\u0442 \u0448\u0440\u0438\u0444\u0442\u0430 */\n"
+"    padding: 6px;                /* \u0432\u043d\u0443\u0442"
+                        "\u0440\u0435\u043d\u043d\u0438\u0435 \u043e\u0442\u0441\u0442\u0443\u043f\u044b */\n"
+"    color: white;              /* \u0446\u0432\u0435\u0442 \u0448\u0440\u0438\u0444\u0442\u0430 */\n"
 "}\n"
 "\n"
 "/* ===== QSpinBox \u2014 \u0441\u0442\u0438\u043b\u044c \u043f\u043e\u0434 QComboBox (\u043a\u0430\u0436\u0434\u044b\u0439 \u043f\u0430\u0440\u0430\u043c\u0435\u0442\u0440 \u043f\u043e\u0434\u043f\u0438\u0441\u0430\u043d) ===== */\n"
@@ -1161,26 +1667,26 @@ class Ui_MainWindow(object):
 "    border: 1px solid #b4b4b4;                 /* \u0432\u043d\u0435\u0448\u043d\u044f\u044f \u0440\u0430\u043c\u043a\u0430 \u0432\u0438\u0434\u0436\u0435\u0442\u0430        */\n"
 "    border-radius: 12px;                       /* \u0441\u043a\u0440\u0443\u0433\u043b\u0435\u043d\u0438\u0435 \u0432\u0441\u0435\u0445 \u0443\u0433\u043b\u043e\u0432        */\n"
 "\n"
-"    padding-left: 12px;                        /* \u043e\u0442\u0441\u0442\u0443\u043f \u0442\u0435\u043a\u0441\u0442\u0430 \u0441\u043b\u0435\u0432\u0430          */\n"
-"    padding-right"
-                        ": 40px;                       /* \u0440\u0435\u0437\u0435\u0440\u0432 \u043f\u043e\u0434 \u0431\u043b\u043e\u043a \u0441\u0442\u0440\u0435\u043b\u043e\u043a      */\n"
+"    padding-left: 12px;                        /* \u043e\u0442"
+                        "\u0441\u0442\u0443\u043f \u0442\u0435\u043a\u0441\u0442\u0430 \u0441\u043b\u0435\u0432\u0430          */\n"
+"    padding-right: 40px;                       /* \u0440\u0435\u0437\u0435\u0440\u0432 \u043f\u043e\u0434 \u0431\u043b\u043e\u043a \u0441\u0442\u0440\u0435\u043b\u043e\u043a      */\n"
 "    background: #f4f4f4;                       /* \u0444\u043e\u043d \u043f\u043e\u043b\u044f \u0432\u0432\u043e\u0434\u0430               */\n"
 "    min-height: 60px;                          /* \u043c\u0438\u043d\u0438\u043c\u0430\u043b\u044c\u043d\u0430\u044f \u0432\u044b\u0441\u043e\u0442\u0430 \u043a\u043e\u043d\u0442\u0440\u043e\u043b\u0430  */\n"
 "    color: black;                              /* \u0446\u0432\u0435\u0442 \u0432\u0432\u0435\u0434\u0451\u043d\u043d\u043e\u0433\u043e \u0442\u0435\u043a\u0441\u0442\u0430       */\n"
 "\n"
-"    outline: none;                             /* \u0443\u0431\u0438\u0440\u0430\u0435\u043c \u0441\u0442\u0430\u043d\u0434\u0430\u0440\u0442\u043d\u044b\u0439 \u043f\u0443\u043d\u043a\u0442\u0438p  */\n"
+"    outline: none;                             /* \u0443\u0431\u0438\u0440\u0430\u0435\u043c \u0441\u0442\u0430\u043d\u0434\u0430\u0440\u0442\u043d\u044b\u0439 \u043f\u0443\u043d\u043a"
+                        "\u0442\u0438p  */\n"
 "}\n"
 "\n"
-"/* \u0411\u041b\u041e\u041a \u0421\u0422\u0420\u0415\u041b\u041e\u041a --------------------"
-                        "--------------------------------------*/\n"
+"/* \u0411\u041b\u041e\u041a \u0421\u0422\u0420\u0415\u041b\u041e\u041a ----------------------------------------------------------*/\n"
 "/* \u043e\u0431\u0449\u0438\u0435 \u043f\u0430\u0440\u0430\u043c\u0435\u0442\u0440\u044b \u0434\u043b\u044f \u043e\u0431\u0435\u0438\u0445 \u043f\u043e\u043b\u043e\u0432\u0438\u043d\u043e\u043a \u0431\u043b\u043e\u043a\u0430 */\n"
 "QSpinBox::up-button,\n"
 "QSpinBox::down-button {\n"
 "    subcontrol-origin: padding;                /* \u043a\u043e\u043e\u0440\u0434\u0438\u043d\u0430\u0442\u044b \u043e\u0442 padding-box    */\n"
 "    width: 32px;                               /* \u0448\u0438\u0440\u0438\u043d\u0430 \u0441\u0435\u0433\u043c\u0435\u043d\u0442\u0430 \u0441\u043e \u0441\u0442\u0440\u0435\u043b\u043a\u0430\u043c\u0438 */\n"
 "    border-left: 1px solid #b4b4b4;            /* \u043b\u0438\u043d\u0438\u044f-\u0440\u0430\u0437\u0434\u0435\u043b\u0438\u0442\u0435\u043b\u044c \u0441\u043b\u0435\u0432\u0430      */\n"
-"    background: #808080;                       /* \u0444\u043e\u043d \u0431\u043b\u043e\u043a\u0430 \u0441\u0442\u0440\u0435\u043b\u043e\u043a     "
-                        "       */\n"
+"    background: #808080"
+                        ";                       /* \u0444\u043e\u043d \u0431\u043b\u043e\u043a\u0430 \u0441\u0442\u0440\u0435\u043b\u043e\u043a            */\n"
 "}\n"
 "\n"
 "/* \u2193 \u043d\u0438\u0436\u043d\u044f\u044f \u043f\u043e\u043b\u043e\u0432\u0438\u043d\u0430 \u0431\u043b\u043e\u043a\u0430 \u0441\u0442\u0440\u0435\u043b\u043e\u043a --------------------------------------*/\n"
@@ -1191,19 +1697,19 @@ class Ui_MainWindow(object):
 "}\n"
 "\n"
 "\n"
-"/* \u2191 \u0432\u0435\u0440\u0445\u043d\u044f\u044f \u043f\u043e\u043b\u043e\u0432\u0438\u043d\u0430 \u0431\u043b\u043e\u043a\u0430 \u0441\u0442\u0440\u0435\u043b\u043e"
-                        "\u043a -------------------------------------*/\n"
+"/* \u2191 \u0432\u0435\u0440\u0445\u043d\u044f"
+                        "\u044f \u043f\u043e\u043b\u043e\u0432\u0438\u043d\u0430 \u0431\u043b\u043e\u043a\u0430 \u0441\u0442\u0440\u0435\u043b\u043e\u043a -------------------------------------*/\n"
 "QSpinBox::up-button {\n"
 "    subcontrol-position: top right;            /* \u043f\u0440\u0438\u0432\u044f\u0437\u043a\u0430 \u043a \u043f\u0440\u0430\u0432\u043e\u043c\u0443-\u0432\u0435\u0440\u0445\u043d\u0435\u043c\u0443  */\n"
 "    height: 30%;                               /* \u0437\u0430\u043d\u0438\u043c\u0430\u0435\u043c \u0440\u043e\u0432\u043d\u043e \u043f\u043e\u043b\u043e\u0432\u0438\u043d\u0443 \u0432\u044b\u0441. */\n"
 "    border-top-right-radius: 12px;             /* \u0441\u043a\u0440\u0443\u0433\u043b\u044f\u0435\u043c \u0422\u041e\u041b\u042c\u041a\u041e \u0432\u0435\u0440\u0445-\u043f\u0440\u0430\u0432.  */\n"
 "}\n"
 "\n"
-"/* \u0432\u0438\u0437\u0443\u0430\u043b\u044c\u043d\u044b\u0439 \u043e\u0442\u043a\u043b\u0438\u043a \u043f\u0440\u0438 \u043d\u0430\u0436\u0430\u0442\u0438\u0438 ----------------------------------------*/\n"
+"/* \u0432\u0438\u0437\u0443\u0430\u043b\u044c\u043d\u044b\u0439 \u043e\u0442\u043a\u043b\u0438\u043a \u043f\u0440\u0438 \u043d\u0430\u0436\u0430\u0442\u0438\u0438 --------------------------------------"
+                        "--*/\n"
 "QSpinBox::up-button:pressed,\n"
 "QSpinBox::down-button:pressed {\n"
-"    background: #6d6d6d;                     "
-                        "  /* \u0437\u0430\u0442\u0435\u043c\u043d\u044f\u0435\u043c \u0444\u043e\u043d \u043d\u0430 \u0432\u0440\u0435\u043c\u044f \u043a\u043b\u0438\u043a\u0430 */\n"
+"    background: #6d6d6d;                       /* \u0437\u0430\u0442\u0435\u043c\u043d\u044f\u0435\u043c \u0444\u043e\u043d \u043d\u0430 \u0432\u0440\u0435\u043c\u044f \u043a\u043b\u0438\u043a\u0430 */\n"
 "}\n"
 "\n"
 "/* \u0421\u0422\u0420\u0415\u041b\u041a\u0418 (\u0438\u043a\u043e\u043d\u043a\u0438) ------------------------------------------------------*/\n"
@@ -1215,9 +1721,9 @@ class Ui_MainWindow(object):
 "}\n"
 "\n"
 "QSpinBox::down-arrow {\n"
-"    image: url(\":/icon/arrow_drop_down_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24.png\"); /* PNG/SVG \u2193 */\n"
-"    width: 24px; height: 24px;                 /* \u0433\u0430\u0431"
-                        "\u0430\u0440\u0438\u0442\u044b \u0438\u043a\u043e\u043d\u043a\u0438              */\n"
+"    image: url(\":/icon/arrow_drop_down_24dp_E3E3E3_FILL0"
+                        "_wght400_GRAD0_opsz24.png\"); /* PNG/SVG \u2193 */\n"
+"    width: 24px; height: 24px;                 /* \u0433\u0430\u0431\u0430\u0440\u0438\u0442\u044b \u0438\u043a\u043e\u043d\u043a\u0438              */\n"
 "    margin: 0 auto;                            /* \u0446\u0435\u043d\u0442\u0440\u0438\u0440\u0443\u0435\u043c \u0432 \u0431\u043b\u043e\u043a\u0435           */\n"
 "}\n"
 "\n"
@@ -1230,8 +1736,8 @@ class Ui_MainWindow(object):
 "\n"
 "QSpinBox::up-arrow:disabled,\n"
 "QSpinBox::down-arrow:disabled {\n"
-"    image: none;                               /* \u043f\u0440\u044f\u0447\u0435\u043c \u0438\u043a\u043e\u043d\u043a\u0443 \u0443 \u043d\u0435"
-                        "\u0430\u043a\u0442\u0438\u0432\u043d\u043e\u0439   */\n"
+"    image: none;    "
+                        "                           /* \u043f\u0440\u044f\u0447\u0435\u043c \u0438\u043a\u043e\u043d\u043a\u0443 \u0443 \u043d\u0435\u0430\u043a\u0442\u0438\u0432\u043d\u043e\u0439   */\n"
 "}\n"
 "\n"
 "/* \u0425\u041e\u0412\u0415\u0420 / \u0424\u041e\u041a\u0423\u0421 ---------------------------------------------------------*/\n"
@@ -1240,392 +1746,8 @@ class Ui_MainWindow(object):
 "\n"
 "/* \u041e\u0422\u041a\u041b\u042e\u0427\u0401\u041d\u041d\u041e\u0415 \u0421\u041e\u0421\u0422\u041e\u042f\u041d\u0418\u0415 -------------------------------------------------*/\n"
 "QSpinBox:disabled {\n"
-"    color: #8f8f8f;                            /* \u043f\u0440\u0438\u0433\u043b\u0443\u0448\u0430\u0435\u043c \u0442\u0435\u043a\u0441\u0442             */\n"
-"    background: #e0e0e0;                       /* \u0438 "
-                        "\u0444\u043e\u043d \u0432\u0441\u0435\u0433\u043e \u0432\u0438\u0434\u0436\u0435\u0442\u0430          */\n"
-"}\n"
-"\n"
-"")
-        self.gridLayout_2 = QGridLayout(self.page_3)
-        self.gridLayout_2.setObjectName(u"gridLayout_2")
-        self.textBrowser_4 = QTextBrowser(self.page_3)
-        self.textBrowser_4.setObjectName(u"textBrowser_4")
-
-        self.gridLayout_2.addWidget(self.textBrowser_4, 0, 0, 1, 2)
-
-        self.textBrowser_5 = QTextBrowser(self.page_3)
-        self.textBrowser_5.setObjectName(u"textBrowser_5")
-
-        self.gridLayout_2.addWidget(self.textBrowser_5, 1, 0, 1, 1)
-
-        self.comboBox = QComboBox(self.page_3)
-        self.comboBox.addItem("")
-        self.comboBox.addItem("")
-        self.comboBox.addItem("")
-        self.comboBox.addItem("")
-        self.comboBox.addItem("")
-        self.comboBox.addItem("")
-        self.comboBox.addItem("")
-        self.comboBox.addItem("")
-        self.comboBox.addItem("")
-        self.comboBox.addItem("")
-        self.comboBox.addItem("")
-        self.comboBox.addItem("")
-        self.comboBox.addItem("")
-        self.comboBox.addItem("")
-        self.comboBox.addItem("")
-        self.comboBox.setObjectName(u"comboBox")
-        sizePolicy5 = QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Maximum)
-        sizePolicy5.setHorizontalStretch(0)
-        sizePolicy5.setVerticalStretch(0)
-        sizePolicy5.setHeightForWidth(self.comboBox.sizePolicy().hasHeightForWidth())
-        self.comboBox.setSizePolicy(sizePolicy5)
-        self.comboBox.setMinimumSize(QSize(0, 70))
-        self.comboBox.setFont(font)
-        self.comboBox.setLayoutDirection(Qt.LayoutDirection.LeftToRight)
-        self.comboBox.setStyleSheet(u"QLabel { font-size: 14pt; }")
-
-        self.gridLayout_2.addWidget(self.comboBox, 1, 1, 1, 1)
-
-        self.textBrowser_9 = QTextBrowser(self.page_3)
-        self.textBrowser_9.setObjectName(u"textBrowser_9")
-
-        self.gridLayout_2.addWidget(self.textBrowser_9, 2, 0, 1, 1)
-
-        self.comboBox_2 = QComboBox(self.page_3)
-        self.comboBox_2.addItem("")
-        self.comboBox_2.addItem("")
-        self.comboBox_2.setObjectName(u"comboBox_2")
-        sizePolicy5.setHeightForWidth(self.comboBox_2.sizePolicy().hasHeightForWidth())
-        self.comboBox_2.setSizePolicy(sizePolicy5)
-        self.comboBox_2.setMinimumSize(QSize(0, 70))
-        self.comboBox_2.setFont(font)
-        self.comboBox_2.setLayoutDirection(Qt.LayoutDirection.LeftToRight)
-
-        self.gridLayout_2.addWidget(self.comboBox_2, 2, 1, 1, 1)
-
-        self.textBrowser_7 = QTextBrowser(self.page_3)
-        self.textBrowser_7.setObjectName(u"textBrowser_7")
-
-        self.gridLayout_2.addWidget(self.textBrowser_7, 3, 0, 1, 1)
-
-        self.comboBox_4 = QComboBox(self.page_3)
-        self.comboBox_4.addItem("")
-        self.comboBox_4.addItem("")
-        self.comboBox_4.addItem("")
-        self.comboBox_4.setObjectName(u"comboBox_4")
-        sizePolicy5.setHeightForWidth(self.comboBox_4.sizePolicy().hasHeightForWidth())
-        self.comboBox_4.setSizePolicy(sizePolicy5)
-        self.comboBox_4.setMinimumSize(QSize(0, 70))
-        self.comboBox_4.setFont(font)
-        self.comboBox_4.setLayoutDirection(Qt.LayoutDirection.LeftToRight)
-
-        self.gridLayout_2.addWidget(self.comboBox_4, 3, 1, 1, 1)
-
-        self.textBrowser_6 = QTextBrowser(self.page_3)
-        self.textBrowser_6.setObjectName(u"textBrowser_6")
-
-        self.gridLayout_2.addWidget(self.textBrowser_6, 4, 0, 1, 1)
-
-        self.comboBox_3 = QComboBox(self.page_3)
-        self.comboBox_3.addItem("")
-        self.comboBox_3.addItem("")
-        self.comboBox_3.setObjectName(u"comboBox_3")
-        sizePolicy5.setHeightForWidth(self.comboBox_3.sizePolicy().hasHeightForWidth())
-        self.comboBox_3.setSizePolicy(sizePolicy5)
-        self.comboBox_3.setMinimumSize(QSize(0, 70))
-        self.comboBox_3.setFont(font)
-        self.comboBox_3.setLayoutDirection(Qt.LayoutDirection.LeftToRight)
-
-        self.gridLayout_2.addWidget(self.comboBox_3, 4, 1, 1, 1)
-
-        self.textBrowser_8 = QTextBrowser(self.page_3)
-        self.textBrowser_8.setObjectName(u"textBrowser_8")
-
-        self.gridLayout_2.addWidget(self.textBrowser_8, 5, 0, 1, 1)
-
-        self.spinBox = QSpinBox(self.page_3)
-        self.spinBox.setObjectName(u"spinBox")
-        sizePolicy6 = QSizePolicy(QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Maximum)
-        sizePolicy6.setHorizontalStretch(0)
-        sizePolicy6.setVerticalStretch(0)
-        sizePolicy6.setHeightForWidth(self.spinBox.sizePolicy().hasHeightForWidth())
-        self.spinBox.setSizePolicy(sizePolicy6)
-        self.spinBox.setMinimumSize(QSize(0, 62))
-        self.spinBox.setFont(font)
-        self.spinBox.setLayoutDirection(Qt.LayoutDirection.LeftToRight)
-        self.spinBox.setStyleSheet(u"")
-
-        self.gridLayout_2.addWidget(self.spinBox, 5, 1, 1, 1)
-
-        self.frame_7 = QFrame(self.page_3)
-        self.frame_7.setObjectName(u"frame_7")
-        self.frame_7.setFrameShape(QFrame.Shape.StyledPanel)
-        self.frame_7.setFrameShadow(QFrame.Shadow.Raised)
-
-        self.gridLayout_2.addWidget(self.frame_7, 6, 0, 1, 1)
-
-        self.frame_8 = QFrame(self.page_3)
-        self.frame_8.setObjectName(u"frame_8")
-        self.frame_8.setMinimumSize(QSize(400, 60))
-        self.frame_8.setFrameShape(QFrame.Shape.StyledPanel)
-        self.frame_8.setFrameShadow(QFrame.Shadow.Raised)
-
-        self.gridLayout_2.addWidget(self.frame_8, 6, 1, 1, 1)
-
-        self.frame_6 = QFrame(self.page_3)
-        self.frame_6.setObjectName(u"frame_6")
-        self.frame_6.setFrameShape(QFrame.Shape.StyledPanel)
-        self.frame_6.setFrameShadow(QFrame.Shadow.Raised)
-
-        self.gridLayout_2.addWidget(self.frame_6, 7, 0, 1, 1)
-
-        self.pushButton_3 = QPushButton(self.page_3)
-        self.pushButton_3.setObjectName(u"pushButton_3")
-        sizePolicy6.setHeightForWidth(self.pushButton_3.sizePolicy().hasHeightForWidth())
-        self.pushButton_3.setSizePolicy(sizePolicy6)
-        self.pushButton_3.setMinimumSize(QSize(0, 60))
-        self.pushButton_3.setFont(font)
-
-        self.gridLayout_2.addWidget(self.pushButton_3, 7, 1, 1, 1)
-
-        self.stackedWidget.addWidget(self.page_3)
-        self.page_2 = QWidget()
-        self.page_2.setObjectName(u"page_2")
-        font1 = QFont()
-        font1.setFamilies([u"Noto Sans SC"])
-        font1.setBold(True)
-        self.page_2.setFont(font1)
-        self.page_2.setStyleSheet(u"/* ===== QComboBox: \u043f\u043e\u043b\u043d\u044b\u0439 \u0441\u0442\u0438\u043b\u044c \u0431\u0435\u0437 \u0440\u0435\u0441\u0443\u0440\u0441\u043e\u0432 ===== */\n"
-"\n"
-"/* --- \u043a\u043e\u043d\u0442\u0435\u0439\u043d\u0435\u0440 \u0432\u0441\u043f\u043b\u044b\u0432\u0430\u044e\u0449\u0435\u0433\u043e \u043e\u043a\u043d\u0430 (Qt-5/6) --- */\n"
-"QFrame#qt_combo_box_popup {      /* << \u043a\u043b\u044e\u0447\u0435\u0432\u0430\u044f \u0441\u0442\u0440\u043e\u0447\u043a\u0430 */\n"
-"    border: none;                /* \u0443\u0431\u0438\u0440\u0430\u0435\u043c \u0440\u0430\u043c\u043a\u0443 */\n"
-"    background: transparent;     /* \u0434\u0435\u043b\u0430\u0435\u043c \u043d\u0435\u0432\u0438\u0434\u0438\u043c\u043e\u0439 \u043a\u043e\u043d\u0442\u0435\u0439\u043d\u0435\u0440 */\n"
-"}\n"
-"\n"
-"\n"
-"\n"
-"\n"
-"\n"
-"\n"
-"/* \u041e\u0421\u041d\u041e\u0412\u041d\u041e\u0415 \u041f\u041e\u041b\u0415 -----------------------------------------------------------*/\n"
-"QComboBox {\n"
-"    border: 1px solid #b4b4b4;\n"
-"    border-radius: 12px;\n"
-"    padding: 4px 40px 4"
-                        "px 12px;   /* \u043c\u0435\u0441\u0442\u043e \u043f\u043e\u0434 \u0441\u0442\u0440\u0435\u043b\u043a\u0443 \u0441\u043f\u0440\u0430\u0432\u0430 */\n"
-"    background: #f4f4f4;\n"
-"combobox-popup: 0;   \n"
-"}\n"
-"\n"
-"/* \u041a\u041d\u041e\u041f\u041a\u0410 \u0412\u042b\u041f\u0410\u0414\u0410\u041d\u0418\u042f (\u043f\u0440\u0430\u0432\u044b\u0439 \u0441\u0435\u0433\u043c\u0435\u043d\u0442) --------------------------------------*/\n"
-"QComboBox::drop-down {\n"
-"    subcontrol-origin: padding;\n"
-"    subcontrol-position: top right;\n"
-"    width: 32px;\n"
-"    border-left: 1px solid #b4b4b4;\n"
-"    border-top-right-radius: 12px;\n"
-"    border-bottom-right-radius: 12px;\n"
-"    background: #e2e2e2;\n"
-"}\n"
-"\n"
-"QComboBox::drop-down { \n"
-"    background: #808080;   /* \u0432\u0440\u0435\u043c\u0435\u043d\u043d\u043e! */\n"
-"}\n"
-"\n"
-"/* \u0421\u0422\u0420\u0415\u041b\u041a\u0410 ----------------------------------------------------------------*/\n"
-"QComboBox::down-arrow {\n"
-"image: url(\":/icon/arrow_drop"
-                        "_down_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24.png\");\n"
-"    width: 24px;      /* \u043f\u043e\u0434\u0433\u043e\u043d\u0438 \u043f\u043e\u0434 \u0440\u0435\u0430\u043b\u044c\u043d\u044b\u0439 \u0440\u0430\u0437\u043c\u0435\u0440 PNG */\n"
-"    height: 24px;\n"
-"    margin: 0 auto;   /* \u043f\u043e \u0446\u0435\u043d\u0442\u0440\u0443 \u043a\u043d\u043e\u043f\u043a\u0438 drop\u2011down */\n"
-"    border: none;     /* \u0433\u043b\u0443\u0448\u0438\u043c \u0432\u0441\u044f\u043a\u0438\u0435 \u0441\u0442\u0430\u0440\u044b\u0435 \u0433\u0440\u0430\u043d\u0438\u0446\u044b */\n"
-"}\n"
-"\n"
-"/* \u041f\u043e\u0432\u043e\u0440\u043e\u0442 \u043f\u0440\u0438 \u0440\u0430\u0441\u043a\u0440\u044b\u0442\u0438\u0438 --------------------------------------------------*/\n"
-"QComboBox::down-arrow:on {\n"
-"    transform: rotate(180deg);\n"
-"}\n"
-"\n"
-"\n"
-"\n"
-"\n"
-"\n"
-"/* \u0425\u041e\u0412\u0415\u0420/\u0424\u041e\u041a\u0423\u0421 -------------------------------------------------------------*/\n"
-"QComboBox:hover { backgr"
-                        "ound: #f9f9f9; }\n"
-"\n"
-"QComboBox:focus {\n"
-"    border: 1px solid #7aa9ff;\n"
-"    outline: none;\n"
-"}\n"
-"\n"
-"/* \u0412\u042b\u041f\u0410\u0414\u0410\u042e\u0429\u0418\u0419 \u0421\u041f\u0418\u0421\u041e\u041a -----------------------------------------------------*/\n"
-"QComboBox QAbstractItemView {\n"
-"    /* \u0442\u043e\u0442 \u0436\u0435 \u0440\u0430\u0434\u0438\u0443\u0441, \u0447\u0442\u043e \u0443 \u043f\u043e\u043b\u044f */\n"
-"    border: 1px solid #c8c8c8;\n"
-"    border-radius: 12px;\n"
-"    padding: 4px;                       /* \u043b\u0451\u0433\u043a\u0438\u0439 \u00ab\u043e\u0442\u0441\u0442\u0443\u043f-\u0440\u0430\u043c\u043a\u0430\u00bb \u0432\u043d\u0443\u0442\u0440\u0438 */\n"
-"    background: transparent;\n"
-"\n"
-"    /* \u043e\u0442\u043a\u043b\u044e\u0447\u0430\u0435\u043c \u0441\u0442\u0430\u043d\u0434\u0430\u0440\u0442\u043d\u044b\u0439 dotted focus-rectangle */\n"
-"    outline: 0;                         /* Qt >5.12 \u043f\u043e\u043d\u0438\u043c\u0430\u0435\u0442 outline */\n"
-" "
-                        "   /* \u0435\u0441\u043b\u0438 outline \u043d\u0435 \u0440\u0430\u0431\u043e\u0442\u0430\u0435\u0442 \u0432 \u0432\u0430\u0448\u0435\u0439 \u0432\u0435\u0440\u0441\u0438\u0438:\n"
-"       border: none; */\n"
-"}\n"
-"\n"
-"/* \u0441\u0442\u0440\u043e\u043a\u0438 \u0432\u043d\u0443\u0442\u0440\u0438 \u0441\u043f\u0438\u0441\u043a\u0430 */\n"
-"QComboBox QAbstractItemView::item {\n"
-"    padding: 6px 12px;\n"
-"    border-radius: 6px;                 /* \u043b\u0451\u0433\u043a\u043e\u0435 \u0441\u043a\u0440\u0443\u0433\u043b\u0435\u043d\u0438\u0435 hover/selected */\n"
-"}\n"
-"\n"
-"/* \u043f\u043e\u0434\u0441\u0432\u0435\u0442\u043a\u0430 \u043d\u0430\u0432\u0435\u0434\u0435\u043d\u0438\u044f  */\n"
-"QComboBox QAbstractItemView::item:hover {\n"
-"    background: #f0f0f0;\n"
-"}\n"
-"\n"
-"/* \u0432\u044b\u0431\u0440\u0430\u043d\u043d\u044b\u0439 \u044d\u043b\u0435\u043c\u0435\u043d\u0442 (\u0431\u0435\u0437 \u043f\u0443\u043d\u043a\u0442\u0438\u0440\u0430!) */\n"
-"QComboBox QAbstractItemView::item:selected {\n"
-"    back"
-                        "ground: #2d97ff;                /* \u043f\u0440\u0438\u043c\u0435\u0440 \u0430\u043a\u0442\u0438\u0432\u043d\u043e\u0433\u043e \u0446\u0432\u0435\u0442\u0430 */\n"
-"    color: #ffffff;\n"
-"    outline: 0;                         /* \u0441\u0442\u0440\u0430\u0445\u043e\u0432\u043a\u0430 */\n"
-"    /* \u0438\u043b\u0438 border: none;  -> \u0435\u0441\u043b\u0438 outline \u043d\u0435 \u043f\u043e\u0434\u0434\u0435\u0440\u0436\u0438\u0432\u0430\u0435\u0442\u0441\u044f */\n"
-"}\n"
-"\n"
-"/* \u041e\u0444\u043e\u0440\u043c\u043b\u0435\u043d\u0438\u0435 \u0442\u0435\u043a\u0441\u0442\u0430 \u0438 \u0440\u0430\u043c\u043a\u0438 \u0434\u043b\u044f QLabel \u0438 QTextBrowser */\n"
-"QLabel,\n"
-"QTextBrowser {\n"
-"    color: white;                    /* \u0446\u0432\u0435\u0442 \u0448\u0440\u0438\u0444\u0442\u0430 */\n"
-"    border-radius: 10px;             /* \u0441\u043a\u0440\u0443\u0433\u043b\u0435\u043d\u0438\u0435 \u0443\u0433\u043b\u043e\u0432 \u0440\u0430\u043c\u043a\u0438 */\n"
-"    padding: 6px;                   "
-                        " /* \u0432\u043d\u0443\u0442\u0440\u0435\u043d\u043d\u0438\u0435 \u043e\u0442\u0441\u0442\u0443\u043f\u044b */\n"
-"border: 2px solid #909090; \n"
-"}\n"
-"\n"
-"\n"
-"/* \u041d\u043e\u0440\u043c\u0430\u043b\u044c\u043d\u043e\u0435 \u0441\u043e\u0441\u0442\u043e\u044f\u043d\u0438\u0435 */\n"
-"QPushButton {\n"
-"    background-color: #404040;        /* \u0437\u0430\u043b\u0438\u0432\u043a\u0430 */\n"
-"    color: white;                     /* \u0446\u0432\u0435\u0442 \u0442\u0435\u043a\u0441\u0442\u0430 */\n"
-"    border: 2px solid #909090;        /* \u0442\u043e\u043b\u0449\u0438\u043d\u0430 \u0438 \u0446\u0432\u0435\u0442 \u043e\u0431\u0432\u043e\u0434\u043a\u0438 */\n"
-"    border-radius: 12px;              /* \u0440\u0430\u0434\u0438\u0443\u0441 \u0441\u043a\u0440\u0443\u0433\u043b\u0435\u043d\u0438\u044f */\n"
-"    padding: 6px 12px;                /* \u00ab\u0432\u043e\u0437\u0434\u0443\u0445\u00bb \u0432\u043d\u0443\u0442\u0440\u0438 */\n"
-"}\n"
-"\n"
-"/* \u041a\u0443\u0440\u0441\u043e\u0440 \u043d\u0430\u0432\u0435"
-                        "\u0434\u0451\u043d */\n"
-"QPushButton:hover {\n"
-"    background-color: #505050;\n"
-"    border-color: #707070;\n"
-"}\n"
-"\n"
-"/* \u041a\u043d\u043e\u043f\u043a\u0430 \u043d\u0430\u0436\u0430\u0442\u0430 (\u0443\u0434\u0435\u0440\u0436\u0438\u0432\u0430\u0435\u0442\u0441\u044f) */\n"
-"QPushButton:pressed {\n"
-"    background-color: #909090;\n"
-"    border-color: #909090;\n"
-"}\n"
-"\n"
-"/* QLabel \u0438\u043b\u0438 QTextBrowser */\n"
-"QLabel, QTextBrowser {\n"
-"    border: 2px solid #909090;   /* \u0442\u043e\u043b\u0449\u0438\u043d\u0430 \u0438 \u0446\u0432\u0435\u0442 */\n"
-"    border-radius: 10px;         /* \u0441\u043a\u0440\u0443\u0433\u043b\u0435\u043d\u0438\u0435 */\n"
-"    padding: 6px;                /* \u0432\u043d\u0443\u0442\u0440\u0435\u043d\u043d\u0438\u0435 \u043e\u0442\u0441\u0442\u0443\u043f\u044b */\n"
-"    color: white;              /* \u0446\u0432\u0435\u0442 \u0448\u0440\u0438\u0444\u0442\u0430 */\n"
-"}\n"
-"\n"
-"/* ===== QSpinBox \u2014 \u0441\u0442\u0438\u043b\u044c \u043f\u043e\u0434 QC"
-                        "omboBox (\u043a\u0430\u0436\u0434\u044b\u0439 \u043f\u0430\u0440\u0430\u043c\u0435\u0442\u0440 \u043f\u043e\u0434\u043f\u0438\u0441\u0430\u043d) ===== */\n"
-"\n"
-"/* \u041e\u0421\u041d\u041e\u0412\u041d\u041e\u0415 \u041f\u041e\u041b\u0415 ---------------------------------------------------------*/\n"
-"QSpinBox {\n"
-"    border: 1px solid #b4b4b4;                 /* \u0432\u043d\u0435\u0448\u043d\u044f\u044f \u0440\u0430\u043c\u043a\u0430 \u0432\u0438\u0434\u0436\u0435\u0442\u0430        */\n"
-"    border-radius: 12px;                       /* \u0441\u043a\u0440\u0443\u0433\u043b\u0435\u043d\u0438\u0435 \u0432\u0441\u0435\u0445 \u0443\u0433\u043b\u043e\u0432        */\n"
-"\n"
-"    padding-left: 12px;                        /* \u043e\u0442\u0441\u0442\u0443\u043f \u0442\u0435\u043a\u0441\u0442\u0430 \u0441\u043b\u0435\u0432\u0430          */\n"
-"    padding-right: 40px;                       /* \u0440\u0435\u0437\u0435\u0440\u0432 \u043f\u043e\u0434 \u0431\u043b\u043e\u043a \u0441\u0442\u0440\u0435\u043b\u043e\u043a"
-                        "      */\n"
-"    background: #f4f4f4;                       /* \u0444\u043e\u043d \u043f\u043e\u043b\u044f \u0432\u0432\u043e\u0434\u0430               */\n"
-"\n"
-"    color: black;                              /* \u0446\u0432\u0435\u0442 \u0432\u0432\u0435\u0434\u0451\u043d\u043d\u043e\u0433\u043e \u0442\u0435\u043a\u0441\u0442\u0430       */\n"
-"\n"
-"    outline: none;                             /* \u0443\u0431\u0438\u0440\u0430\u0435\u043c \u0441\u0442\u0430\u043d\u0434\u0430\u0440\u0442\u043d\u044b\u0439 \u043f\u0443\u043d\u043a\u0442\u0438p  */\n"
-"}\n"
-"\n"
-"/* \u0411\u041b\u041e\u041a \u0421\u0422\u0420\u0415\u041b\u041e\u041a ----------------------------------------------------------*/\n"
-"/* \u043e\u0431\u0449\u0438\u0435 \u043f\u0430\u0440\u0430\u043c\u0435\u0442\u0440\u044b \u0434\u043b\u044f \u043e\u0431\u0435\u0438\u0445 \u043f\u043e\u043b\u043e\u0432\u0438\u043d\u043e\u043a \u0431\u043b\u043e\u043a\u0430 */\n"
-"QSpinBox::up-button,\n"
-"QSpinBox::down-button {\n"
-"    subcontrol-origin: padding; "
-                        "               /* \u043a\u043e\u043e\u0440\u0434\u0438\u043d\u0430\u0442\u044b \u043e\u0442 padding-box    */\n"
-"    width: 32px;                               /* \u0448\u0438\u0440\u0438\u043d\u0430 \u0441\u0435\u0433\u043c\u0435\u043d\u0442\u0430 \u0441\u043e \u0441\u0442\u0440\u0435\u043b\u043a\u0430\u043c\u0438 */\n"
-"    border-left: 1px solid #b4b4b4;            /* \u043b\u0438\u043d\u0438\u044f-\u0440\u0430\u0437\u0434\u0435\u043b\u0438\u0442\u0435\u043b\u044c \u0441\u043b\u0435\u0432\u0430      */\n"
-"    background: #808080;                       /* \u0444\u043e\u043d \u0431\u043b\u043e\u043a\u0430 \u0441\u0442\u0440\u0435\u043b\u043e\u043a            */\n"
-"}\n"
-"\n"
-"/* \u2193 \u043d\u0438\u0436\u043d\u044f\u044f \u043f\u043e\u043b\u043e\u0432\u0438\u043d\u0430 \u0431\u043b\u043e\u043a\u0430 \u0441\u0442\u0440\u0435\u043b\u043e\u043a --------------------------------------*/\n"
-"QSpinBox::down-button {\n"
-"    subcontrol-position: bottom right;         /* \u043f\u0440\u0438\u0432\u044f\u0437\u043a\u0430"
-                        " \u043a \u043f\u0440\u0430\u0432\u043e\u043c\u0443-\u043d\u0438\u0436\u043d\u0435\u043c\u0443   */\n"
-"    height: 30%;                               /* \u0437\u0430\u043d\u0438\u043c\u0430\u0435\u043c \u043e\u0441\u0442\u0430\u0432\u0448\u0438\u0435\u0441\u044f 50 %     */\n"
-"    border-bottom-right-radius: 12px;          /* \u0441\u043a\u0440\u0443\u0433\u043b\u044f\u0435\u043c \u0422\u041e\u041b\u042c\u041a\u041e \u043d\u0438\u0437-\u043f\u0440\u0430\u0432.   */\n"
-"}\n"
-"\n"
-"\n"
-"/* \u2191 \u0432\u0435\u0440\u0445\u043d\u044f\u044f \u043f\u043e\u043b\u043e\u0432\u0438\u043d\u0430 \u0431\u043b\u043e\u043a\u0430 \u0441\u0442\u0440\u0435\u043b\u043e\u043a -------------------------------------*/\n"
-"QSpinBox::up-button {\n"
-"    subcontrol-position: top right;            /* \u043f\u0440\u0438\u0432\u044f\u0437\u043a\u0430 \u043a \u043f\u0440\u0430\u0432\u043e\u043c\u0443-\u0432\u0435\u0440\u0445\u043d\u0435\u043c\u0443  */\n"
-"    height: 30%;                               /* \u0437\u0430\u043d\u0438\u043c\u0430"
-                        "\u0435\u043c \u0440\u043e\u0432\u043d\u043e \u043f\u043e\u043b\u043e\u0432\u0438\u043d\u0443 \u0432\u044b\u0441. */\n"
-"    border-top-right-radius: 12px;             /* \u0441\u043a\u0440\u0443\u0433\u043b\u044f\u0435\u043c \u0422\u041e\u041b\u042c\u041a\u041e \u0432\u0435\u0440\u0445-\u043f\u0440\u0430\u0432.  */\n"
-"}\n"
-"\n"
-"/* \u0432\u0438\u0437\u0443\u0430\u043b\u044c\u043d\u044b\u0439 \u043e\u0442\u043a\u043b\u0438\u043a \u043f\u0440\u0438 \u043d\u0430\u0436\u0430\u0442\u0438\u0438 ----------------------------------------*/\n"
-"QSpinBox::up-button:pressed,\n"
-"QSpinBox::down-button:pressed {\n"
-"    background: #6d6d6d;                       /* \u0437\u0430\u0442\u0435\u043c\u043d\u044f\u0435\u043c \u0444\u043e\u043d \u043d\u0430 \u0432\u0440\u0435\u043c\u044f \u043a\u043b\u0438\u043a\u0430 */\n"
-"}\n"
-"\n"
-"/* \u0421\u0422\u0420\u0415\u041b\u041a\u0418 (\u0438\u043a\u043e\u043d\u043a\u0438) ------------------------------------------------------*/\n"
-"QSpinBox::up-arrow {\n"
-"    image: url(\":/icon/ar"
-                        "row_drop_up_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24.png\"); /* PNG/SVG \u2193 */\n"
-"    width: 24px; height: 24px;                 /* \u0433\u0430\u0431\u0430\u0440\u0438\u0442\u044b \u0438\u043a\u043e\u043d\u043a\u0438              */\n"
-"    margin: 0 auto;                            /* \u0446\u0435\u043d\u0442\u0440\u0438\u0440\u0443\u0435\u043c \u0432 \u0431\u043b\u043e\u043a\u0435           */\n"
-"	transform: rotate(180deg);\n"
-"}\n"
-"\n"
-"QSpinBox::down-arrow {\n"
-"    image: url(\":/icon/arrow_drop_down_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24.png\"); /* PNG/SVG \u2193 */\n"
-"    width: 24px; height: 24px;                 /* \u0433\u0430\u0431\u0430\u0440\u0438\u0442\u044b \u0438\u043a\u043e\u043d\u043a\u0438              */\n"
-"    margin: 0 auto;                            /* \u0446\u0435\u043d\u0442\u0440\u0438\u0440\u0443\u0435\u043c \u0432 \u0431\u043b\u043e\u043a\u0435           */\n"
-"}\n"
-"\n"
-"\n"
-"/* \u043e\u0442\u043a\u043b\u044e\u0447\u0430\u0435\u043c \u043a\u043d\u043e\u043f\u043a\u0438 \u0438"
-                        " \u0438\u043a\u043e\u043d\u043a\u0438 \u043f\u0440\u0438 \u0434\u043e\u0441\u0442\u0438\u0436\u0435\u043d\u0438\u0438 min/max ---------------------*/\n"
-"QSpinBox::up-button:disabled,\n"
-"QSpinBox::down-button:disabled {\n"
-"    background: #c8c8c8;                       /* \u0442\u0443\u0441\u043a\u043b\u044b\u0439 \u0444\u043e\u043d \u2014 \u043a\u043d\u043e\u043f\u043a\u0430 \u043d\u0435\u0430\u043a\u0442\u0438\u0432 */\n"
-"}\n"
-"\n"
-"QSpinBox::up-arrow:disabled,\n"
-"QSpinBox::down-arrow:disabled {\n"
-"    image: none;                               /* \u043f\u0440\u044f\u0447\u0435\u043c \u0438\u043a\u043e\u043d\u043a\u0443 \u0443 \u043d\u0435\u0430\u043a\u0442\u0438\u0432\u043d\u043e\u0439   */\n"
-"}\n"
-"\n"
-"/* \u0425\u041e\u0412\u0415\u0420 / \u0424\u041e\u041a\u0423\u0421 ---------------------------------------------------------*/\n"
-"QSpinBox:hover  { background: #f9f9f9; }       /* \u043b\u0451\u0433\u043a\u043e\u0435 \u0432\u044b\u0441\u0432\u0435\u0442\u043b\u0435\u043d\u0438\u0435 \u043f\u0440\u0438"
-                        " \u0445\u043e\u0432\u0435\u0440\u0435*/\n"
-"QSpinBox:focus  { border: 1px solid #7aa9ff; } /* \u0441\u0438\u043d\u044f\u044f \u0440\u0430\u043c\u043a\u0430 \u043f\u0440\u0438 \u0444\u043e\u043a\u0443\u0441\u0435       */\n"
-"\n"
-"/* \u041e\u0422\u041a\u041b\u042e\u0427\u0401\u041d\u041d\u041e\u0415 \u0421\u041e\u0421\u0422\u041e\u042f\u041d\u0418\u0415 -------------------------------------------------*/\n"
-"QSpinBox:disabled {\n"
-"    color: #8f8f8f;                            /* \u043f\u0440\u0438\u0433\u043b\u0443\u0448\u0430\u0435\u043c \u0442\u0435\u043a\u0441\u0442             */\n"
+"    color: #8f8f8f;                            /* \u043f\u0440\u0438\u0433\u043b\u0443\u0448\u0430"
+                        "\u0435\u043c \u0442\u0435\u043a\u0441\u0442             */\n"
 "    background: #e0e0e0;                       /* \u0438 \u0444\u043e\u043d \u0432\u0441\u0435\u0433\u043e \u0432\u0438\u0434\u0436\u0435\u0442\u0430          */\n"
 "}\n"
 "\n"
@@ -1645,6 +1767,16 @@ class Ui_MainWindow(object):
 
         self.gridLayout.addWidget(self.textBrowser_2, 0, 0, 1, 1)
 
+        self.pushButton_5 = QPushButton(self.page_2)
+        self.pushButton_5.setObjectName(u"pushButton_5")
+        self.pushButton_5.setMinimumSize(QSize(0, 50))
+        font2 = QFont()
+        font2.setFamilies([u"Noto Sans SC"])
+        font2.setPointSize(12)
+        self.pushButton_5.setFont(font2)
+
+        self.gridLayout.addWidget(self.pushButton_5, 1, 0, 1, 1)
+
 
         self.verticalLayout_5.addLayout(self.gridLayout)
 
@@ -1659,7 +1791,7 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
 
-        self.stackedWidget.setCurrentIndex(1)
+        self.stackedWidget.setCurrentIndex(2)
 
 
         QMetaObject.connectSlotsByName(MainWindow)
@@ -1686,33 +1818,25 @@ class Ui_MainWindow(object):
 "li.checked::marker { content: \"\\2612\"; }\n"
 "</style></head><body style=\" font-family:'Noto Sans SC'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">\u041f\u0430\u0440\u043e\u043b\u044c</p></body></html>", None))
-        self.textBrowser_63.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
-"<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
-"p, li { white-space: pre-wrap; }\n"
-"hr { height: 1px; border-width: 0; }\n"
-"li.unchecked::marker { content: \"\\2610\"; }\n"
-"li.checked::marker { content: \"\\2612\"; }\n"
-"</style></head><body style=\" font-family:'Noto Sans SC'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">\u041a\u043e\u043b\u043b\u0438\u0447\u0435\u0441\u0442\u0432\u043e \u0431\u0438\u0442</p></body></html>", None))
-        self.comboBox_8.setItemText(0, QCoreApplication.translate("MainWindow", u"1", None))
-        self.comboBox_8.setItemText(1, QCoreApplication.translate("MainWindow", u"2", None))
+        self.comboBox_6.setItemText(0, QCoreApplication.translate("MainWindow", u"7", None))
+        self.comboBox_6.setItemText(1, QCoreApplication.translate("MainWindow", u"8", None))
 
-        self.textBrowser_65.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.textBrowser_66.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "hr { height: 1px; border-width: 0; }\n"
 "li.unchecked::marker { content: \"\\2610\"; }\n"
 "li.checked::marker { content: \"\\2612\"; }\n"
 "</style></head><body style=\" font-family:'Noto Sans SC'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">\u0421\u0442\u043e\u043f \u0431\u0438\u0442</p></body></html>", None))
-        self.textBrowser_62.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">USART ID</p></body></html>", None))
+        self.textBrowser_64.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "hr { height: 1px; border-width: 0; }\n"
 "li.unchecked::marker { content: \"\\2610\"; }\n"
 "li.checked::marker { content: \"\\2612\"; }\n"
 "</style></head><body style=\" font-family:'Noto Sans SC'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">USART \u0441\u043a\u043e\u0440\u043e\u0441\u0442\u044c</p></body></html>", None))
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">\u0427\u0435\u0442\u043d\u043e\u0441\u0442\u044c</p></body></html>", None))
         self.comboBox_5.setItemText(0, QCoreApplication.translate("MainWindow", u"300", None))
         self.comboBox_5.setItemText(1, QCoreApplication.translate("MainWindow", u"600", None))
         self.comboBox_5.setItemText(2, QCoreApplication.translate("MainWindow", u"1200", None))
@@ -1729,6 +1853,25 @@ class Ui_MainWindow(object):
         self.comboBox_5.setItemText(13, QCoreApplication.translate("MainWindow", u"230400", None))
         self.comboBox_5.setItemText(14, QCoreApplication.translate("MainWindow", u"256000", None))
 
+        self.textBrowser_63.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"hr { height: 1px; border-width: 0; }\n"
+"li.unchecked::marker { content: \"\\2610\"; }\n"
+"li.checked::marker { content: \"\\2612\"; }\n"
+"</style></head><body style=\" font-family:'Noto Sans SC'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">\u041a\u043e\u043b\u043b\u0438\u0447\u0435\u0441\u0442\u0432\u043e \u0431\u0438\u0442</p></body></html>", None))
+        self.comboBox_8.setItemText(0, QCoreApplication.translate("MainWindow", u"1", None))
+        self.comboBox_8.setItemText(1, QCoreApplication.translate("MainWindow", u"2", None))
+
+        self.textBrowser_62.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"hr { height: 1px; border-width: 0; }\n"
+"li.unchecked::marker { content: \"\\2610\"; }\n"
+"li.checked::marker { content: \"\\2612\"; }\n"
+"</style></head><body style=\" font-family:'Noto Sans SC'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">USART \u0441\u043a\u043e\u0440\u043e\u0441\u0442\u044c</p></body></html>", None))
         self.textBrowser_74.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
@@ -1737,29 +1880,18 @@ class Ui_MainWindow(object):
 "li.checked::marker { content: \"\\2612\"; }\n"
 "</style></head><body style=\" font-family:'Noto Sans SC'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
 "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:12pt;\">\u041d\u0430\u0441\u0442\u0440\u043e\u0439\u043a\u0438 USART</span></p></body></html>", None))
-        self.comboBox_6.setItemText(0, QCoreApplication.translate("MainWindow", u"7", None))
-        self.comboBox_6.setItemText(1, QCoreApplication.translate("MainWindow", u"8", None))
-
+        self.textBrowser_65.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"hr { height: 1px; border-width: 0; }\n"
+"li.unchecked::marker { content: \"\\2610\"; }\n"
+"li.checked::marker { content: \"\\2612\"; }\n"
+"</style></head><body style=\" font-family:'Noto Sans SC'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">\u0421\u0442\u043e\u043f \u0431\u0438\u0442</p></body></html>", None))
         self.comboBox_7.setItemText(0, QCoreApplication.translate("MainWindow", u"\u041d\u0435\u0442", None))
         self.comboBox_7.setItemText(1, QCoreApplication.translate("MainWindow", u"\u041d\u0435\u0447\u0435\u0442\u043d\u0430\u044f", None))
         self.comboBox_7.setItemText(2, QCoreApplication.translate("MainWindow", u"\u0427\u0435\u0442\u043d\u0430\u044f", None))
 
-        self.textBrowser_64.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
-"<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
-"p, li { white-space: pre-wrap; }\n"
-"hr { height: 1px; border-width: 0; }\n"
-"li.unchecked::marker { content: \"\\2610\"; }\n"
-"li.checked::marker { content: \"\\2612\"; }\n"
-"</style></head><body style=\" font-family:'Noto Sans SC'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">\u0427\u0435\u0442\u043d\u043e\u0441\u0442\u044c</p></body></html>", None))
-        self.textBrowser_66.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
-"<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
-"p, li { white-space: pre-wrap; }\n"
-"hr { height: 1px; border-width: 0; }\n"
-"li.unchecked::marker { content: \"\\2610\"; }\n"
-"li.checked::marker { content: \"\\2612\"; }\n"
-"</style></head><body style=\" font-family:'Noto Sans SC'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">USART ID</p></body></html>", None))
         self.textBrowser_19.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
@@ -2191,14 +2323,9 @@ class Ui_MainWindow(object):
 "li.checked::marker { content: \"\\2612\"; }\n"
 "</style></head><body style=\" font-family:'Noto Sans SC'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
 "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:12pt;\">\u041b\u0438\u043d\u0435\u0439\u043d\u0430\u044f \u0418\u043d\u0442\u0435\u0440\u043f\u043e\u043b\u044f\u0446\u0438\u044f</span></p></body></html>", None))
-        self.textBrowser_4.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
-"<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
-"p, li { white-space: pre-wrap; }\n"
-"hr { height: 1px; border-width: 0; }\n"
-"li.unchecked::marker { content: \"\\2610\"; }\n"
-"li.checked::marker { content: \"\\2612\"; }\n"
-"</style></head><body style=\" font-family:'Noto Sans SC'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
-"<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:16pt;\">\u0420\u0443\u0447\u043d\u043e\u0435 \u043f\u043e\u0434\u043a\u043b\u044e\u0447\u0435\u043d\u0438\u0435</span></p></body></html>", None))
+        self.comboBox_2.setItemText(0, QCoreApplication.translate("MainWindow", u"7", None))
+        self.comboBox_2.setItemText(1, QCoreApplication.translate("MainWindow", u"8", None))
+
         self.textBrowser_5.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
@@ -2207,6 +2334,15 @@ class Ui_MainWindow(object):
 "li.checked::marker { content: \"\\2612\"; }\n"
 "</style></head><body style=\" font-family:'Noto Sans SC'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
 "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:14pt;\">\u0421\u043a\u043e\u0440\u043e\u0441\u0442\u044c USART</span></p></body></html>", None))
+        self.pushButton_3.setText(QCoreApplication.translate("MainWindow", u"\u041d\u0430\u0437\u0430\u0434", None))
+        self.textBrowser_9.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"hr { height: 1px; border-width: 0; }\n"
+"li.unchecked::marker { content: \"\\2610\"; }\n"
+"li.checked::marker { content: \"\\2612\"; }\n"
+"</style></head><body style=\" font-family:'Noto Sans SC'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
+"<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:14pt;\">\u041a\u043e\u043b\u043b\u0438\u0447\u0435\u0441\u0442\u0432\u043e \u0431\u0438\u0442</span></p></body></html>", None))
         self.comboBox.setItemText(0, QCoreApplication.translate("MainWindow", u"300", None))
         self.comboBox.setItemText(1, QCoreApplication.translate("MainWindow", u"600", None))
         self.comboBox.setItemText(2, QCoreApplication.translate("MainWindow", u"1200", None))
@@ -2223,16 +2359,12 @@ class Ui_MainWindow(object):
         self.comboBox.setItemText(13, QCoreApplication.translate("MainWindow", u"230400", None))
         self.comboBox.setItemText(14, QCoreApplication.translate("MainWindow", u"256000", None))
 
-        self.textBrowser_9.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
-"<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
-"p, li { white-space: pre-wrap; }\n"
-"hr { height: 1px; border-width: 0; }\n"
-"li.unchecked::marker { content: \"\\2610\"; }\n"
-"li.checked::marker { content: \"\\2612\"; }\n"
-"</style></head><body style=\" font-family:'Noto Sans SC'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
-"<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:14pt;\">\u041a\u043e\u043b\u043b\u0438\u0447\u0435\u0441\u0442\u0432\u043e \u0431\u0438\u0442</span></p></body></html>", None))
-        self.comboBox_2.setItemText(0, QCoreApplication.translate("MainWindow", u"7", None))
-        self.comboBox_2.setItemText(1, QCoreApplication.translate("MainWindow", u"8", None))
+        self.comboBox_3.setItemText(0, QCoreApplication.translate("MainWindow", u"1 \u0441\u0442\u043e\u043f \u0431\u0438\u0442", None))
+        self.comboBox_3.setItemText(1, QCoreApplication.translate("MainWindow", u"2 \u0441\u0442\u043e\u043f \u0431\u0438\u0442", None))
+
+        self.comboBox_4.setItemText(0, QCoreApplication.translate("MainWindow", u"\u043d\u0435\u0442", None))
+        self.comboBox_4.setItemText(1, QCoreApplication.translate("MainWindow", u"\u041d\u0435\u0447\u0435\u0442\u043d\u0430\u044f", None))
+        self.comboBox_4.setItemText(2, QCoreApplication.translate("MainWindow", u"\u0427\u0435\u0442\u043d\u0430\u044f", None))
 
         self.textBrowser_7.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
@@ -2242,21 +2374,14 @@ class Ui_MainWindow(object):
 "li.checked::marker { content: \"\\2612\"; }\n"
 "</style></head><body style=\" font-family:'Noto Sans SC'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
 "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:14pt;\">\u0427\u0435\u0442\u043d\u043e\u0441\u0442\u044c</span></p></body></html>", None))
-        self.comboBox_4.setItemText(0, QCoreApplication.translate("MainWindow", u"\u043d\u0435\u0442", None))
-        self.comboBox_4.setItemText(1, QCoreApplication.translate("MainWindow", u"\u041d\u0435\u0447\u0435\u0442\u043d\u0430\u044f", None))
-        self.comboBox_4.setItemText(2, QCoreApplication.translate("MainWindow", u"\u0427\u0435\u0442\u043d\u0430\u044f", None))
-
-        self.textBrowser_6.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.textBrowser_4.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "hr { height: 1px; border-width: 0; }\n"
 "li.unchecked::marker { content: \"\\2610\"; }\n"
 "li.checked::marker { content: \"\\2612\"; }\n"
 "</style></head><body style=\" font-family:'Noto Sans SC'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
-"<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:14pt;\">\u0421\u0442\u043e\u043f-\u0431\u0438\u0442</span></p></body></html>", None))
-        self.comboBox_3.setItemText(0, QCoreApplication.translate("MainWindow", u"1 \u0441\u0442\u043e\u043f \u0431\u0438\u0442", None))
-        self.comboBox_3.setItemText(1, QCoreApplication.translate("MainWindow", u"2 \u0441\u0442\u043e\u043f \u0431\u0438\u0442", None))
-
+"<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:16pt;\">\u0420\u0443\u0447\u043d\u043e\u0435 \u043f\u043e\u0434\u043a\u043b\u044e\u0447\u0435\u043d\u0438\u0435</span></p></body></html>", None))
         self.textBrowser_8.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
@@ -2265,7 +2390,15 @@ class Ui_MainWindow(object):
 "li.checked::marker { content: \"\\2612\"; }\n"
 "</style></head><body style=\" font-family:'Noto Sans SC'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
 "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:14pt;\">USART ID</span></p></body></html>", None))
-        self.pushButton_3.setText(QCoreApplication.translate("MainWindow", u"\u041f\u043e\u0434\u043a\u043b\u044e\u0447\u0438\u0442\u044c\u0441\u044f", None))
+        self.textBrowser_6.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"hr { height: 1px; border-width: 0; }\n"
+"li.unchecked::marker { content: \"\\2610\"; }\n"
+"li.checked::marker { content: \"\\2612\"; }\n"
+"</style></head><body style=\" font-family:'Noto Sans SC'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
+"<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:14pt;\">\u0421\u0442\u043e\u043f-\u0431\u0438\u0442</span></p></body></html>", None))
+        self.pushButton_11.setText(QCoreApplication.translate("MainWindow", u"\u041f\u043e\u0434\u043a\u043b\u044e\u0447\u0438\u0442\u044c\u0441\u044f", None))
         self.textBrowser_2.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
@@ -2275,5 +2408,6 @@ class Ui_MainWindow(object):
 "</style></head><body style=\" font-family:'Noto Sans SC'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
 "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:18pt;\">\u0410\u0432\u0442\u043e\u043f\u043e\u0434\u043a\u043b\u044e\u0447\u0435\u043d\u0438\u0435<br /></span><span style=\" font-size:14pt;\">\u0414\u043b\u044f \u0430\u0432\u0442\u043e\u043c\u0430\u0442\u0438\u0447\u0435\u0441\u043a\u043e\u0433\u043e \u043f\u043e\u0434\u043a\u043b\u044e\u0447\u0435\u043d\u0438\u044f \u0443\u0431\u0435\u0434\u0438\u0442\u0435"
                         "\u0441\u044c, \u0447\u0442\u043e \u0443\u0441\u0442\u0440\u043e\u0439\u0441\u0442\u0432\u043e \u0444\u0438\u0437\u0438\u0447\u0435\u0441\u043a\u0438 \u043f\u043e\u0434\u043a\u043b\u044e\u0447\u0435\u043d\u043e \u043a \u0448\u0438\u043d\u0435 RS-485, \u0430 \u0437\u0430\u0442\u0435\u043c \u043f\u0435\u0440\u0435\u0437\u0430\u043f\u0443\u0441\u0442\u0438\u0442\u0435 \u043c\u043e\u0434\u0443\u043b\u044c \u0423\u041c\u0412\u0425.</span></p></body></html>", None))
+        self.pushButton_5.setText(QCoreApplication.translate("MainWindow", u"\u041d\u0430\u0437\u0430\u0434", None))
     # retranslateUi
 
