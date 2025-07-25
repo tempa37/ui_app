@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'untitled2.ui'
+## Form generated from reading UI file 'untitled3.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.9.1
 ##
@@ -25,13 +25,15 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(1061, 700)
+        MainWindow.resize(1069, 846)
+        MainWindow.setMinimumSize(QSize(1025, 812))
         MainWindow.setLayoutDirection(Qt.LayoutDirection.RightToLeft)
         MainWindow.setStyleSheet(u"background-color: rgb(89, 89, 89);\n"
 "\n"
 "font-family: Noto Sans SC")
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
+        self.centralwidget.setMinimumSize(QSize(1023, 812))
         self.centralwidget.setLayoutDirection(Qt.LayoutDirection.RightToLeft)
         self.centralwidget.setStyleSheet(u"QComboBox {\n"
 "    combobox-popup: 0;        /* \u0437\u0430\u043f\u0440\u0435\u0442 \u043e\u0442\u0434\u0435\u043b\u044c\u043d\u043e\u0433\u043e \u043e\u043a\u043d\u0430-popup */\n"
@@ -40,6 +42,7 @@ class Ui_MainWindow(object):
         self.gridLayout_3.setObjectName(u"gridLayout_3")
         self.frame = QFrame(self.centralwidget)
         self.frame.setObjectName(u"frame")
+        self.frame.setMinimumSize(QSize(1025, 812))
         self.frame.setFrameShape(QFrame.Shape.StyledPanel)
         self.frame.setFrameShadow(QFrame.Shadow.Raised)
         self.gridLayout_4 = QGridLayout(self.frame)
@@ -431,6 +434,7 @@ class Ui_MainWindow(object):
         self.stackedWidget.addWidget(self.page)
         self.page_4 = QWidget()
         self.page_4.setObjectName(u"page_4")
+        self.page_4.setMinimumSize(QSize(1023, 805))
         self.page_4.setStyleSheet(u"/* ===== QComboBox: \u043f\u043e\u043b\u043d\u044b\u0439 \u0441\u0442\u0438\u043b\u044c \u0431\u0435\u0437 \u0440\u0435\u0441\u0443\u0440\u0441\u043e\u0432 ===== */\n"
 "\n"
 "/* --- \u043a\u043e\u043d\u0442\u0435\u0439\u043d\u0435\u0440 \u0432\u0441\u043f\u043b\u044b\u0432\u0430\u044e\u0449\u0435\u0433\u043e \u043e\u043a\u043d\u0430 (Qt-5/6) --- */\n"
@@ -734,6 +738,8 @@ class Ui_MainWindow(object):
         self.gridLayout_5.setObjectName(u"gridLayout_5")
         self.frame_9 = QFrame(self.page_4)
         self.frame_9.setObjectName(u"frame_9")
+        self.frame_9.setMinimumSize(QSize(1007, 817))
+        self.frame_9.setBaseSize(QSize(1005, 787))
         self.frame_9.setFrameShape(QFrame.Shape.StyledPanel)
         self.frame_9.setFrameShadow(QFrame.Shadow.Raised)
         self.gridLayout_7 = QGridLayout(self.frame_9)
@@ -937,41 +943,41 @@ class Ui_MainWindow(object):
         self.frame_10.setFrameShadow(QFrame.Shadow.Raised)
         self.gridLayout_6 = QGridLayout(self.frame_10)
         self.gridLayout_6.setObjectName(u"gridLayout_6")
-        self.textBrowser_19 = QTextBrowser(self.frame_10)
-        self.textBrowser_19.setObjectName(u"textBrowser_19")
-        self.textBrowser_19.setMinimumSize(QSize(97, 0))
+        self.s3s0x04 = QTextBrowser(self.frame_10)
+        self.s3s0x04.setObjectName(u"s3s0x04")
+        self.s3s0x04.setMinimumSize(QSize(97, 0))
 
-        self.gridLayout_6.addWidget(self.textBrowser_19, 3, 0, 1, 1)
+        self.gridLayout_6.addWidget(self.s3s0x04, 3, 0, 1, 1)
 
-        self.textBrowser_38 = QTextBrowser(self.frame_10)
-        self.textBrowser_38.setObjectName(u"textBrowser_38")
-        self.textBrowser_38.setMinimumSize(QSize(97, 0))
+        self.s3s0x02 = QTextBrowser(self.frame_10)
+        self.s3s0x02.setObjectName(u"s3s0x02")
+        self.s3s0x02.setMinimumSize(QSize(97, 0))
 
-        self.gridLayout_6.addWidget(self.textBrowser_38, 3, 1, 1, 1)
+        self.gridLayout_6.addWidget(self.s3s0x02, 3, 1, 1, 1)
 
-        self.textBrowser_43 = QTextBrowser(self.frame_10)
-        self.textBrowser_43.setObjectName(u"textBrowser_43")
-        self.textBrowser_43.setMinimumSize(QSize(97, 0))
+        self.s4s0x00 = QTextBrowser(self.frame_10)
+        self.s4s0x00.setObjectName(u"s4s0x00")
+        self.s4s0x00.setMinimumSize(QSize(97, 0))
 
-        self.gridLayout_6.addWidget(self.textBrowser_43, 4, 3, 1, 1)
+        self.gridLayout_6.addWidget(self.s4s0x00, 4, 3, 1, 1)
 
-        self.textBrowser_17 = QTextBrowser(self.frame_10)
-        self.textBrowser_17.setObjectName(u"textBrowser_17")
-        self.textBrowser_17.setMinimumSize(QSize(97, 0))
+        self.s1s0x04 = QTextBrowser(self.frame_10)
+        self.s1s0x04.setObjectName(u"s1s0x04")
+        self.s1s0x04.setMinimumSize(QSize(97, 0))
 
-        self.gridLayout_6.addWidget(self.textBrowser_17, 1, 0, 1, 1)
+        self.gridLayout_6.addWidget(self.s1s0x04, 1, 0, 1, 1)
 
-        self.textBrowser_44 = QTextBrowser(self.frame_10)
-        self.textBrowser_44.setObjectName(u"textBrowser_44")
-        self.textBrowser_44.setMinimumSize(QSize(97, 0))
+        self.s4s0x01 = QTextBrowser(self.frame_10)
+        self.s4s0x01.setObjectName(u"s4s0x01")
+        self.s4s0x01.setMinimumSize(QSize(97, 0))
 
-        self.gridLayout_6.addWidget(self.textBrowser_44, 4, 2, 1, 1)
+        self.gridLayout_6.addWidget(self.s4s0x01, 4, 2, 1, 1)
 
-        self.textBrowser_35 = QTextBrowser(self.frame_10)
-        self.textBrowser_35.setObjectName(u"textBrowser_35")
-        self.textBrowser_35.setMinimumSize(QSize(97, 0))
+        self.s2s0x00 = QTextBrowser(self.frame_10)
+        self.s2s0x00.setObjectName(u"s2s0x00")
+        self.s2s0x00.setMinimumSize(QSize(97, 0))
 
-        self.gridLayout_6.addWidget(self.textBrowser_35, 2, 3, 1, 1)
+        self.gridLayout_6.addWidget(self.s2s0x00, 2, 3, 1, 1)
 
         self.textBrowser_50 = QTextBrowser(self.frame_10)
         self.textBrowser_50.setObjectName(u"textBrowser_50")
@@ -1001,47 +1007,47 @@ class Ui_MainWindow(object):
 
         self.gridLayout_6.addWidget(self.textBrowser_42, 4, 4, 1, 1)
 
-        self.textBrowser_54 = QTextBrowser(self.frame_10)
-        self.textBrowser_54.setObjectName(u"textBrowser_54")
-        self.textBrowser_54.setMinimumSize(QSize(97, 0))
+        self.s7s0x02 = QTextBrowser(self.frame_10)
+        self.s7s0x02.setObjectName(u"s7s0x02")
+        self.s7s0x02.setMinimumSize(QSize(97, 0))
 
-        self.gridLayout_6.addWidget(self.textBrowser_54, 7, 1, 1, 1)
+        self.gridLayout_6.addWidget(self.s7s0x02, 7, 1, 1, 1)
 
-        self.textBrowser_21 = QTextBrowser(self.frame_10)
-        self.textBrowser_21.setObjectName(u"textBrowser_21")
-        self.textBrowser_21.setMinimumSize(QSize(97, 0))
+        self.s5s0x04 = QTextBrowser(self.frame_10)
+        self.s5s0x04.setObjectName(u"s5s0x04")
+        self.s5s0x04.setMinimumSize(QSize(97, 0))
 
-        self.gridLayout_6.addWidget(self.textBrowser_21, 5, 0, 1, 1)
+        self.gridLayout_6.addWidget(self.s5s0x04, 5, 0, 1, 1)
 
-        self.textBrowser_53 = QTextBrowser(self.frame_10)
-        self.textBrowser_53.setObjectName(u"textBrowser_53")
-        self.textBrowser_53.setMinimumSize(QSize(97, 0))
+        self.s6s0x02 = QTextBrowser(self.frame_10)
+        self.s6s0x02.setObjectName(u"s6s0x02")
+        self.s6s0x02.setMinimumSize(QSize(97, 0))
 
-        self.gridLayout_6.addWidget(self.textBrowser_53, 6, 1, 1, 1)
+        self.gridLayout_6.addWidget(self.s6s0x02, 6, 1, 1, 1)
 
-        self.textBrowser_37 = QTextBrowser(self.frame_10)
-        self.textBrowser_37.setObjectName(u"textBrowser_37")
-        self.textBrowser_37.setMinimumSize(QSize(97, 0))
+        self.s2s0x02 = QTextBrowser(self.frame_10)
+        self.s2s0x02.setObjectName(u"s2s0x02")
+        self.s2s0x02.setMinimumSize(QSize(97, 0))
 
-        self.gridLayout_6.addWidget(self.textBrowser_37, 2, 1, 1, 1)
+        self.gridLayout_6.addWidget(self.s2s0x02, 2, 1, 1, 1)
 
-        self.textBrowser_51 = QTextBrowser(self.frame_10)
-        self.textBrowser_51.setObjectName(u"textBrowser_51")
-        self.textBrowser_51.setMinimumSize(QSize(97, 0))
+        self.s6s0x00 = QTextBrowser(self.frame_10)
+        self.s6s0x00.setObjectName(u"s6s0x00")
+        self.s6s0x00.setMinimumSize(QSize(97, 0))
 
-        self.gridLayout_6.addWidget(self.textBrowser_51, 6, 3, 1, 1)
+        self.gridLayout_6.addWidget(self.s6s0x00, 6, 3, 1, 1)
 
-        self.textBrowser_24 = QTextBrowser(self.frame_10)
-        self.textBrowser_24.setObjectName(u"textBrowser_24")
-        self.textBrowser_24.setMinimumSize(QSize(97, 0))
+        self.s8s0x04 = QTextBrowser(self.frame_10)
+        self.s8s0x04.setObjectName(u"s8s0x04")
+        self.s8s0x04.setMinimumSize(QSize(97, 0))
 
-        self.gridLayout_6.addWidget(self.textBrowser_24, 8, 0, 1, 1)
+        self.gridLayout_6.addWidget(self.s8s0x04, 8, 0, 1, 1)
 
-        self.textBrowser_55 = QTextBrowser(self.frame_10)
-        self.textBrowser_55.setObjectName(u"textBrowser_55")
-        self.textBrowser_55.setMinimumSize(QSize(97, 0))
+        self.s7s0x01 = QTextBrowser(self.frame_10)
+        self.s7s0x01.setObjectName(u"s7s0x01")
+        self.s7s0x01.setMinimumSize(QSize(97, 0))
 
-        self.gridLayout_6.addWidget(self.textBrowser_55, 7, 2, 1, 1)
+        self.gridLayout_6.addWidget(self.s7s0x01, 7, 2, 1, 1)
 
         self.textBrowser_26 = QTextBrowser(self.frame_10)
         self.textBrowser_26.setObjectName(u"textBrowser_26")
@@ -1057,30 +1063,30 @@ class Ui_MainWindow(object):
 
         self.gridLayout_6.addWidget(self.textBrowser_57, 7, 4, 1, 1)
 
-        self.textBrowser_56 = QTextBrowser(self.frame_10)
-        self.textBrowser_56.setObjectName(u"textBrowser_56")
-        self.textBrowser_56.setMinimumSize(QSize(97, 0))
+        self.s7s0x00 = QTextBrowser(self.frame_10)
+        self.s7s0x00.setObjectName(u"s7s0x00")
+        self.s7s0x00.setMinimumSize(QSize(97, 0))
 
-        self.gridLayout_6.addWidget(self.textBrowser_56, 7, 3, 1, 1)
+        self.gridLayout_6.addWidget(self.s7s0x00, 7, 3, 1, 1)
 
-        self.textBrowser_30 = QTextBrowser(self.frame_10)
-        self.textBrowser_30.setObjectName(u"textBrowser_30")
-        self.textBrowser_30.setMinimumSize(QSize(97, 0))
+        self.s1s0x02 = QTextBrowser(self.frame_10)
+        self.s1s0x02.setObjectName(u"s1s0x02")
+        self.s1s0x02.setMinimumSize(QSize(97, 0))
 
-        self.gridLayout_6.addWidget(self.textBrowser_30, 1, 1, 1, 1)
+        self.gridLayout_6.addWidget(self.s1s0x02, 1, 1, 1, 1)
 
-        self.textBrowser_32 = QTextBrowser(self.frame_10)
-        self.textBrowser_32.setObjectName(u"textBrowser_32")
-        self.textBrowser_32.setMinimumSize(QSize(97, 0))
-        self.textBrowser_32.setStyleSheet(u"background-color:rgb(165, 168, 180);")
+        self.s1s0x00 = QTextBrowser(self.frame_10)
+        self.s1s0x00.setObjectName(u"s1s0x00")
+        self.s1s0x00.setMinimumSize(QSize(97, 0))
+        self.s1s0x00.setStyleSheet(u"background-color:rgb(165, 168, 180);")
 
-        self.gridLayout_6.addWidget(self.textBrowser_32, 1, 3, 1, 1)
+        self.gridLayout_6.addWidget(self.s1s0x00, 1, 3, 1, 1)
 
-        self.textBrowser_18 = QTextBrowser(self.frame_10)
-        self.textBrowser_18.setObjectName(u"textBrowser_18")
-        self.textBrowser_18.setMinimumSize(QSize(97, 0))
+        self.s2s0x04 = QTextBrowser(self.frame_10)
+        self.s2s0x04.setObjectName(u"s2s0x04")
+        self.s2s0x04.setMinimumSize(QSize(97, 0))
 
-        self.gridLayout_6.addWidget(self.textBrowser_18, 2, 0, 1, 1)
+        self.gridLayout_6.addWidget(self.s2s0x04, 2, 0, 1, 1)
 
         self.textBrowser_27 = QTextBrowser(self.frame_10)
         self.textBrowser_27.setObjectName(u"textBrowser_27")
@@ -1096,47 +1102,47 @@ class Ui_MainWindow(object):
 
         self.gridLayout_6.addWidget(self.textBrowser_34, 2, 4, 1, 1)
 
-        self.textBrowser_39 = QTextBrowser(self.frame_10)
-        self.textBrowser_39.setObjectName(u"textBrowser_39")
-        self.textBrowser_39.setMinimumSize(QSize(97, 0))
+        self.s3s0x01 = QTextBrowser(self.frame_10)
+        self.s3s0x01.setObjectName(u"s3s0x01")
+        self.s3s0x01.setMinimumSize(QSize(97, 0))
 
-        self.gridLayout_6.addWidget(self.textBrowser_39, 3, 2, 1, 1)
+        self.gridLayout_6.addWidget(self.s3s0x01, 3, 2, 1, 1)
 
-        self.textBrowser_22 = QTextBrowser(self.frame_10)
-        self.textBrowser_22.setObjectName(u"textBrowser_22")
-        self.textBrowser_22.setMinimumSize(QSize(97, 0))
+        self.s6s0x04 = QTextBrowser(self.frame_10)
+        self.s6s0x04.setObjectName(u"s6s0x04")
+        self.s6s0x04.setMinimumSize(QSize(97, 0))
 
-        self.gridLayout_6.addWidget(self.textBrowser_22, 6, 0, 1, 1)
+        self.gridLayout_6.addWidget(self.s6s0x04, 6, 0, 1, 1)
 
-        self.textBrowser_46 = QTextBrowser(self.frame_10)
-        self.textBrowser_46.setObjectName(u"textBrowser_46")
-        self.textBrowser_46.setMinimumSize(QSize(97, 0))
+        self.s5s0x02 = QTextBrowser(self.frame_10)
+        self.s5s0x02.setObjectName(u"s5s0x02")
+        self.s5s0x02.setMinimumSize(QSize(97, 0))
 
-        self.gridLayout_6.addWidget(self.textBrowser_46, 5, 1, 1, 1)
+        self.gridLayout_6.addWidget(self.s5s0x02, 5, 1, 1, 1)
 
-        self.textBrowser_20 = QTextBrowser(self.frame_10)
-        self.textBrowser_20.setObjectName(u"textBrowser_20")
-        self.textBrowser_20.setMinimumSize(QSize(97, 0))
+        self.s4s0x04 = QTextBrowser(self.frame_10)
+        self.s4s0x04.setObjectName(u"s4s0x04")
+        self.s4s0x04.setMinimumSize(QSize(97, 0))
 
-        self.gridLayout_6.addWidget(self.textBrowser_20, 4, 0, 1, 1)
+        self.gridLayout_6.addWidget(self.s4s0x04, 4, 0, 1, 1)
 
-        self.textBrowser_61 = QTextBrowser(self.frame_10)
-        self.textBrowser_61.setObjectName(u"textBrowser_61")
-        self.textBrowser_61.setMinimumSize(QSize(97, 0))
+        self.s8s0x00 = QTextBrowser(self.frame_10)
+        self.s8s0x00.setObjectName(u"s8s0x00")
+        self.s8s0x00.setMinimumSize(QSize(97, 0))
 
-        self.gridLayout_6.addWidget(self.textBrowser_61, 8, 3, 1, 1)
+        self.gridLayout_6.addWidget(self.s8s0x00, 8, 3, 1, 1)
 
-        self.textBrowser_45 = QTextBrowser(self.frame_10)
-        self.textBrowser_45.setObjectName(u"textBrowser_45")
-        self.textBrowser_45.setMinimumSize(QSize(97, 0))
+        self.s4s0x02 = QTextBrowser(self.frame_10)
+        self.s4s0x02.setObjectName(u"s4s0x02")
+        self.s4s0x02.setMinimumSize(QSize(97, 0))
 
-        self.gridLayout_6.addWidget(self.textBrowser_45, 4, 1, 1, 1)
+        self.gridLayout_6.addWidget(self.s4s0x02, 4, 1, 1, 1)
 
-        self.textBrowser_48 = QTextBrowser(self.frame_10)
-        self.textBrowser_48.setObjectName(u"textBrowser_48")
-        self.textBrowser_48.setMinimumSize(QSize(97, 0))
+        self.s5s0x00 = QTextBrowser(self.frame_10)
+        self.s5s0x00.setObjectName(u"s5s0x00")
+        self.s5s0x00.setMinimumSize(QSize(97, 0))
 
-        self.gridLayout_6.addWidget(self.textBrowser_48, 5, 3, 1, 1)
+        self.gridLayout_6.addWidget(self.s5s0x00, 5, 3, 1, 1)
 
         self.textBrowser_58 = QTextBrowser(self.frame_10)
         self.textBrowser_58.setObjectName(u"textBrowser_58")
@@ -1145,11 +1151,11 @@ class Ui_MainWindow(object):
 
         self.gridLayout_6.addWidget(self.textBrowser_58, 8, 4, 1, 1)
 
-        self.textBrowser_40 = QTextBrowser(self.frame_10)
-        self.textBrowser_40.setObjectName(u"textBrowser_40")
-        self.textBrowser_40.setMinimumSize(QSize(97, 0))
+        self.s3s0x00 = QTextBrowser(self.frame_10)
+        self.s3s0x00.setObjectName(u"s3s0x00")
+        self.s3s0x00.setMinimumSize(QSize(97, 0))
 
-        self.gridLayout_6.addWidget(self.textBrowser_40, 3, 3, 1, 1)
+        self.gridLayout_6.addWidget(self.s3s0x00, 3, 3, 1, 1)
 
         self.textBrowser_29 = QTextBrowser(self.frame_10)
         self.textBrowser_29.setObjectName(u"textBrowser_29")
@@ -1164,23 +1170,23 @@ class Ui_MainWindow(object):
 
         self.gridLayout_6.addWidget(self.textBrowser_28, 0, 3, 1, 1)
 
-        self.textBrowser_60 = QTextBrowser(self.frame_10)
-        self.textBrowser_60.setObjectName(u"textBrowser_60")
-        self.textBrowser_60.setMinimumSize(QSize(97, 0))
+        self.s8s0x01 = QTextBrowser(self.frame_10)
+        self.s8s0x01.setObjectName(u"s8s0x01")
+        self.s8s0x01.setMinimumSize(QSize(97, 0))
 
-        self.gridLayout_6.addWidget(self.textBrowser_60, 8, 2, 1, 1)
+        self.gridLayout_6.addWidget(self.s8s0x01, 8, 2, 1, 1)
 
-        self.textBrowser_23 = QTextBrowser(self.frame_10)
-        self.textBrowser_23.setObjectName(u"textBrowser_23")
-        self.textBrowser_23.setMinimumSize(QSize(97, 0))
+        self.s7s0x04 = QTextBrowser(self.frame_10)
+        self.s7s0x04.setObjectName(u"s7s0x04")
+        self.s7s0x04.setMinimumSize(QSize(97, 0))
 
-        self.gridLayout_6.addWidget(self.textBrowser_23, 7, 0, 1, 1)
+        self.gridLayout_6.addWidget(self.s7s0x04, 7, 0, 1, 1)
 
-        self.textBrowser_47 = QTextBrowser(self.frame_10)
-        self.textBrowser_47.setObjectName(u"textBrowser_47")
-        self.textBrowser_47.setMinimumSize(QSize(97, 0))
+        self.s5s0x01 = QTextBrowser(self.frame_10)
+        self.s5s0x01.setObjectName(u"s5s0x01")
+        self.s5s0x01.setMinimumSize(QSize(97, 0))
 
-        self.gridLayout_6.addWidget(self.textBrowser_47, 5, 2, 1, 1)
+        self.gridLayout_6.addWidget(self.s5s0x01, 5, 2, 1, 1)
 
         self.textBrowser_49 = QTextBrowser(self.frame_10)
         self.textBrowser_49.setObjectName(u"textBrowser_49")
@@ -1189,18 +1195,18 @@ class Ui_MainWindow(object):
 
         self.gridLayout_6.addWidget(self.textBrowser_49, 5, 4, 1, 1)
 
-        self.textBrowser_36 = QTextBrowser(self.frame_10)
-        self.textBrowser_36.setObjectName(u"textBrowser_36")
-        self.textBrowser_36.setMinimumSize(QSize(97, 0))
-        self.textBrowser_36.setStyleSheet(u"background-color:rgb(165, 168, 180);")
+        self.s2s0x01 = QTextBrowser(self.frame_10)
+        self.s2s0x01.setObjectName(u"s2s0x01")
+        self.s2s0x01.setMinimumSize(QSize(97, 0))
+        self.s2s0x01.setStyleSheet(u"background-color:rgb(165, 168, 180);")
 
-        self.gridLayout_6.addWidget(self.textBrowser_36, 2, 2, 1, 1)
+        self.gridLayout_6.addWidget(self.s2s0x01, 2, 2, 1, 1)
 
-        self.textBrowser_59 = QTextBrowser(self.frame_10)
-        self.textBrowser_59.setObjectName(u"textBrowser_59")
-        self.textBrowser_59.setMinimumSize(QSize(97, 0))
+        self.s8s0x02 = QTextBrowser(self.frame_10)
+        self.s8s0x02.setObjectName(u"s8s0x02")
+        self.s8s0x02.setMinimumSize(QSize(97, 0))
 
-        self.gridLayout_6.addWidget(self.textBrowser_59, 8, 1, 1, 1)
+        self.gridLayout_6.addWidget(self.s8s0x02, 8, 1, 1, 1)
 
         self.textBrowser_25 = QTextBrowser(self.frame_10)
         self.textBrowser_25.setObjectName(u"textBrowser_25")
@@ -1209,18 +1215,18 @@ class Ui_MainWindow(object):
 
         self.gridLayout_6.addWidget(self.textBrowser_25, 0, 0, 1, 1)
 
-        self.textBrowser_31 = QTextBrowser(self.frame_10)
-        self.textBrowser_31.setObjectName(u"textBrowser_31")
-        self.textBrowser_31.setMinimumSize(QSize(97, 0))
+        self.s1s0x01 = QTextBrowser(self.frame_10)
+        self.s1s0x01.setObjectName(u"s1s0x01")
+        self.s1s0x01.setMinimumSize(QSize(97, 0))
 
-        self.gridLayout_6.addWidget(self.textBrowser_31, 1, 2, 1, 1)
+        self.gridLayout_6.addWidget(self.s1s0x01, 1, 2, 1, 1)
 
-        self.textBrowser_52 = QTextBrowser(self.frame_10)
-        self.textBrowser_52.setObjectName(u"textBrowser_52")
-        self.textBrowser_52.setMinimumSize(QSize(97, 0))
-        self.textBrowser_52.setStyleSheet(u"background-color:rgb(165, 168, 180);")
+        self.s6s0x01 = QTextBrowser(self.frame_10)
+        self.s6s0x01.setObjectName(u"s6s0x01")
+        self.s6s0x01.setMinimumSize(QSize(97, 0))
+        self.s6s0x01.setStyleSheet(u"background-color:rgb(165, 168, 180);")
 
-        self.gridLayout_6.addWidget(self.textBrowser_52, 6, 2, 1, 1)
+        self.gridLayout_6.addWidget(self.s6s0x01, 6, 2, 1, 1)
 
 
         self.gridLayout_7.addWidget(self.frame_10, 0, 1, 1, 1)
@@ -2083,7 +2089,7 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
 
-        self.stackedWidget.setCurrentIndex(0)
+        self.stackedWidget.setCurrentIndex(1)
 
 
         QMetaObject.connectSlotsByName(MainWindow)
@@ -2185,7 +2191,7 @@ class Ui_MainWindow(object):
         self.comboBox_7.setItemText(1, QCoreApplication.translate("MainWindow", u"\u041d\u0435\u0447\u0435\u0442\u043d\u0430\u044f", None))
         self.comboBox_7.setItemText(2, QCoreApplication.translate("MainWindow", u"\u0427\u0435\u0442\u043d\u0430\u044f", None))
 
-        self.textBrowser_19.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.s3s0x04.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "hr { height: 1px; border-width: 0; }\n"
@@ -2193,7 +2199,7 @@ class Ui_MainWindow(object):
 "li.checked::marker { content: \"\\2612\"; }\n"
 "</style></head><body style=\" font-family:'Noto Sans SC'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>", None))
-        self.textBrowser_38.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.s3s0x02.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "hr { height: 1px; border-width: 0; }\n"
@@ -2201,7 +2207,7 @@ class Ui_MainWindow(object):
 "li.checked::marker { content: \"\\2612\"; }\n"
 "</style></head><body style=\" font-family:'Noto Sans SC'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>", None))
-        self.textBrowser_43.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.s4s0x00.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "hr { height: 1px; border-width: 0; }\n"
@@ -2209,7 +2215,7 @@ class Ui_MainWindow(object):
 "li.checked::marker { content: \"\\2612\"; }\n"
 "</style></head><body style=\" font-family:'Noto Sans SC'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>", None))
-        self.textBrowser_17.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.s1s0x04.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "hr { height: 1px; border-width: 0; }\n"
@@ -2217,7 +2223,7 @@ class Ui_MainWindow(object):
 "li.checked::marker { content: \"\\2612\"; }\n"
 "</style></head><body style=\" font-family:'Noto Sans SC'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>", None))
-        self.textBrowser_44.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.s4s0x01.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "hr { height: 1px; border-width: 0; }\n"
@@ -2225,7 +2231,7 @@ class Ui_MainWindow(object):
 "li.checked::marker { content: \"\\2612\"; }\n"
 "</style></head><body style=\" font-family:'Noto Sans SC'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>", None))
-        self.textBrowser_35.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.s2s0x00.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "hr { height: 1px; border-width: 0; }\n"
@@ -2265,7 +2271,7 @@ class Ui_MainWindow(object):
 "li.checked::marker { content: \"\\2612\"; }\n"
 "</style></head><body style=\" font-family:'Noto Sans SC'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
 "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">4</p></body></html>", None))
-        self.textBrowser_54.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.s7s0x02.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "hr { height: 1px; border-width: 0; }\n"
@@ -2273,7 +2279,7 @@ class Ui_MainWindow(object):
 "li.checked::marker { content: \"\\2612\"; }\n"
 "</style></head><body style=\" font-family:'Noto Sans SC'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>", None))
-        self.textBrowser_21.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.s5s0x04.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "hr { height: 1px; border-width: 0; }\n"
@@ -2281,7 +2287,7 @@ class Ui_MainWindow(object):
 "li.checked::marker { content: \"\\2612\"; }\n"
 "</style></head><body style=\" font-family:'Noto Sans SC'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>", None))
-        self.textBrowser_53.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.s6s0x02.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "hr { height: 1px; border-width: 0; }\n"
@@ -2289,7 +2295,7 @@ class Ui_MainWindow(object):
 "li.checked::marker { content: \"\\2612\"; }\n"
 "</style></head><body style=\" font-family:'Noto Sans SC'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>", None))
-        self.textBrowser_37.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.s2s0x02.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "hr { height: 1px; border-width: 0; }\n"
@@ -2297,7 +2303,7 @@ class Ui_MainWindow(object):
 "li.checked::marker { content: \"\\2612\"; }\n"
 "</style></head><body style=\" font-family:'Noto Sans SC'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>", None))
-        self.textBrowser_51.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.s6s0x00.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "hr { height: 1px; border-width: 0; }\n"
@@ -2305,7 +2311,7 @@ class Ui_MainWindow(object):
 "li.checked::marker { content: \"\\2612\"; }\n"
 "</style></head><body style=\" font-family:'Noto Sans SC'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>", None))
-        self.textBrowser_24.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.s8s0x04.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "hr { height: 1px; border-width: 0; }\n"
@@ -2313,7 +2319,7 @@ class Ui_MainWindow(object):
 "li.checked::marker { content: \"\\2612\"; }\n"
 "</style></head><body style=\" font-family:'Noto Sans SC'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>", None))
-        self.textBrowser_55.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.s7s0x01.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "hr { height: 1px; border-width: 0; }\n"
@@ -2337,7 +2343,7 @@ class Ui_MainWindow(object):
 "li.checked::marker { content: \"\\2612\"; }\n"
 "</style></head><body style=\" font-family:'Noto Sans SC'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
 "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">7</p></body></html>", None))
-        self.textBrowser_56.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.s7s0x00.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "hr { height: 1px; border-width: 0; }\n"
@@ -2345,7 +2351,7 @@ class Ui_MainWindow(object):
 "li.checked::marker { content: \"\\2612\"; }\n"
 "</style></head><body style=\" font-family:'Noto Sans SC'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>", None))
-        self.textBrowser_30.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.s1s0x02.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "hr { height: 1px; border-width: 0; }\n"
@@ -2353,7 +2359,7 @@ class Ui_MainWindow(object):
 "li.checked::marker { content: \"\\2612\"; }\n"
 "</style></head><body style=\" font-family:'Noto Sans SC'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>", None))
-        self.textBrowser_32.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.s1s0x00.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "hr { height: 1px; border-width: 0; }\n"
@@ -2361,7 +2367,7 @@ class Ui_MainWindow(object):
 "li.checked::marker { content: \"\\2612\"; }\n"
 "</style></head><body style=\" font-family:'Noto Sans SC'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
 "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">\u0417\u0430\u0434\u0430\u043d\u043e</p></body></html>", None))
-        self.textBrowser_18.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.s2s0x04.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "hr { height: 1px; border-width: 0; }\n"
@@ -2385,7 +2391,7 @@ class Ui_MainWindow(object):
 "li.checked::marker { content: \"\\2612\"; }\n"
 "</style></head><body style=\" font-family:'Noto Sans SC'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
 "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">2</p></body></html>", None))
-        self.textBrowser_39.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.s3s0x01.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "hr { height: 1px; border-width: 0; }\n"
@@ -2393,7 +2399,7 @@ class Ui_MainWindow(object):
 "li.checked::marker { content: \"\\2612\"; }\n"
 "</style></head><body style=\" font-family:'Noto Sans SC'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>", None))
-        self.textBrowser_22.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.s6s0x04.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "hr { height: 1px; border-width: 0; }\n"
@@ -2401,7 +2407,7 @@ class Ui_MainWindow(object):
 "li.checked::marker { content: \"\\2612\"; }\n"
 "</style></head><body style=\" font-family:'Noto Sans SC'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>", None))
-        self.textBrowser_46.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.s5s0x02.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "hr { height: 1px; border-width: 0; }\n"
@@ -2409,7 +2415,7 @@ class Ui_MainWindow(object):
 "li.checked::marker { content: \"\\2612\"; }\n"
 "</style></head><body style=\" font-family:'Noto Sans SC'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>", None))
-        self.textBrowser_20.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.s4s0x04.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "hr { height: 1px; border-width: 0; }\n"
@@ -2417,7 +2423,7 @@ class Ui_MainWindow(object):
 "li.checked::marker { content: \"\\2612\"; }\n"
 "</style></head><body style=\" font-family:'Noto Sans SC'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>", None))
-        self.textBrowser_61.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.s8s0x00.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "hr { height: 1px; border-width: 0; }\n"
@@ -2425,7 +2431,7 @@ class Ui_MainWindow(object):
 "li.checked::marker { content: \"\\2612\"; }\n"
 "</style></head><body style=\" font-family:'Noto Sans SC'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>", None))
-        self.textBrowser_45.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.s4s0x02.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "hr { height: 1px; border-width: 0; }\n"
@@ -2433,7 +2439,7 @@ class Ui_MainWindow(object):
 "li.checked::marker { content: \"\\2612\"; }\n"
 "</style></head><body style=\" font-family:'Noto Sans SC'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>", None))
-        self.textBrowser_48.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.s5s0x00.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "hr { height: 1px; border-width: 0; }\n"
@@ -2449,7 +2455,7 @@ class Ui_MainWindow(object):
 "li.checked::marker { content: \"\\2612\"; }\n"
 "</style></head><body style=\" font-family:'Noto Sans SC'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
 "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">8</p></body></html>", None))
-        self.textBrowser_40.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.s3s0x00.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "hr { height: 1px; border-width: 0; }\n"
@@ -2473,7 +2479,7 @@ class Ui_MainWindow(object):
 "li.checked::marker { content: \"\\2612\"; }\n"
 "</style></head><body style=\" font-family:'Noto Sans SC'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
 "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">0\u044500(mA)</p></body></html>", None))
-        self.textBrowser_60.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.s8s0x01.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "hr { height: 1px; border-width: 0; }\n"
@@ -2481,7 +2487,7 @@ class Ui_MainWindow(object):
 "li.checked::marker { content: \"\\2612\"; }\n"
 "</style></head><body style=\" font-family:'Noto Sans SC'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>", None))
-        self.textBrowser_23.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.s7s0x04.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "hr { height: 1px; border-width: 0; }\n"
@@ -2489,7 +2495,7 @@ class Ui_MainWindow(object):
 "li.checked::marker { content: \"\\2612\"; }\n"
 "</style></head><body style=\" font-family:'Noto Sans SC'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>", None))
-        self.textBrowser_47.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.s5s0x01.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "hr { height: 1px; border-width: 0; }\n"
@@ -2505,7 +2511,7 @@ class Ui_MainWindow(object):
 "li.checked::marker { content: \"\\2612\"; }\n"
 "</style></head><body style=\" font-family:'Noto Sans SC'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
 "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">5</p></body></html>", None))
-        self.textBrowser_36.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.s2s0x01.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "hr { height: 1px; border-width: 0; }\n"
@@ -2513,7 +2519,7 @@ class Ui_MainWindow(object):
 "li.checked::marker { content: \"\\2612\"; }\n"
 "</style></head><body style=\" font-family:'Noto Sans SC'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">\u0417\u0430\u0434\u0430\u043d\u043e</p></body></html>", None))
-        self.textBrowser_59.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.s8s0x02.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "hr { height: 1px; border-width: 0; }\n"
@@ -2529,7 +2535,7 @@ class Ui_MainWindow(object):
 "li.checked::marker { content: \"\\2612\"; }\n"
 "</style></head><body style=\" font-family:'Noto Sans SC'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
 "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">0x04(V)</p></body></html>", None))
-        self.textBrowser_31.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.s1s0x01.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "hr { height: 1px; border-width: 0; }\n"
@@ -2537,7 +2543,7 @@ class Ui_MainWindow(object):
 "li.checked::marker { content: \"\\2612\"; }\n"
 "</style></head><body style=\" font-family:'Noto Sans SC'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>", None))
-        self.textBrowser_52.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.s6s0x01.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "hr { height: 1px; border-width: 0; }\n"
