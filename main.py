@@ -4,6 +4,8 @@ from PySide6.QtCore    import Qt, QObject, Signal, QThread
 from PySide6.QtWidgets import QApplication, QMainWindow, QComboBox
 import serial
 import serial.tools.list_ports
+import struct
+import time
 
 from ui_main import Ui_MainWindow
 
@@ -82,6 +84,44 @@ class AutoConnectWorker(QObject):
         }
 
 
+class RegisterPoller(QObject):
+    """Поток опроса регистров 22-29 Modbus-устройства."""
+
+    data_ready = Signal(list)
+    error = Signal(str)
+
+    def __init__(self, serial_port: serial.Serial, slave_id: int):
+        super().__init__()
+        self.serial_port = serial_port
+        self.slave_id = slave_id
+        self._running = True
+
+    def stop(self):
+        self._running = False
+
+    def run(self):
+        while self._running:
+            try:
+                # формируем запрос на чтение 8 регистров начиная с адреса 22
+                req = struct.pack(">BBHH", self.slave_id, 3, 22, 8)
+                crc = AutoConnectWorker._calc_crc(req)
+                self.serial_port.write(req + crc.to_bytes(2, "little"))
+                resp = self.serial_port.read(21)
+                if len(resp) < 21 or not self._check_crc(resp):
+                    time.sleep(1)
+                    continue
+                regs = [int.from_bytes(resp[3 + i * 2 : 5 + i * 2], "big") for i in range(8)]
+                self.data_ready.emit(regs)
+            except serial.SerialException as exc:
+                self.error.emit(str(exc))
+                break
+            time.sleep(1)
+
+    def _check_crc(self, packet: bytes) -> bool:
+        recv = int.from_bytes(packet[-2:], "little")
+        calc = AutoConnectWorker._calc_crc(packet[:-2])
+        return recv == calc
+
 class UMVH(QMainWindow):
     def __init__(self):
         super().__init__()
@@ -128,6 +168,19 @@ class UMVH(QMainWindow):
         self.serial_port = None
         self.worker_thread = None
         self.worker = None
+        self.poll_thread = None
+        self.poller = None
+
+        # словарь ячеек таблицы датчиков для быстрого доступа
+        self.sensor_cells = {
+            row: {
+                0: getattr(self.ui, f"s{row}s0x00"),
+                1: getattr(self.ui, f"s{row}s0x01"),
+                2: getattr(self.ui, f"s{row}s0x02"),
+                4: getattr(self.ui, f"s{row}s0x04"),
+            }
+            for row in range(1, 9)
+        }
         self.populate_com_ports()
         # реагируем на смену выбора пользователем
         self.ui.comboBox_11.currentTextChanged.connect(self.on_port_selected)
@@ -208,6 +261,7 @@ class UMVH(QMainWindow):
 
         self._fill_settings_ui()
         self.switch_to(self.ui.page_4)
+        self.start_polling()
 
     def _fill_settings_ui(self):
         """Заполняем виджеты на page_4 полученными значениями."""
@@ -227,7 +281,51 @@ class UMVH(QMainWindow):
         if self.worker_thread:
             self.worker_thread.quit()
             self.worker_thread.wait()
+        self.stop_polling()
         self.switch_to(self.ui.page)
+
+    # --- опрос регистров ------------------------------------------------
+    def start_polling(self):
+        if not self.serial_port:
+            return
+        self.poll_thread = QThread()
+        slave = self.serial_config.get("usart_id", 1)
+        self.poller = RegisterPoller(self.serial_port, slave)
+        self.poller.moveToThread(self.poll_thread)
+        self.poll_thread.started.connect(self.poller.run)
+        self.poller.data_ready.connect(self.update_sensor_table)
+        self.poller.error.connect(self.poll_error)
+        self.poll_thread.start()
+
+    def stop_polling(self):
+        if self.poller:
+            self.poller.stop()
+        if self.poll_thread:
+            self.poll_thread.quit()
+            self.poll_thread.wait()
+
+    def poll_error(self, msg: str):
+        # выводим ошибку чтения в текстовое поле на странице ожидания
+        self.ui.textBrowser_2.setText(msg)
+
+    def update_sensor_table(self, regs: list[int]):
+        """Обновляем таблицу датчиков на странице."""
+        for row, value in enumerate(regs, start=1):
+            cells = self.sensor_cells.get(row, {})
+            for sensor, widget in cells.items():
+                if value & (1 << sensor):
+                    widget.setText("\u0417\u0430\u0434\u0430\u043d\u043e")
+                    widget.setStyleSheet("background-color:rgb(165, 168, 180);")
+                else:
+                    widget.setText("")
+                    widget.setStyleSheet("")
+
+    def closeEvent(self, event):
+        """Гарантируем остановку потоков при закрытии окна."""
+        self.stop_polling()
+        if self.serial_port:
+            self.serial_port.close()
+        super().closeEvent(event)
 
 
 def main():
