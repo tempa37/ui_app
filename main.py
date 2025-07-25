@@ -206,14 +206,24 @@ class UMVH(QMainWindow):
     def populate_com_ports(self):
         """Заполняем comboBox_11 списком доступных COM портов."""
         ports = serial.tools.list_ports.comports()
+
+        # сортируем список по возрастанию индекса, чтобы последний был максимальным
+        def port_index(p):
+            # выдёргиваем цифры из названия, например COM9 -> 9
+            nums = "".join(filter(str.isdigit, p.device))
+            return int(nums) if nums else -1
+
+        ports = sorted(ports, key=port_index)
+
         self.ui.comboBox_11.clear()
         for port in ports:
             # добавляем имя устройства, например 'COM3'
             self.ui.comboBox_11.addItem(port.device)
 
-        # если есть хотя бы один порт, запоминаем первый из списка
         if ports:
-            self.selected_port = ports[0].device
+            # выбираем порт с наибольшим индексом
+            self.selected_port = ports[-1].device
+            self.ui.comboBox_11.setCurrentText(self.selected_port)
         else:
             self.selected_port = None
 
@@ -314,10 +324,14 @@ class UMVH(QMainWindow):
             cells = self.sensor_cells.get(row, {})
             for sensor, widget in cells.items():
                 if value & (1 << sensor):
+                    # отображаем "Задано" по центру ячейки
                     widget.setText("\u0417\u0430\u0434\u0430\u043d\u043e")
+                    widget.setAlignment(Qt.AlignCenter)
                     widget.setStyleSheet("background-color:rgb(165, 168, 180);")
                 else:
+                    # очищаем текст и убираем оформление
                     widget.setText("")
+                    widget.setAlignment(Qt.AlignCenter)
                     widget.setStyleSheet("")
 
     def closeEvent(self, event):
