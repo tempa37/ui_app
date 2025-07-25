@@ -197,6 +197,8 @@ class UMVH(QMainWindow):
 
         # кнопка "Назад" на page_3
         self.ui.pushButton_3.clicked.connect(lambda: self.switch_to(self.ui.page))
+        # кнопка "Подключиться" на page_3
+        self.ui.pushButton_11.clicked.connect(self.manual_connect)
         # кнопка "Назад" на page_2
         self.ui.pushButton_5.clicked.connect(self.stop_auto_connect)
 
@@ -251,6 +253,65 @@ class UMVH(QMainWindow):
     def _auto_connect_error(self, message: str):
         # при ошибке просто выводим её в текстовое поле
         self.ui.textBrowser_2.setText(message)
+
+    def manual_connect(self):
+        """Ручное подключение с выбранными настройками."""
+        if not self.selected_port:
+            return
+
+        # получаем параметры из элементов управления
+        try:
+            baud = int(self.ui.comboBox.currentText())
+        except ValueError:
+            baud = 9600
+        bits = int(self.ui.comboBox_2.currentText())
+        parity_idx = self.ui.comboBox_4.currentIndex()
+        parity_val = {0: serial.PARITY_NONE, 1: serial.PARITY_ODD, 2: serial.PARITY_EVEN}.get(parity_idx, serial.PARITY_NONE)
+        stop = 2 if self.ui.comboBox_3.currentIndex() == 1 else 1
+        slave = self.ui.spinBox.value()
+
+        # создаем временное соединение и проверяем ответ
+        try:
+            ser = serial.Serial(
+                self.selected_port,
+                baudrate=baud,
+                bytesize=serial.EIGHTBITS if bits == 8 else serial.SEVENBITS,
+                parity=parity_val,
+                stopbits=serial.STOPBITS_TWO if stop == 2 else serial.STOPBITS_ONE,
+                timeout=1,
+            )
+        except serial.SerialException as exc:
+            self.ui.textBrowser_2.setText(str(exc))
+            return
+
+        # формируем запрос чтения одного регистра для проверки связи
+        req = struct.pack(">BBHH", slave, 3, 22, 1)
+        crc = AutoConnectWorker._calc_crc(req)
+        ser.write(req + crc.to_bytes(2, "little"))
+        resp = ser.read(7)
+
+        valid = False
+        if len(resp) == 7:
+            recv_crc = int.from_bytes(resp[-2:], "little")
+            calc_crc = AutoConnectWorker._calc_crc(resp[:-2])
+            valid = recv_crc == calc_crc
+
+        ser.close()
+
+        if not valid:
+            # если ответ не получен или CRC неверен
+            self.ui.textBrowser_2.setText("\u041d\u0435\u0442 \u043e\u0442\u0432\u0435\u0442\u0430 \u043e\u0442 \u0443\u0441\u0442\u0440\u043e\u0439\u0441\u0442\u0432\u0430")
+            return
+
+        settings = {
+            "baud": baud,
+            "bits": bits,
+            "parity": parity_idx,
+            "stop": stop,
+            "usart_id": slave,
+        }
+        # используем существующий метод для открытия порта и запуска опроса
+        self._auto_connect_finished(settings)
 
     def _auto_connect_finished(self, settings: dict):
         """Сохранение полученных настроек и открытие порта."""
