@@ -1,7 +1,13 @@
 import sys
 
-from PySide6.QtCore    import Qt, QObject, Signal, QThread
-from PySide6.QtWidgets import QApplication, QMainWindow, QComboBox
+from PySide6.QtCore    import Qt, QObject, Signal, QThread, QTimer
+from PySide6.QtWidgets import (
+    QApplication,
+    QMainWindow,
+    QComboBox,
+    QFileDialog,
+)
+from firmware_update import FirmwareUpdateWorker
 from PySide6.QtCore import QTimer
 import serial
 import serial.tools.list_ports
@@ -227,6 +233,13 @@ class UMVH(QMainWindow):
         self.ui.comboBox_8.currentTextChanged.connect(self._on_setting_changed)
         self.ui.spinBox_2.valueChanged.connect(self._on_setting_changed)
 
+        # кнопка обновления ПО
+        self.ui.OS_update.clicked.connect(self.choose_firmware_file)
+
+        # переменные для процесса обновления
+        self.update_thread = None
+        self.updater = None
+
     def switch_to(self, page_widget):
         self.ui.stackedWidget.setCurrentWidget(page_widget)
 
@@ -358,6 +371,8 @@ class UMVH(QMainWindow):
         self._fill_settings_ui()
         self._capture_page4_settings()
         self.switch_to(self.ui.page_4)
+        # при открытии страницы отображаем кнопку обновления
+        self.ui.stackedWidget_2.setCurrentWidget(self.ui.page_6)
         self.start_polling()
 
     def _fill_settings_ui(self):
@@ -517,6 +532,53 @@ class UMVH(QMainWindow):
 
         if any(r in regs for r in (30, 31, 32, 33, 35)):
             self._apply_new_serial()
+
+    # ------------------------------------------------------------------
+    def choose_firmware_file(self):
+        """Открывает диалог выбора файла прошивки и запускает обновление."""
+        path, _ = QFileDialog.getOpenFileName(self, "Выбор файла прошивки", "", "HEX (*.hex);;All files (*)")
+        if path:
+            self.start_firmware_update(path)
+
+    def start_firmware_update(self, path: str):
+        """Запускает процесс обновления ПО в отдельном потоке."""
+        self.stop_polling()
+        if self.serial_port:
+            self.serial_port.close()
+            self.serial_port = None
+
+        self.ui.progressBar.setValue(0)
+        self.ui.progressBar.setFormat("0% подготовка к обновлению")
+        self.ui.stackedWidget_2.setCurrentWidget(self.ui.page_7)
+
+        port = self.selected_port or ""
+        slave = self.serial_config.get("usart_id", 1)
+
+        self.update_thread = QThread()
+        self.updater = FirmwareUpdateWorker(port, slave, path)
+        self.updater.moveToThread(self.update_thread)
+        self.update_thread.started.connect(self.updater.run)
+        self.updater.progress.connect(self.on_update_progress)
+        self.updater.finished.connect(self.on_update_finished)
+        self.updater.finished.connect(self.update_thread.quit)
+        self.update_thread.start()
+
+    def on_update_progress(self, value: int, text: str):
+        """Обновляет индикатор прогресса."""
+        self.ui.progressBar.setValue(value)
+        if text:
+            self.ui.progressBar.setFormat(f"{value}% {text}")
+        else:
+            self.ui.progressBar.setFormat(f"{value}%")
+
+    def on_update_finished(self, success: bool):
+        """Обработчик завершения обновления."""
+        if success:
+            self.ui.stackedWidget_2.setCurrentWidget(self.ui.page_9)
+            QTimer.singleShot(5000, lambda: self.ui.stackedWidget_2.setCurrentWidget(self.ui.page_6))
+        else:
+            self.ui.stackedWidget_2.setCurrentWidget(self.ui.page_8)
+            QTimer.singleShot(5000, lambda: self.switch_to(self.ui.page))
 
     def _write_register(self, addr: int, value: int) -> bool:
         """Запись одного регистра Modbus."""
