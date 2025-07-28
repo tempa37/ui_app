@@ -1,14 +1,27 @@
 import sys
 
 from PySide6.QtCore    import Qt, QObject, Signal, QThread
-from PySide6.QtWidgets import QApplication, QMainWindow, QComboBox
+from PySide6.QtWidgets import QApplication, QMainWindow, QComboBox, QFileDialog
 from PySide6.QtCore import QTimer
+import math
 import serial
 import serial.tools.list_ports
 import struct
 import time
 
 from ui_main import Ui_MainWindow
+
+# --- константы для обновления ---
+FUNC_CODE_FIRMWARE = 0x2A
+FUNC_CODE_START    = 0x2B
+
+MAX_PACKET_SIZE    = 91
+HEADER_SIZE        = 5
+CRC_SIZE           = 2
+MAX_PAYLOAD_SIZE   = MAX_PACKET_SIZE - HEADER_SIZE - CRC_SIZE
+
+MAX_RETRIES        = 3
+RETRY_DELAY        = 1
 
 
 class AutoConnectWorker(QObject):
@@ -130,6 +143,123 @@ class RegisterPoller(QObject):
         calc = AutoConnectWorker._calc_crc(packet[:-2])
         return recv == calc
 
+
+class FirmwareUpdateWorker(QObject):
+    """\u041e\u0431\u043d\u043e\u0432\u043b\u0435\u043d\u0438\u0435 \u041f\u041e \u0432 \u043e\u0442\u0434\u0435\u043b\u044c\u043d\u043e\u043c \u043f\u043e\u0442\u043e\u043a\u0435."""
+
+    progress = Signal(int, str)
+    finished = Signal(bool)
+
+    def __init__(self, serial_port: serial.Serial, slave_id: int, filename: str):
+        super().__init__()
+        self.serial_port = serial_port
+        self.slave_id = slave_id
+        self.filename = filename
+        self._running = True
+
+    def stop(self):
+        self._running = False
+
+    # --- \u043f\u0440\u043e\u0446\u0435\u0441\u0441 \u043e\u0431\u043d\u043e\u0432\u043b\u0435\u043d\u0438\u044f ----------------------
+    def run(self):
+        try:
+            with open(self.filename, "rb") as f:
+                firmware_data = f.read()
+        except Exception:
+            self.finished.emit(False)
+            return
+
+        total_packets = math.ceil(len(firmware_data) / MAX_PAYLOAD_SIZE)
+
+        # ---- 0x2B ----
+        if not self._send_start():
+            self.finished.emit(False)
+            return
+
+        time.sleep(7)
+
+        # ---- \u0441\u043c\u0435\u043d\u0430 \u043d\u0430 \u0434\u0435\u0444\u043e\u043b\u0442\u043d\u044b\u0435 \u043d\u0430\u0441\u0442\u0440\u043e\u0439\u043a\u0438 ----
+        orig_cfg = (
+            self.serial_port.baudrate,
+            self.serial_port.bytesize,
+            self.serial_port.parity,
+            self.serial_port.stopbits,
+        )
+        try:
+            # \u043f\u043e\u0441\u043b\u0435 \u043a\u043e\u043c\u0430\u043d\u0434\u044b 0x2B
+            # \u043c\u0435\u043d\u044f\u0435\u043c \u043d\u0430 \u0434\u0435\u0444\u043e\u043b\u0442\u043d\u044b\u0435
+            # \u043d\u0430\u0441\u0442\u0440\u043e\u0439\u043a\u0438 \u0434\u043b\u044f
+            # \u043e\u0442\u043f\u0440\u0430\u0432\u043a\u0438 0x2A
+            self.serial_port.baudrate = 9600
+            self.serial_port.bytesize = serial.EIGHTBITS
+            self.serial_port.parity = serial.PARITY_NONE
+            self.serial_port.stopbits = serial.STOPBITS_ONE
+        except serial.SerialException:
+            self.finished.emit(False)
+            return
+
+        first_ack = False
+        for i in range(total_packets):
+            if not self._running:
+                self.finished.emit(False)
+                return
+            chunk = firmware_data[i * MAX_PAYLOAD_SIZE : (i + 1) * MAX_PAYLOAD_SIZE]
+            if not self._send_packet(i + 1, total_packets, chunk):
+                # \u043e\u0448\u0438\u0431\u043a\u0430 \u043e\u0442\u043f\u0440\u0430\u0432\u043a\u0438
+                self._restore_serial(orig_cfg)
+                self.finished.emit(False)
+                return
+
+            if not first_ack:
+                first_ack = True
+
+            pct = int((i + 1) * 100 / total_packets)
+            msg = "" if first_ack else "\u043f\u043e\u0434\u0433\u043e\u0442\u043e\u0432\u043a\u0430 \u043a \u043e\u0431\u043d\u043e\u0432\u043b\u0435\u043d\u0438\u044e"
+            self.progress.emit(pct, msg)
+
+        self._restore_serial(orig_cfg)
+        self.finished.emit(True)
+
+    # ------------------------------------------------------------------
+    def _restore_serial(self, cfg):
+        try:
+            self.serial_port.baudrate = cfg[0]
+            self.serial_port.bytesize = cfg[1]
+            self.serial_port.parity = cfg[2]
+            self.serial_port.stopbits = cfg[3]
+        except serial.SerialException:
+            pass
+
+    def _send_start(self) -> bool:
+        try:
+            req = struct.pack(">BB", self.slave_id, FUNC_CODE_START)
+            crc = AutoConnectWorker._calc_crc(req)
+            self.serial_port.write(req + crc.to_bytes(2, "little"))
+            resp = self.serial_port.read(8)
+            return len(resp) >= 4
+        except serial.SerialException:
+            return False
+
+    def _send_packet(self, idx: int, total: int, payload: bytes) -> bool:
+        frame = bytearray()
+        frame += struct.pack(">BB", self.slave_id, FUNC_CODE_FIRMWARE)
+        frame += idx.to_bytes(2, "big")
+        frame += total.to_bytes(2, "big")
+        frame += payload
+        crc = AutoConnectWorker._calc_crc(frame)
+        frame += crc.to_bytes(2, "little")
+
+        for _ in range(MAX_RETRIES):
+            try:
+                self.serial_port.write(frame)
+                resp = self.serial_port.read(8)
+                if len(resp) >= 4:
+                    return True
+            except serial.SerialException:
+                pass
+            time.sleep(RETRY_DELAY)
+        return False
+
 class UMVH(QMainWindow):
     def __init__(self):
         super().__init__()
@@ -178,6 +308,8 @@ class UMVH(QMainWindow):
         self.worker = None
         self.poll_thread = None
         self.poller = None
+        self.update_thread = None
+        self.updater = None
 
         # словарь ячеек таблицы датчиков для быстрого доступа
         self.sensor_cells = {
@@ -226,9 +358,13 @@ class UMVH(QMainWindow):
         self.ui.comboBox_7.currentIndexChanged.connect(self._on_setting_changed)
         self.ui.comboBox_8.currentTextChanged.connect(self._on_setting_changed)
         self.ui.spinBox_2.valueChanged.connect(self._on_setting_changed)
+        self.ui.OS_update.clicked.connect(self.select_firmware_file)
 
     def switch_to(self, page_widget):
         self.ui.stackedWidget.setCurrentWidget(page_widget)
+        if page_widget is self.ui.page_4:
+            # при открытии page_4 показываем страницу выбора файла
+            self.ui.stackedWidget_2.setCurrentWidget(self.ui.page_6)
 
     def populate_com_ports(self):
         """Заполняем comboBox_11 списком доступных COM портов."""
@@ -488,6 +624,53 @@ class UMVH(QMainWindow):
                     widget.setAlignment(Qt.AlignCenter)
                     widget.setStyleSheet("")
 
+    # --- \u043e\u0431\u043d\u043e\u0432\u043b\u0435\u043d\u0438\u0435 \u041f\u041e ---------------------------------
+    def select_firmware_file(self):
+        filename, _ = QFileDialog.getOpenFileName(self, "Select firmware", "", "Hex files (*.hex);;All files (*)")
+        if filename:
+            self.start_firmware_update(filename)
+
+    def start_firmware_update(self, filename: str):
+        if not self.serial_port:
+            return
+        self.stop_polling()
+        self.ui.progressBar.setValue(0)
+        self.ui.progressBar.setFormat("0% \u043f\u043e\u0434\u0433\u043e\u0442\u043e\u0432\u043a\u0430 \u043a \u043e\u0431\u043d\u043e\u0432\u043b\u0435\u043d\u0438\u044e")
+        self.ui.stackedWidget_2.setCurrentWidget(self.ui.page_7)
+
+        self.update_thread = QThread()
+        # \u043f\u043e \u0442\u0440\u0435\u0431\u043e\u0432\u0430\u043d\u0438\ю
+        # \u043f\u043e\u0441\u044b\u043b\u0430\u0435\u043c \u0431\u043b\u043e\u043a\u0438
+        # 0x2A \u043d\u0430 USART ID = 1
+        self.updater = FirmwareUpdateWorker(self.serial_port, 1, filename)
+        self.updater.moveToThread(self.update_thread)
+        self.update_thread.started.connect(self.updater.run)
+        self.updater.progress.connect(self.update_progress)
+        self.updater.finished.connect(self.update_finished)
+        self.updater.finished.connect(self.update_thread.quit)
+        self.update_thread.start()
+
+    def update_progress(self, percent: int, msg: str):
+        fmt = f"{percent}%" + (f" {msg}" if msg else "")
+        self.ui.progressBar.setFormat(fmt)
+        self.ui.progressBar.setValue(percent)
+
+    def update_finished(self, success: bool):
+        if success:
+            self.ui.stackedWidget_2.setCurrentWidget(self.ui.page_9)
+            QTimer.singleShot(5000, self._finish_success)
+        else:
+            self.ui.stackedWidget_2.setCurrentWidget(self.ui.page_8)
+            QTimer.singleShot(5000, self._finish_failure)
+
+    def _finish_success(self):
+        self.ui.stackedWidget_2.setCurrentWidget(self.ui.page_6)
+        self.start_polling()
+
+    def _finish_failure(self):
+        self.switch_to(self.ui.page)
+        self.start_polling()
+
     def apply_settings(self):
         """Отправляет изменённые настройки на устройство."""
         if not self.serial_port or not self._changed_regs:
@@ -537,6 +720,9 @@ class UMVH(QMainWindow):
     def _handle_comm_error(self):
         """Отображает страницу ошибки и возвращается на главную."""
         self.stop_polling()
+        if self.update_thread:
+            self.update_thread.quit()
+            self.update_thread.wait()
         if self.serial_port:
             self.serial_port.close()
         self.switch_to(self.ui.page_5)
@@ -545,6 +731,9 @@ class UMVH(QMainWindow):
     def closeEvent(self, event):
         """Гарантируем остановку потоков при закрытии окна."""
         self.stop_polling()
+        if self.update_thread:
+            self.update_thread.quit()
+            self.update_thread.wait()
         if self.serial_port:
             self.serial_port.close()
         super().closeEvent(event)
