@@ -461,8 +461,12 @@ class UMVH(QMainWindow):
             self.poll_thread.wait()
 
     def poll_error(self, msg: str):
-        # выводим ошибку чтения в текстовое поле на странице ожидания
+        # выводим текст ошибки на странице ожидания
         self.ui.textBrowser_2.setText(msg)
+        # при любой ошибке связи сразу переходим на страницу ошибки,
+        # которая покажется пользователю в течение 5 секунд, а затем
+        # произойдёт возврат на начальную страницу
+        self._handle_comm_error()
 
     def update_sensor_table(self, regs: list[int]):
         """Обновляем таблицу датчиков на странице."""
@@ -531,7 +535,9 @@ class UMVH(QMainWindow):
         self.stop_polling()
         if self.serial_port:
             self.serial_port.close()
+        # показываем страницу ошибки
         self.switch_to(self.ui.page_5)
+        # через 5 секунд автоматически возвращаемся на главную страницу
         QTimer.singleShot(5000, lambda: self.switch_to(self.ui.page))
 
     def closeEvent(self, event):
