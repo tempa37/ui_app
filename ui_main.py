@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'untitled5.ui'
+## Form generated from reading UI file 'untitled.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.9.1
 ##
@@ -16,16 +16,17 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
 from PySide6.QtWidgets import (QApplication, QComboBox, QFrame, QGridLayout,
-    QHBoxLayout, QMainWindow, QPushButton, QSizePolicy,
-    QSpacerItem, QSpinBox, QSplitter, QStackedWidget,
-    QTextBrowser, QTextEdit, QVBoxLayout, QWidget)
+    QHBoxLayout, QMainWindow, QProgressBar, QPushButton,
+    QSizePolicy, QSpacerItem, QSpinBox, QSplitter,
+    QStackedWidget, QTextBrowser, QTextEdit, QVBoxLayout,
+    QWidget)
 import myicon
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(1039, 812)
+        MainWindow.resize(1070, 812)
         MainWindow.setMinimumSize(QSize(1025, 812))
         MainWindow.setLayoutDirection(Qt.LayoutDirection.RightToLeft)
         MainWindow.setStyleSheet(u"background-color: rgb(89, 89, 89);\n"
@@ -53,7 +54,7 @@ class Ui_MainWindow(object):
 
         self.stackedWidget = QStackedWidget(self.frame)
         self.stackedWidget.setObjectName(u"stackedWidget")
-        self.stackedWidget.setMinimumSize(QSize(0, 60))
+        self.stackedWidget.setMinimumSize(QSize(1025, 60))
         self.stackedWidget.setLayoutDirection(Qt.LayoutDirection.RightToLeft)
         self.page = QWidget()
         self.page.setObjectName(u"page")
@@ -371,6 +372,7 @@ class Ui_MainWindow(object):
         self.splitter.addWidget(self.comboBox_11)
         self.pushButton_6 = QPushButton(self.splitter)
         self.pushButton_6.setObjectName(u"pushButton_6")
+        self.pushButton_6.setEnabled(False)
         sizePolicy1 = QSizePolicy(QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Preferred)
         sizePolicy1.setHorizontalStretch(0)
         sizePolicy1.setVerticalStretch(0)
@@ -790,6 +792,97 @@ class Ui_MainWindow(object):
         self.textBrowser_73.setSizePolicy(sizePolicy2)
         self.textBrowser_73.setMinimumSize(QSize(97, 0))
         self.textBrowser_73.setMaximumSize(QSize(16777215, 40))
+        self.stackedWidget_2 = QStackedWidget(self.frame_13)
+        self.stackedWidget_2.setObjectName(u"stackedWidget_2")
+        self.stackedWidget_2.setGeometry(QRect(10, 160, 431, 101))
+        self.stackedWidget_2.setLayoutDirection(Qt.LayoutDirection.LeftToRight)
+        self.page_6 = QWidget()
+        self.page_6.setObjectName(u"page_6")
+        self.OS_update = QPushButton(self.page_6)
+        self.OS_update.setObjectName(u"OS_update")
+        self.OS_update.setEnabled(True)
+        self.OS_update.setGeometry(QRect(0, 10, 431, 71))
+        self.OS_update.setFont(font)
+        self.stackedWidget_2.addWidget(self.page_6)
+        self.page_9 = QWidget()
+        self.page_9.setObjectName(u"page_9")
+        self.textBrowser_83 = QTextBrowser(self.page_9)
+        self.textBrowser_83.setObjectName(u"textBrowser_83")
+        self.textBrowser_83.setGeometry(QRect(0, 20, 431, 61))
+        sizePolicy2.setHeightForWidth(self.textBrowser_83.sizePolicy().hasHeightForWidth())
+        self.textBrowser_83.setSizePolicy(sizePolicy2)
+        self.textBrowser_83.setMinimumSize(QSize(0, 0))
+        self.textBrowser_83.setMaximumSize(QSize(16777215, 16000))
+        self.textBrowser_83.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        self.textBrowser_83.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        self.stackedWidget_2.addWidget(self.page_9)
+        self.page_7 = QWidget()
+        self.page_7.setObjectName(u"page_7")
+        self.page_7.setContextMenuPolicy(Qt.ContextMenuPolicy.NoContextMenu)
+        self.page_7.setLayoutDirection(Qt.LayoutDirection.RightToLeft)
+        self.page_7.setStyleSheet(u"/* \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 \u041f\u0420\u041e\u0413\u0420\u0415\u0421\u0421-\u0411\u0410\u0420 \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 */\n"
+"\n"
+"/* \u00ab\u043f\u0443\u0441\u0442\u0430\u044f\u00bb \u0434\u043e\u0440\u043e\u0436\u043a\u0430 */\n"
+"QProgressBar {\n"
+"    border: 2px solid #909090;   /* \u0442\u0430 \u0436\u0435 \u0442\u043e\u043b\u0449\u0438\u043d\u0430 \u0438 \u0446\u0432\u0435\u0442 \u0440\u0430\u043c\u043a\u0438          */\n"
+"    border-radius: 12px;         /* \u043e\u0434\u0438\u043d\u0430\u043a\u043e\u0432\u044b\u0439 \u0440\u0430\u0434\u0438\u0443\u0441, \u043a\u0430\u043a \u0443 \u043e\u0441\u0442\u0430\u043b\u044c\u043d\u044b\u0445  */\n"
+"    background: #404040;         /* \u043e\u0431\u0449\u0438\u0439 \u0444\u043e\u043d \u0432\u0438\u0434\u0436\u0435\u0442\u043e\u0432                  */\n"
+"    min-height: 24px;            /* \u043d\u0435 \u0434\u0430\u0451\u043c \u0441\u043f\u043b\u044e\u0449\u0438\u0432\u0430\u0442\u044c"
+                        "\u0441\u044f                */\n"
+"\n"
+"    /* \u0435\u0441\u043b\u0438 \u0445\u043e\u0442\u0438\u0442\u0435 \u043f\u0440\u043e\u0446\u0435\u043d\u0442 \u0432\u043d\u0443\u0442\u0440\u0438 \u2014 \u0440\u0430\u0441\u043a\u043e\u043c\u043c\u0435\u043d\u0442\u0438\u0440\u0443\u0439\u0442\u0435:\n"
+"       text-align: center;\n"
+"       color: white; */\n"
+"}\n"
+"\n"
+"/* \u00ab\u0437\u0430\u043f\u043e\u043b\u043d\u0435\u043d\u043d\u0430\u044f\u00bb \u0447\u0430\u0441\u0442\u044c (\u0433\u043e\u0440\u0438\u0437\u043e\u043d\u0442\u0430\u043b\u044c\u043d\u0430\u044f) */\n"
+"QProgressBar::chunk {\n"
+"    background: #2d97ff;         /* \u0432\u0430\u0448 \u0444\u0438\u0440\u043c\u0435\u043d\u043d\u044b\u0439 \u0441\u0438\u043d\u0438\u0439                 */\n"
+"    border-radius: 12px;         /* \u0447\u0442\u043e\u0431\u044b \u043a\u0440\u0430\u0439 \u0437\u0430\u043f\u043e\u043b\u043d\u0435\u043d\u0438\u044f \u0442\u043e\u0436\u0435 \u0431\u044b\u043b \u043a\u0440\u0443\u0433\u043b\u044b\u043c */\n"
+"}\n"
+"\n"
+"/*"
+                        " \u0435\u0441\u043b\u0438 \u0432\u0434\u0440\u0443\u0433 \u043f\u043e\u043d\u0430\u0434\u043e\u0431\u0438\u0442\u0441\u044f \u0432\u0435\u0440\u0442\u0438\u043a\u0430\u043b\u044c\u043d\u044b\u0439 \u0431\u0430\u0440 \u2014\n"
+"   \u0442\u043e\u0442 \u0436\u0435 \u0441\u0442\u0438\u043b\u044c \u0434\u043b\u044f \u0432\u0435\u0440\u0442\u0438\u043a\u0430\u043b\u044c\u043d\u043e\u0433\u043e chunk\u2019\u0430  */\n"
+"QProgressBar:vertical::chunk {\n"
+"    background: #2d97ff;\n"
+"    border-radius: 12px;\n"
+"}\n"
+"\n"
+"/* \u2500\u2500 QProgressBar \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500*/\n"
+"QProgressBar {\n"
+"    border: 2px solid #909090;   /* \u0442\u0430\u043a\u0430\u044f \u0436\u0435 \u0440\u0430\u043c\u043a\u0430, \u043a\u0430\u043a \u0432 \u0434\u0440\u0443\u0433\u0438\u0445 \u043a\u043e\u043d"
+                        "\u0442\u0440\u043e\u043b\u0430\u0445 */\n"
+"    border-radius: 12px;\n"
+"    background: #404040;         /* \u043e\u0431\u0449\u0438\u0439 \u0442\u0451\u043c\u043d\u043e-\u0441\u0435\u0440\u044b\u0439 \u0444\u043e\u043d */\n"
+"    min-height: 24px;\n"
+"\n"
+"    text-align: center;          /* \u043f\u0440\u043e\u0446\u0435\u043d\u0442/\u0442\u0435\u043a\u0441\u0442 \u043f\u043e \u0446\u0435\u043d\u0442\u0440\u0443 */\n"
+"    color: white;                /* \u0431\u0435\u043b\u044b\u0435 \u0431\u0443\u043a\u0432\u044b \u043f\u043e\u0432\u0435\u0440\u0445 \u0441\u0438\u043d\u0435\u0433\u043e */\n"
+"}\n"
+"\n"
+"QProgressBar::chunk {\n"
+"    background: #2d97ff;         /* \u0444\u0438\u0440\u043c\u0435\u043d\u043d\u044b\u0439 \u0441\u0438\u043d\u0438\u0439 */\n"
+"    border-radius: 12px;         /* \u0441\u043a\u0440\u0443\u0433\u043b\u044f\u0435\u043c \u0442\u0430\u043a \u0436\u0435, \u043a\u0430\u043a \u0434\u043e\u0440\u043e\u0436\u043a\u0443 */\n"
+"}")
+        self.progressBar = QProgressBar(self.page_7)
+        self.progressBar.setObjectName(u"progressBar")
+        self.progressBar.setGeometry(QRect(10, 37, 411, 31))
+        self.progressBar.setLayoutDirection(Qt.LayoutDirection.LeftToRight)
+        self.progressBar.setValue(24)
+        self.stackedWidget_2.addWidget(self.page_7)
+        self.page_8 = QWidget()
+        self.page_8.setObjectName(u"page_8")
+        self.textBrowser_82 = QTextBrowser(self.page_8)
+        self.textBrowser_82.setObjectName(u"textBrowser_82")
+        self.textBrowser_82.setGeometry(QRect(0, 20, 431, 61))
+        sizePolicy2.setHeightForWidth(self.textBrowser_82.sizePolicy().hasHeightForWidth())
+        self.textBrowser_82.setSizePolicy(sizePolicy2)
+        self.textBrowser_82.setMinimumSize(QSize(0, 0))
+        self.textBrowser_82.setMaximumSize(QSize(16777215, 16000))
+        self.textBrowser_82.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        self.textBrowser_82.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        self.stackedWidget_2.addWidget(self.page_8)
 
         self.gridLayout_7.addWidget(self.frame_13, 1, 0, 1, 1)
 
@@ -816,35 +909,14 @@ class Ui_MainWindow(object):
 
         self.gridLayout_8.addWidget(self.comboBox_6, 2, 0, 1, 1)
 
-        self.verticalSpacer = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
+        self.textBrowser_62 = QTextBrowser(self.frame_11)
+        self.textBrowser_62.setObjectName(u"textBrowser_62")
+        sizePolicy2.setHeightForWidth(self.textBrowser_62.sizePolicy().hasHeightForWidth())
+        self.textBrowser_62.setSizePolicy(sizePolicy2)
+        self.textBrowser_62.setMinimumSize(QSize(97, 0))
+        self.textBrowser_62.setMaximumSize(QSize(16777215, 40))
 
-        self.gridLayout_8.addItem(self.verticalSpacer, 6, 0, 1, 1)
-
-        self.spinBox_2 = QSpinBox(self.frame_11)
-        self.spinBox_2.setObjectName(u"spinBox_2")
-        sizePolicy3.setHeightForWidth(self.spinBox_2.sizePolicy().hasHeightForWidth())
-        self.spinBox_2.setSizePolicy(sizePolicy3)
-        self.spinBox_2.setMinimumSize(QSize(0, 42))
-
-        self.gridLayout_8.addWidget(self.spinBox_2, 5, 0, 1, 1)
-
-        self.textBrowser_66 = QTextBrowser(self.frame_11)
-        self.textBrowser_66.setObjectName(u"textBrowser_66")
-        sizePolicy2.setHeightForWidth(self.textBrowser_66.sizePolicy().hasHeightForWidth())
-        self.textBrowser_66.setSizePolicy(sizePolicy2)
-        self.textBrowser_66.setMinimumSize(QSize(97, 0))
-        self.textBrowser_66.setMaximumSize(QSize(16777215, 40))
-
-        self.gridLayout_8.addWidget(self.textBrowser_66, 5, 1, 1, 1)
-
-        self.textBrowser_64 = QTextBrowser(self.frame_11)
-        self.textBrowser_64.setObjectName(u"textBrowser_64")
-        sizePolicy2.setHeightForWidth(self.textBrowser_64.sizePolicy().hasHeightForWidth())
-        self.textBrowser_64.setSizePolicy(sizePolicy2)
-        self.textBrowser_64.setMinimumSize(QSize(97, 0))
-        self.textBrowser_64.setMaximumSize(QSize(16777215, 40))
-
-        self.gridLayout_8.addWidget(self.textBrowser_64, 3, 1, 1, 1)
+        self.gridLayout_8.addWidget(self.textBrowser_62, 1, 1, 1, 1)
 
         self.comboBox_5 = QComboBox(self.frame_11)
         self.comboBox_5.addItem("")
@@ -870,15 +942,6 @@ class Ui_MainWindow(object):
 
         self.gridLayout_8.addWidget(self.comboBox_5, 1, 0, 1, 1)
 
-        self.textBrowser_63 = QTextBrowser(self.frame_11)
-        self.textBrowser_63.setObjectName(u"textBrowser_63")
-        sizePolicy2.setHeightForWidth(self.textBrowser_63.sizePolicy().hasHeightForWidth())
-        self.textBrowser_63.setSizePolicy(sizePolicy2)
-        self.textBrowser_63.setMinimumSize(QSize(97, 0))
-        self.textBrowser_63.setMaximumSize(QSize(16777215, 40))
-
-        self.gridLayout_8.addWidget(self.textBrowser_63, 2, 1, 1, 1)
-
         self.comboBox_8 = QComboBox(self.frame_11)
         self.comboBox_8.addItem("")
         self.comboBox_8.addItem("")
@@ -890,14 +953,32 @@ class Ui_MainWindow(object):
 
         self.gridLayout_8.addWidget(self.comboBox_8, 4, 0, 1, 1)
 
-        self.textBrowser_62 = QTextBrowser(self.frame_11)
-        self.textBrowser_62.setObjectName(u"textBrowser_62")
-        sizePolicy2.setHeightForWidth(self.textBrowser_62.sizePolicy().hasHeightForWidth())
-        self.textBrowser_62.setSizePolicy(sizePolicy2)
-        self.textBrowser_62.setMinimumSize(QSize(97, 0))
-        self.textBrowser_62.setMaximumSize(QSize(16777215, 40))
+        self.textBrowser_64 = QTextBrowser(self.frame_11)
+        self.textBrowser_64.setObjectName(u"textBrowser_64")
+        sizePolicy2.setHeightForWidth(self.textBrowser_64.sizePolicy().hasHeightForWidth())
+        self.textBrowser_64.setSizePolicy(sizePolicy2)
+        self.textBrowser_64.setMinimumSize(QSize(97, 0))
+        self.textBrowser_64.setMaximumSize(QSize(16777215, 40))
 
-        self.gridLayout_8.addWidget(self.textBrowser_62, 1, 1, 1, 1)
+        self.gridLayout_8.addWidget(self.textBrowser_64, 3, 1, 1, 1)
+
+        self.textBrowser_66 = QTextBrowser(self.frame_11)
+        self.textBrowser_66.setObjectName(u"textBrowser_66")
+        sizePolicy2.setHeightForWidth(self.textBrowser_66.sizePolicy().hasHeightForWidth())
+        self.textBrowser_66.setSizePolicy(sizePolicy2)
+        self.textBrowser_66.setMinimumSize(QSize(97, 0))
+        self.textBrowser_66.setMaximumSize(QSize(16777215, 40))
+
+        self.gridLayout_8.addWidget(self.textBrowser_66, 5, 1, 1, 1)
+
+        self.textBrowser_65 = QTextBrowser(self.frame_11)
+        self.textBrowser_65.setObjectName(u"textBrowser_65")
+        sizePolicy2.setHeightForWidth(self.textBrowser_65.sizePolicy().hasHeightForWidth())
+        self.textBrowser_65.setSizePolicy(sizePolicy2)
+        self.textBrowser_65.setMinimumSize(QSize(97, 0))
+        self.textBrowser_65.setMaximumSize(QSize(16777215, 40))
+
+        self.gridLayout_8.addWidget(self.textBrowser_65, 4, 1, 1, 1)
 
         self.textBrowser_74 = QTextBrowser(self.frame_11)
         self.textBrowser_74.setObjectName(u"textBrowser_74")
@@ -910,14 +991,22 @@ class Ui_MainWindow(object):
 
         self.gridLayout_8.addWidget(self.textBrowser_74, 0, 0, 1, 2)
 
-        self.textBrowser_65 = QTextBrowser(self.frame_11)
-        self.textBrowser_65.setObjectName(u"textBrowser_65")
-        sizePolicy2.setHeightForWidth(self.textBrowser_65.sizePolicy().hasHeightForWidth())
-        self.textBrowser_65.setSizePolicy(sizePolicy2)
-        self.textBrowser_65.setMinimumSize(QSize(97, 0))
-        self.textBrowser_65.setMaximumSize(QSize(16777215, 40))
+        self.spinBox_2 = QSpinBox(self.frame_11)
+        self.spinBox_2.setObjectName(u"spinBox_2")
+        sizePolicy3.setHeightForWidth(self.spinBox_2.sizePolicy().hasHeightForWidth())
+        self.spinBox_2.setSizePolicy(sizePolicy3)
+        self.spinBox_2.setMinimumSize(QSize(0, 42))
 
-        self.gridLayout_8.addWidget(self.textBrowser_65, 4, 1, 1, 1)
+        self.gridLayout_8.addWidget(self.spinBox_2, 5, 0, 1, 1)
+
+        self.textBrowser_63 = QTextBrowser(self.frame_11)
+        self.textBrowser_63.setObjectName(u"textBrowser_63")
+        sizePolicy2.setHeightForWidth(self.textBrowser_63.sizePolicy().hasHeightForWidth())
+        self.textBrowser_63.setSizePolicy(sizePolicy2)
+        self.textBrowser_63.setMinimumSize(QSize(97, 0))
+        self.textBrowser_63.setMaximumSize(QSize(16777215, 40))
+
+        self.gridLayout_8.addWidget(self.textBrowser_63, 2, 1, 1, 1)
 
         self.comboBox_7 = QComboBox(self.frame_11)
         self.comboBox_7.addItem("")
@@ -930,6 +1019,10 @@ class Ui_MainWindow(object):
         self.comboBox_7.setLayoutDirection(Qt.LayoutDirection.LeftToRight)
 
         self.gridLayout_8.addWidget(self.comboBox_7, 3, 0, 1, 1)
+
+        self.verticalSpacer = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
+
+        self.gridLayout_8.addItem(self.verticalSpacer, 6, 0, 1, 1)
 
 
         self.gridLayout_7.addWidget(self.frame_11, 0, 0, 1, 1)
@@ -1161,12 +1254,6 @@ class Ui_MainWindow(object):
 
         self.gridLayout_6.addWidget(self.s3s0x00, 3, 3, 1, 1)
 
-        self.textBrowser_29 = QTextBrowser(self.frame_10)
-        self.textBrowser_29.setObjectName(u"textBrowser_29")
-        self.textBrowser_29.setMinimumSize(QSize(97, 0))
-
-        self.gridLayout_6.addWidget(self.textBrowser_29, 0, 4, 1, 1)
-
         self.textBrowser_28 = QTextBrowser(self.frame_10)
         self.textBrowser_28.setObjectName(u"textBrowser_28")
         self.textBrowser_28.setMinimumSize(QSize(97, 0))
@@ -1274,6 +1361,7 @@ class Ui_MainWindow(object):
         self.spinBox_3.setMinimumSize(QSize(0, 42))
         self.spinBox_3.setLayoutDirection(Qt.LayoutDirection.LeftToRight)
         self.spinBox_3.setStyleSheet(u"")
+        self.spinBox_3.setMaximum(65535)
         self.spinBox_5 = QSpinBox(self.frame_12)
         self.spinBox_5.setObjectName(u"spinBox_5")
         self.spinBox_5.setGeometry(QRect(260, 160, 131, 42))
@@ -1281,6 +1369,7 @@ class Ui_MainWindow(object):
         self.spinBox_5.setSizePolicy(sizePolicy3)
         self.spinBox_5.setMinimumSize(QSize(0, 42))
         self.spinBox_5.setLayoutDirection(Qt.LayoutDirection.LeftToRight)
+        self.spinBox_5.setMaximum(65535)
         self.spinBox_6 = QSpinBox(self.frame_12)
         self.spinBox_6.setObjectName(u"spinBox_6")
         self.spinBox_6.setGeometry(QRect(10, 210, 131, 42))
@@ -1288,6 +1377,7 @@ class Ui_MainWindow(object):
         self.spinBox_6.setSizePolicy(sizePolicy3)
         self.spinBox_6.setMinimumSize(QSize(0, 42))
         self.spinBox_6.setLayoutDirection(Qt.LayoutDirection.LeftToRight)
+        self.spinBox_6.setMaximum(65535)
         self.spinBox_7 = QSpinBox(self.frame_12)
         self.spinBox_7.setObjectName(u"spinBox_7")
         self.spinBox_7.setGeometry(QRect(10, 160, 131, 42))
@@ -1295,6 +1385,7 @@ class Ui_MainWindow(object):
         self.spinBox_7.setSizePolicy(sizePolicy3)
         self.spinBox_7.setMinimumSize(QSize(0, 42))
         self.spinBox_7.setLayoutDirection(Qt.LayoutDirection.LeftToRight)
+        self.spinBox_7.setMaximum(65535)
         self.textBrowser_67 = QTextBrowser(self.frame_12)
         self.textBrowser_67.setObjectName(u"textBrowser_67")
         self.textBrowser_67.setGeometry(QRect(290, 60, 211, 40))
@@ -2360,9 +2451,14 @@ class Ui_MainWindow(object):
 "}\n"
 "\n"
 "")
+        self.gridLayout_10 = QGridLayout(self.page_5)
+        self.gridLayout_10.setObjectName(u"gridLayout_10")
         self.textBrowser_3 = QTextBrowser(self.page_5)
         self.textBrowser_3.setObjectName(u"textBrowser_3")
-        self.textBrowser_3.setGeometry(QRect(270, 270, 401, 192))
+        self.textBrowser_3.setMaximumSize(QSize(400, 200))
+
+        self.gridLayout_10.addWidget(self.textBrowser_3, 0, 0, 1, 1)
+
         self.stackedWidget.addWidget(self.page_5)
 
         self.gridLayout_4.addWidget(self.stackedWidget, 0, 1, 1, 1)
@@ -2370,18 +2466,12 @@ class Ui_MainWindow(object):
 
         self.gridLayout_3.addWidget(self.frame, 0, 0, 1, 1)
 
-        self.frame_6 = QFrame(self.centralwidget)
-        self.frame_6.setObjectName(u"frame_6")
-        self.frame_6.setFrameShape(QFrame.Shape.StyledPanel)
-        self.frame_6.setFrameShadow(QFrame.Shadow.Raised)
-
-        self.gridLayout_3.addWidget(self.frame_6, 0, 1, 1, 1)
-
         MainWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(MainWindow)
 
         self.stackedWidget.setCurrentIndex(1)
+        self.stackedWidget_2.setCurrentIndex(1)
 
 
         QMetaObject.connectSlotsByName(MainWindow)
@@ -2409,25 +2499,34 @@ class Ui_MainWindow(object):
 "li.checked::marker { content: \"\\2612\"; }\n"
 "</style></head><body style=\" font-family:'Noto Sans SC'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">\u041f\u0430\u0440\u043e\u043b\u044c</p></body></html>", None))
+        self.OS_update.setText(QCoreApplication.translate("MainWindow", u"\u041e\u0431\u043d\u043e\u0432\u0438\u0442\u044c \u041f\u041e", None))
+        self.textBrowser_83.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"hr { height: 1px; border-width: 0; }\n"
+"li.unchecked::marker { content: \"\\2610\"; }\n"
+"li.checked::marker { content: \"\\2612\"; }\n"
+"</style></head><body style=\" font-family:'Noto Sans SC'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
+"<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:12pt;\">\u041e\u0431\u043d\u043e\u0432\u043b\u0435\u043d\u0438\u0435 \u0432\u044b\u043f\u043e\u043b\u043d\u0435\u043d\u043e \u0443\u0441\u043f\u0435\u0448\u043d\u043e, \u043d\u0435\u043e\u0431\u0445\u043e\u0434\u0438\u043c\u043e \u043f\u0435\u0440\u0435\u043f\u043e\u0434\u043a\u043b\u044e\u0447\u0435\u043d\u0438\u0435</span></p></body></html>", None))
+        self.textBrowser_82.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"hr { height: 1px; border-width: 0; }\n"
+"li.unchecked::marker { content: \"\\2610\"; }\n"
+"li.checked::marker { content: \"\\2612\"; }\n"
+"</style></head><body style=\" font-family:'Noto Sans SC'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
+"<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:12pt;\">\u041e\u0448\u0438\u0431\u043a\u0430 \u043e\u0431\u043d\u043e\u0432\u043b\u0435\u043d\u0438\u044f</span></p></body></html>", None))
         self.comboBox_6.setItemText(0, QCoreApplication.translate("MainWindow", u"7", None))
         self.comboBox_6.setItemText(1, QCoreApplication.translate("MainWindow", u"8", None))
 
-        self.textBrowser_66.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.textBrowser_62.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "hr { height: 1px; border-width: 0; }\n"
 "li.unchecked::marker { content: \"\\2610\"; }\n"
 "li.checked::marker { content: \"\\2612\"; }\n"
 "</style></head><body style=\" font-family:'Noto Sans SC'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">USART ID</p></body></html>", None))
-        self.textBrowser_64.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
-"<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
-"p, li { white-space: pre-wrap; }\n"
-"hr { height: 1px; border-width: 0; }\n"
-"li.unchecked::marker { content: \"\\2610\"; }\n"
-"li.checked::marker { content: \"\\2612\"; }\n"
-"</style></head><body style=\" font-family:'Noto Sans SC'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">\u0427\u0435\u0442\u043d\u043e\u0441\u0442\u044c</p></body></html>", None))
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">USART \u0441\u043a\u043e\u0440\u043e\u0441\u0442\u044c</p></body></html>", None))
         self.comboBox_5.setItemText(0, QCoreApplication.translate("MainWindow", u"300", None))
         self.comboBox_5.setItemText(1, QCoreApplication.translate("MainWindow", u"600", None))
         self.comboBox_5.setItemText(2, QCoreApplication.translate("MainWindow", u"1200", None))
@@ -2444,33 +2543,25 @@ class Ui_MainWindow(object):
         self.comboBox_5.setItemText(13, QCoreApplication.translate("MainWindow", u"230400", None))
         self.comboBox_5.setItemText(14, QCoreApplication.translate("MainWindow", u"256000", None))
 
-        self.textBrowser_63.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
-"<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
-"p, li { white-space: pre-wrap; }\n"
-"hr { height: 1px; border-width: 0; }\n"
-"li.unchecked::marker { content: \"\\2610\"; }\n"
-"li.checked::marker { content: \"\\2612\"; }\n"
-"</style></head><body style=\" font-family:'Noto Sans SC'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">\u041a\u043e\u043b\u043b\u0438\u0447\u0435\u0441\u0442\u0432\u043e \u0431\u0438\u0442</p></body></html>", None))
         self.comboBox_8.setItemText(0, QCoreApplication.translate("MainWindow", u"1", None))
         self.comboBox_8.setItemText(1, QCoreApplication.translate("MainWindow", u"2", None))
 
-        self.textBrowser_62.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.textBrowser_64.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "hr { height: 1px; border-width: 0; }\n"
 "li.unchecked::marker { content: \"\\2610\"; }\n"
 "li.checked::marker { content: \"\\2612\"; }\n"
 "</style></head><body style=\" font-family:'Noto Sans SC'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">USART \u0441\u043a\u043e\u0440\u043e\u0441\u0442\u044c</p></body></html>", None))
-        self.textBrowser_74.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">\u0427\u0435\u0442\u043d\u043e\u0441\u0442\u044c</p></body></html>", None))
+        self.textBrowser_66.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "hr { height: 1px; border-width: 0; }\n"
 "li.unchecked::marker { content: \"\\2610\"; }\n"
 "li.checked::marker { content: \"\\2612\"; }\n"
 "</style></head><body style=\" font-family:'Noto Sans SC'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
-"<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:12pt;\">\u041d\u0430\u0441\u0442\u0440\u043e\u0439\u043a\u0438 USART</span></p></body></html>", None))
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">USART ID</p></body></html>", None))
         self.textBrowser_65.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
@@ -2479,6 +2570,22 @@ class Ui_MainWindow(object):
 "li.checked::marker { content: \"\\2612\"; }\n"
 "</style></head><body style=\" font-family:'Noto Sans SC'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">\u0421\u0442\u043e\u043f \u0431\u0438\u0442</p></body></html>", None))
+        self.textBrowser_74.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"hr { height: 1px; border-width: 0; }\n"
+"li.unchecked::marker { content: \"\\2610\"; }\n"
+"li.checked::marker { content: \"\\2612\"; }\n"
+"</style></head><body style=\" font-family:'Noto Sans SC'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
+"<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:12pt;\">\u041d\u0430\u0441\u0442\u0440\u043e\u0439\u043a\u0438 USART</span></p></body></html>", None))
+        self.textBrowser_63.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"hr { height: 1px; border-width: 0; }\n"
+"li.unchecked::marker { content: \"\\2610\"; }\n"
+"li.checked::marker { content: \"\\2612\"; }\n"
+"</style></head><body style=\" font-family:'Noto Sans SC'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">\u041a\u043e\u043b\u043b\u0438\u0447\u0435\u0441\u0442\u0432\u043e \u0431\u0438\u0442</p></body></html>", None))
         self.comboBox_7.setItemText(0, QCoreApplication.translate("MainWindow", u"\u041d\u0435\u0442", None))
         self.comboBox_7.setItemText(1, QCoreApplication.translate("MainWindow", u"\u041d\u0435\u0447\u0435\u0442\u043d\u0430\u044f", None))
         self.comboBox_7.setItemText(2, QCoreApplication.translate("MainWindow", u"\u0427\u0435\u0442\u043d\u0430\u044f", None))
@@ -2748,14 +2855,6 @@ class Ui_MainWindow(object):
 "</style></head><body style=\" font-family:'Noto Sans SC'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
 "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">8</p></body></html>", None))
         self.s3s0x00.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
-"<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
-"p, li { white-space: pre-wrap; }\n"
-"hr { height: 1px; border-width: 0; }\n"
-"li.unchecked::marker { content: \"\\2610\"; }\n"
-"li.checked::marker { content: \"\\2612\"; }\n"
-"</style></head><body style=\" font-family:'Noto Sans SC'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>", None))
-        self.textBrowser_29.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "hr { height: 1px; border-width: 0; }\n"
