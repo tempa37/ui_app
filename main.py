@@ -2,6 +2,7 @@ import sys
 
 from PySide6.QtCore    import Qt, QObject, Signal, QThread
 from PySide6.QtWidgets import QApplication, QMainWindow, QComboBox
+from PySide6.QtCore import QTimer
 import serial
 import serial.tools.list_ports
 import struct
@@ -181,6 +182,9 @@ class UMVH(QMainWindow):
             }
             for row in range(1, 9)
         }
+        # словари для отслеживания изменений настроек
+        self._saved_regs: dict[int, int] = {}
+        self._changed_regs: dict[int, int] = {}
         self.populate_com_ports()
         # реагируем на смену выбора пользователем
         self.ui.comboBox_11.currentTextChanged.connect(self.on_port_selected)
@@ -201,6 +205,20 @@ class UMVH(QMainWindow):
         self.ui.pushButton_11.clicked.connect(self.manual_connect)
         # кнопка "Назад" на page_2
         self.ui.pushButton_5.clicked.connect(self.stop_auto_connect)
+
+        # обработчики изменений на page_4
+        self.ui.pushButton_4.clicked.connect(self.apply_settings)
+        self.ui.comboBox_10.currentTextChanged.connect(self._on_setting_changed)
+        self.ui.comboBox_9.currentIndexChanged.connect(self._on_setting_changed)
+        self.ui.spinBox_7.valueChanged.connect(self._on_setting_changed)
+        self.ui.spinBox_6.valueChanged.connect(self._on_setting_changed)
+        self.ui.spinBox_5.valueChanged.connect(self._on_setting_changed)
+        self.ui.spinBox_3.valueChanged.connect(self._on_setting_changed)
+        self.ui.comboBox_5.currentTextChanged.connect(self._on_setting_changed)
+        self.ui.comboBox_6.currentTextChanged.connect(self._on_setting_changed)
+        self.ui.comboBox_7.currentIndexChanged.connect(self._on_setting_changed)
+        self.ui.comboBox_8.currentTextChanged.connect(self._on_setting_changed)
+        self.ui.spinBox_2.valueChanged.connect(self._on_setting_changed)
 
     def switch_to(self, page_widget):
         self.ui.stackedWidget.setCurrentWidget(page_widget)
@@ -331,6 +349,7 @@ class UMVH(QMainWindow):
             return
 
         self._fill_settings_ui()
+        self._capture_page4_settings()
         self.switch_to(self.ui.page_4)
         self.start_polling()
 
@@ -344,6 +363,72 @@ class UMVH(QMainWindow):
         self.ui.comboBox_8.setCurrentText(str(cfg.get("stop", "")))
         if "usart_id" in cfg:
             self.ui.spinBox_2.setValue(cfg["usart_id"])
+
+    def _capture_page4_settings(self):
+        """Сохраняем текущие значения виджетов страницы."""
+        self._saved_regs = self._get_current_regs()
+        self._changed_regs.clear()
+
+    def _on_setting_changed(self):
+        """Обработчик изменения любых настроек на page_4."""
+        current = self._get_current_regs()
+        for reg, val in current.items():
+            if self._saved_regs.get(reg) != val:
+                self._changed_regs[reg] = val
+            elif reg in self._changed_regs:
+                del self._changed_regs[reg]
+
+    def _get_current_regs(self) -> dict[int, int]:
+        """Возвращает словарь регистр -> значение из UI."""
+        try:
+            sensor = int(self.ui.comboBox_9.currentText().split()[0], 16)
+        except ValueError:
+            sensor = 0
+        try:
+            port = int(self.ui.comboBox_10.currentText())
+        except ValueError:
+            port = 0
+        regs = {
+            17: (port << 8) | sensor,
+            18: self.ui.spinBox_7.value(),
+            19: self.ui.spinBox_6.value(),
+            20: self.ui.spinBox_5.value(),
+            21: self.ui.spinBox_3.value(),
+            30: int(self.ui.comboBox_5.currentText()) // 100,
+            31: int(self.ui.comboBox_6.currentText()),
+            32: self.ui.comboBox_7.currentIndex(),
+            33: int(self.ui.comboBox_8.currentText()),
+            35: self.ui.spinBox_2.value(),
+        }
+        return regs
+
+    def _apply_new_serial(self):
+        """Применяем настройки USART после отправки."""
+        cfg = {
+            "baud": int(self.ui.comboBox_5.currentText()),
+            "bits": int(self.ui.comboBox_6.currentText()),
+            "parity": self.ui.comboBox_7.currentIndex(),
+            "stop": int(self.ui.comboBox_8.currentText()),
+            "usart_id": self.ui.spinBox_2.value(),
+        }
+        try:
+            if self.serial_port:
+                self.serial_port.close()
+            self.serial_port = serial.Serial(
+                self.selected_port,
+                baudrate=cfg["baud"],
+                bytesize=serial.EIGHTBITS if cfg["bits"] == 8 else serial.SEVENBITS,
+                parity={0: serial.PARITY_NONE, 1: serial.PARITY_ODD, 2: serial.PARITY_EVEN}.get(cfg["parity"], serial.PARITY_NONE),
+                stopbits=serial.STOPBITS_TWO if cfg["stop"] == 2 else serial.STOPBITS_ONE,
+                timeout=1,
+            )
+        except serial.SerialException:
+            self._handle_comm_error()
+            return
+        self.serial_config = cfg
+        self._fill_settings_ui()
+        self.stop_polling()
+        self.start_polling()
 
     def stop_auto_connect(self):
         """Останавливаем поток автоподключения и возвращаемся на главную."""
@@ -394,6 +479,60 @@ class UMVH(QMainWindow):
                     widget.setText("")
                     widget.setAlignment(Qt.AlignCenter)
                     widget.setStyleSheet("")
+
+    def apply_settings(self):
+        """Отправляет изменённые настройки на устройство."""
+        if not self.serial_port or not self._changed_regs:
+            return
+
+        regs = self._changed_regs.copy()
+        pwd_text = self.ui.textEditSP.toPlainText().strip()
+        if pwd_text:
+            try:
+                regs[34] = int(pwd_text)
+            except ValueError:
+                pass
+
+        order = [17, 18, 19, 20, 21, 30, 31, 32, 33, 35]
+        for reg in order:
+            if reg in regs:
+                if not self._write_register(reg, regs[reg]):
+                    self._handle_comm_error()
+                    return
+        if 34 in regs:
+            if not self._write_register(34, regs[34]):
+                self._handle_comm_error()
+                return
+
+        self._saved_regs.update(regs)
+        self._changed_regs.clear()
+
+        if any(r in regs for r in (30, 31, 32, 33, 35)):
+            self._apply_new_serial()
+
+    def _write_register(self, addr: int, value: int) -> bool:
+        """Запись одного регистра Modbus."""
+        try:
+            slave = self.serial_config.get("usart_id", 1)
+            req = struct.pack(">BBHH", slave, 6, addr, value)
+            crc = AutoConnectWorker._calc_crc(req)
+            self.serial_port.write(req + crc.to_bytes(2, "little"))
+            resp = self.serial_port.read(8)
+            if len(resp) != 8:
+                return False
+            recv_crc = int.from_bytes(resp[-2:], "little")
+            calc_crc = AutoConnectWorker._calc_crc(resp[:-2])
+            return recv_crc == calc_crc
+        except serial.SerialException:
+            return False
+
+    def _handle_comm_error(self):
+        """Отображает страницу ошибки и возвращается на главную."""
+        self.stop_polling()
+        if self.serial_port:
+            self.serial_port.close()
+        self.switch_to(self.ui.page_5)
+        QTimer.singleShot(5000, lambda: self.switch_to(self.ui.page))
 
     def closeEvent(self, event):
         """Гарантируем остановку потоков при закрытии окна."""
