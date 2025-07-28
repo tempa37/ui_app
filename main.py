@@ -90,12 +90,14 @@ class RegisterPoller(QObject):
 
     data_ready = Signal(list)
     error = Signal(str)
+    connection_lost = Signal()
 
     def __init__(self, serial_port: serial.Serial, slave_id: int):
         super().__init__()
         self.serial_port = serial_port
         self.slave_id = slave_id
         self._running = True
+        self._fail_count = 0
 
     def stop(self):
         self._running = False
@@ -109,8 +111,13 @@ class RegisterPoller(QObject):
                 self.serial_port.write(req + crc.to_bytes(2, "little"))
                 resp = self.serial_port.read(21)
                 if len(resp) < 21 or not self._check_crc(resp):
+                    self._fail_count += 1
+                    if self._fail_count >= 5:
+                        self.connection_lost.emit()
+                        break
                     time.sleep(1)
                     continue
+                self._fail_count = 0
                 regs = [int.from_bytes(resp[3 + i * 2 : 5 + i * 2], "big") for i in range(8)]
                 self.data_ready.emit(regs)
             except serial.SerialException as exc:
@@ -451,6 +458,7 @@ class UMVH(QMainWindow):
         self.poll_thread.started.connect(self.poller.run)
         self.poller.data_ready.connect(self.update_sensor_table)
         self.poller.error.connect(self.poll_error)
+        self.poller.connection_lost.connect(self._handle_comm_error)
         self.poll_thread.start()
 
     def stop_polling(self):
