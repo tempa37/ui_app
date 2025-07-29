@@ -23,6 +23,14 @@ MAX_PAYLOAD_SIZE   = MAX_PACKET_SIZE - HEADER_SIZE - CRC_SIZE
 MAX_RETRIES        = 3
 RETRY_DELAY        = 1
 
+# --- настройки USART для автоподключения и отправки 0x2A ---------
+# используются при приёме пакета автоподключения и во время
+# обновления прошивки
+DEFAULT_BAUDRATE = 56000
+DEFAULT_BYTESIZE = serial.EIGHTBITS
+DEFAULT_PARITY   = serial.PARITY_NONE
+DEFAULT_STOPBITS = serial.STOPBITS_ONE
+
 
 class AutoConnectWorker(QObject):
     """Поток для приёма Modbus пакета с настройками."""
@@ -42,10 +50,10 @@ class AutoConnectWorker(QObject):
         try:
             ser = serial.Serial(
                 self.port,
-                baudrate=9600,
-                bytesize=serial.EIGHTBITS,
-                parity=serial.PARITY_NONE,
-                stopbits=serial.STOPBITS_ONE,
+                baudrate=DEFAULT_BAUDRATE,
+                bytesize=DEFAULT_BYTESIZE,
+                parity=DEFAULT_PARITY,
+                stopbits=DEFAULT_STOPBITS,
                 timeout=1,
             )
         except serial.SerialException as exc:
@@ -187,13 +195,12 @@ class FirmwareUpdateWorker(QObject):
         )
         try:
             # \u043f\u043e\u0441\u043b\u0435 \u043a\u043e\u043c\u0430\u043d\u0434\u044b 0x2B
-            # \u043c\u0435\u043d\u044f\u0435\u043c \u043d\u0430 \u0434\u0435\u0444\u043e\u043b\u0442\u043d\u044b\u0435
-            # \u043d\u0430\u0441\u0442\u0440\u043e\u0439\u043a\u0438 \u0434\u043b\u044f
-            # \u043e\u0442\u043f\u0440\u0430\u0432\u043a\u0438 0x2A
-            self.serial_port.baudrate = 9600
-            self.serial_port.bytesize = serial.EIGHTBITS
-            self.serial_port.parity = serial.PARITY_NONE
-            self.serial_port.stopbits = serial.STOPBITS_ONE
+            # \u043f\u0435\u0440\u0435\u043a\u043b\u044e\u0447\u0430\u0435\u043c \u043f\u043e\u0440\u0442 \u043d\u0430 \u043e\u0431\u0449\u0438\u0435
+            # \u043d\u0430\u0441\u0442\u0440\u043e\u0439\u043a\u0438 \u0434\u043b\u044f \u043e\u0442\u043f\u0440\u0430\u0432\u043a\u0438 0x2A
+            self.serial_port.baudrate = DEFAULT_BAUDRATE
+            self.serial_port.bytesize = DEFAULT_BYTESIZE
+            self.serial_port.parity = DEFAULT_PARITY
+            self.serial_port.stopbits = DEFAULT_STOPBITS
         except serial.SerialException:
             self.finished.emit(False)
             return
@@ -424,7 +431,7 @@ class UMVH(QMainWindow):
         try:
             baud = int(self.ui.comboBox.currentText())
         except ValueError:
-            baud = 9600
+            baud = DEFAULT_BAUDRATE
         bits = int(self.ui.comboBox_2.currentText())
         parity_idx = self.ui.comboBox_4.currentIndex()
         parity_val = {0: serial.PARITY_NONE, 1: serial.PARITY_ODD, 2: serial.PARITY_EVEN}.get(parity_idx, serial.PARITY_NONE)
