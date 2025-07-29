@@ -366,6 +366,8 @@ class UMVH(QMainWindow):
         self.ui.comboBox_8.currentTextChanged.connect(self._on_setting_changed)
         self.ui.spinBox_2.valueChanged.connect(self._on_setting_changed)
         self.ui.OS_update.clicked.connect(self.select_firmware_file)
+        self.ui.stackedWidget_3.setCurrentWidget(self.ui.page_11)
+        self.ui.pushButton_7.clicked.connect(self.select_bootloader_firmware_file)
 
     def switch_to(self, page_widget):
         self.ui.stackedWidget.setCurrentWidget(page_widget)
@@ -676,6 +678,55 @@ class UMVH(QMainWindow):
 
     def _finish_failure(self):
         self.switch_to(self.ui.page)
+        self.start_polling()
+
+    # --- обновление из загрузчика ---------------------------------
+    def select_bootloader_firmware_file(self):
+        filename, _ = QFileDialog.getOpenFileName(
+            self,
+            "Select firmware",
+            "",
+            "Hex files (*.hex);;All files (*)",
+        )
+        if filename:
+            self.start_bootloader_firmware_update(filename)
+
+    def start_bootloader_firmware_update(self, filename: str):
+        if not self.serial_port:
+            return
+        self.stop_polling()
+        self.ui.progressBar_2.setValue(0)
+        self.ui.progressBar_2.setFormat("0% \u043f\u043e\u0434\u0433\u043e\u0442\u043e\u0432\u043a\u0430 \u043a \u043e\u0431\u043d\u043e\u0432\u043b\u0435\u043d\u0438\u044e")
+        self.ui.stackedWidget_3.setCurrentWidget(self.ui.page_10)
+
+        self.update_thread = QThread()
+        self.updater = FirmwareUpdateWorker(self.serial_port, 1, filename)
+        self.updater.moveToThread(self.update_thread)
+        self.update_thread.started.connect(self.updater.run)
+        self.updater.progress.connect(self.update_progress_bl)
+        self.updater.finished.connect(self.update_finished_bl)
+        self.updater.finished.connect(self.update_thread.quit)
+        self.update_thread.start()
+
+    def update_progress_bl(self, percent: int, msg: str):
+        fmt = f"{percent}%" + (f" {msg}" if msg else "")
+        self.ui.progressBar_2.setFormat(fmt)
+        self.ui.progressBar_2.setValue(percent)
+
+    def update_finished_bl(self, success: bool):
+        if success:
+            self.ui.stackedWidget_3.setCurrentWidget(self.ui.page_12)
+            QTimer.singleShot(5000, self._finish_success_bl)
+        else:
+            self.ui.stackedWidget_3.setCurrentWidget(self.ui.page_13)
+            QTimer.singleShot(5000, self._finish_failure_bl)
+
+    def _finish_success_bl(self):
+        self.ui.stackedWidget_3.setCurrentWidget(self.ui.page_11)
+        self.start_polling()
+
+    def _finish_failure_bl(self):
+        self.ui.stackedWidget_3.setCurrentWidget(self.ui.page_11)
         self.start_polling()
 
     def apply_settings(self):
