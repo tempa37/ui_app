@@ -262,7 +262,8 @@ class FirmwareUpdateWorker(QObject):
                 resp = self.serial_port.read(8)
                 if len(resp) >= 4:
                     return True
-            except serial.SerialException:
+            except (serial.SerialException, OSError):
+                # ошибка передачи - пробуем ещё раз
                 pass
             time.sleep(RETRY_DELAY)
         return False
@@ -296,7 +297,7 @@ class BootloaderUpdateWorker(QObject):
                 stopbits=DEFAULT_STOPBITS,
                 timeout=1,
             )
-        except serial.SerialException:
+        except (serial.SerialException, OSError):  # если порт не открыть
             self.finished.emit(False)
             return
 
@@ -304,7 +305,12 @@ class BootloaderUpdateWorker(QObject):
             with open(self.filename, "rb") as f:
                 firmware_data = f.read()
         except Exception:
-            self.serial_port.close()
+            # закрываем порт, если файл не открыт
+            try:
+                if self.serial_port:
+                    self.serial_port.close()
+            except (serial.SerialException, OSError):
+                pass
             self.finished.emit(False)
             return
 
@@ -313,12 +319,21 @@ class BootloaderUpdateWorker(QObject):
         first_ack = False
         for i in range(total_packets):
             if not self._running:
-                self.serial_port.close()
+                try:
+                    if self.serial_port:
+                        self.serial_port.close()
+                except (serial.SerialException, OSError):
+                    pass
                 self.finished.emit(False)
                 return
             chunk = firmware_data[i * MAX_PAYLOAD_SIZE : (i + 1) * MAX_PAYLOAD_SIZE]
             if not self._send_packet(i + 1, total_packets, chunk):
-                self.serial_port.close()
+                # в случае ошибки отправки закрываем порт и сообщаем о неудаче
+                try:
+                    if self.serial_port:
+                        self.serial_port.close()
+                except (serial.SerialException, OSError):
+                    pass
                 self.finished.emit(False)
                 return
 
@@ -329,7 +344,11 @@ class BootloaderUpdateWorker(QObject):
             msg = "" if first_ack else "подготовка к обновлению"
             self.progress.emit(pct, msg)
 
-        self.serial_port.close()
+        try:
+            if self.serial_port:
+                self.serial_port.close()
+        except (serial.SerialException, OSError):
+            pass
         self.finished.emit(True)
 
     def _send_packet(self, idx: int, total: int, payload: bytes) -> bool:
@@ -820,7 +839,9 @@ class UMVH(QMainWindow):
         self.ui.stackedWidget_3.setCurrentWidget(self.ui.page_11)
 
     def _boot_finish_failure(self):
+        # после сообщения об ошибке возвращаем на главную страницу
         self.ui.stackedWidget_3.setCurrentWidget(self.ui.page_11)
+        self.switch_to(self.ui.page)
 
     def apply_settings(self):
         """Отправляет изменённые настройки на устройство."""
