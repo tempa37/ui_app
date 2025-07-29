@@ -83,7 +83,7 @@ font-family: Noto Sans SC</string>
           <enum>Qt::LayoutDirection::RightToLeft</enum>
          </property>
          <property name="currentIndex">
-          <number>1</number>
+          <number>0</number>
          </property>
          <widget class="QWidget" name="page">
           <property name="styleSheet">
@@ -359,6 +359,127 @@ QSpinBox:disabled {
 </string>
           </property>
           <layout class="QGridLayout" name="gridLayout_9">
+           <item row="1" column="0">
+            <widget class="QStackedWidget" name="stackedWidget_3">
+             <widget class="QWidget" name="page_10">
+              <property name="styleSheet">
+               <string notr="true">/* ────────── ПРОГРЕСС-БАР ────────── */
+
+/* «заполненная» часть (горизонтальная) */
+QProgressBar::chunk {
+    background: #2d97ff;         /* ваш фирменный синий                 */
+    border-radius: 12px;         /* чтобы край заполнения тоже был круглым */
+	
+}
+
+/* ── QProgressBar ───────────────────────────────────────────*/
+QProgressBar {
+    border: 2px solid #909090;   /* такая же рамка, как в других контролах */
+    border-radius: 12px;
+    background: #404040;         /* общий тёмно-серый фон */
+    min-height: 24px;
+
+    text-align: center;          /* процент/текст по центру */
+    color: white;                /* белые буквы поверх синего */
+}
+</string>
+              </property>
+              <widget class="QProgressBar" name="progressBar_2">
+               <property name="geometry">
+                <rect>
+                 <x>210</x>
+                 <y>67</y>
+                 <width>591</width>
+                 <height>31</height>
+                </rect>
+               </property>
+               <property name="layoutDirection">
+                <enum>Qt::LayoutDirection::LeftToRight</enum>
+               </property>
+               <property name="value">
+                <number>24</number>
+               </property>
+              </widget>
+             </widget>
+             <widget class="QWidget" name="page_12">
+              <widget class="QTextBrowser" name="textBrowser_10">
+               <property name="geometry">
+                <rect>
+                 <x>210</x>
+                 <y>50</y>
+                 <width>601</width>
+                 <height>71</height>
+                </rect>
+               </property>
+               <property name="html">
+                <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;meta charset=&quot;utf-8&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+hr { height: 1px; border-width: 0; }
+li.unchecked::marker { content: &quot;\2610&quot;; }
+li.checked::marker { content: &quot;\2612&quot;; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Noto Sans SC'; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:14pt;&quot;&gt;Прошивка загружена успешно&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+               </property>
+              </widget>
+             </widget>
+             <widget class="QWidget" name="page_13">
+              <widget class="QTextBrowser" name="textBrowser_11">
+               <property name="geometry">
+                <rect>
+                 <x>210</x>
+                 <y>50</y>
+                 <width>601</width>
+                 <height>71</height>
+                </rect>
+               </property>
+               <property name="html">
+                <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;meta charset=&quot;utf-8&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+hr { height: 1px; border-width: 0; }
+li.unchecked::marker { content: &quot;\2610&quot;; }
+li.checked::marker { content: &quot;\2612&quot;; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Noto Sans SC'; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:14pt;&quot;&gt;Произошла ошибка обновления&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+               </property>
+              </widget>
+             </widget>
+             <widget class="QWidget" name="page_11">
+              <widget class="QPushButton" name="pushButton_7">
+               <property name="geometry">
+                <rect>
+                 <x>200</x>
+                 <y>40</y>
+                 <width>200</width>
+                 <height>70</height>
+                </rect>
+               </property>
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>200</width>
+                 <height>70</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>0</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="text">
+                <string>Обновление ПО из загрузчика</string>
+               </property>
+              </widget>
+             </widget>
+            </widget>
+           </item>
            <item row="0" column="0">
             <layout class="QVBoxLayout" name="verticalLayout">
              <item>
@@ -411,7 +532,23 @@ li.checked::marker { content: &quot;\2612&quot;; }
               </widget>
              </item>
              <item>
+              <widget class="QFrame" name="frame_6">
+               <property name="frameShape">
+                <enum>QFrame::Shape::StyledPanel</enum>
+               </property>
+               <property name="frameShadow">
+                <enum>QFrame::Shadow::Raised</enum>
+               </property>
+              </widget>
+             </item>
+             <item>
               <widget class="QFrame" name="frame_2">
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>100</height>
+                </size>
+               </property>
                <property name="frameShape">
                 <enum>QFrame::Shape::StyledPanel</enum>
                </property>
@@ -462,7 +599,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                  <property name="minimumSize">
                   <size>
                    <width>70</width>
-                   <height>0</height>
+                   <height>100</height>
                   </size>
                  </property>
                  <property name="frameShape">
@@ -511,6 +648,22 @@ li.checked::marker { content: &quot;\2612&quot;; }
               </layout>
              </item>
             </layout>
+           </item>
+           <item row="2" column="0">
+            <widget class="QFrame" name="frame_14">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>100</height>
+              </size>
+             </property>
+             <property name="frameShape">
+              <enum>QFrame::Shape::StyledPanel</enum>
+             </property>
+             <property name="frameShadow">
+              <enum>QFrame::Shadow::Raised</enum>
+             </property>
+            </widget>
            </item>
           </layout>
          </widget>
@@ -936,7 +1089,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                   <enum>Qt::LayoutDirection::LeftToRight</enum>
                  </property>
                  <property name="currentIndex">
-                  <number>1</number>
+                  <number>2</number>
                  </property>
                  <widget class="QWidget" name="page_6">
                   <widget class="QPushButton" name="OS_update">
@@ -1018,29 +1171,11 @@ li.checked::marker { content: &quot;\2612&quot;; }
                   <property name="styleSheet">
                    <string notr="true">/* ────────── ПРОГРЕСС-БАР ────────── */
 
-/* «пустая» дорожка */
-QProgressBar {
-    border: 2px solid #909090;   /* та же толщина и цвет рамки          */
-    border-radius: 12px;         /* одинаковый радиус, как у остальных  */
-    background: #404040;         /* общий фон виджетов                  */
-    min-height: 24px;            /* не даём сплющиваться                */
-
-    /* если хотите процент внутри — раскомментируйте:
-       text-align: center;
-       color: white; */
-}
-
 /* «заполненная» часть (горизонтальная) */
 QProgressBar::chunk {
     background: #2d97ff;         /* ваш фирменный синий                 */
     border-radius: 12px;         /* чтобы край заполнения тоже был круглым */
-}
-
-/* если вдруг понадобится вертикальный бар —
-   тот же стиль для вертикального chunk’а  */
-QProgressBar:vertical::chunk {
-    background: #2d97ff;
-    border-radius: 12px;
+	
 }
 
 /* ── QProgressBar ───────────────────────────────────────────*/
@@ -1053,11 +1188,7 @@ QProgressBar {
     text-align: center;          /* процент/текст по центру */
     color: white;                /* белые буквы поверх синего */
 }
-
-QProgressBar::chunk {
-    background: #2d97ff;         /* фирменный синий */
-    border-radius: 12px;         /* скругляем так же, как дорожку */
-}</string>
+</string>
                   </property>
                   <widget class="QProgressBar" name="progressBar">
                    <property name="geometry">

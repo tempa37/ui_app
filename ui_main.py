@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'untitled.ui'
+## Form generated from reading UI file 'untitled2.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.9.1
 ##
@@ -350,15 +350,74 @@ class Ui_MainWindow(object):
 "")
         self.gridLayout_9 = QGridLayout(self.page)
         self.gridLayout_9.setObjectName(u"gridLayout_9")
+        self.stackedWidget_3 = QStackedWidget(self.page)
+        self.stackedWidget_3.setObjectName(u"stackedWidget_3")
+        self.page_10 = QWidget()
+        self.page_10.setObjectName(u"page_10")
+        self.page_10.setStyleSheet(u"/* \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 \u041f\u0420\u041e\u0413\u0420\u0415\u0421\u0421-\u0411\u0410\u0420 \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 */\n"
+"\n"
+"/* \u00ab\u0437\u0430\u043f\u043e\u043b\u043d\u0435\u043d\u043d\u0430\u044f\u00bb \u0447\u0430\u0441\u0442\u044c (\u0433\u043e\u0440\u0438\u0437\u043e\u043d\u0442\u0430\u043b\u044c\u043d\u0430\u044f) */\n"
+"QProgressBar::chunk {\n"
+"    background: #2d97ff;         /* \u0432\u0430\u0448 \u0444\u0438\u0440\u043c\u0435\u043d\u043d\u044b\u0439 \u0441\u0438\u043d\u0438\u0439                 */\n"
+"    border-radius: 12px;         /* \u0447\u0442\u043e\u0431\u044b \u043a\u0440\u0430\u0439 \u0437\u0430\u043f\u043e\u043b\u043d\u0435\u043d\u0438\u044f \u0442\u043e\u0436\u0435 \u0431\u044b\u043b \u043a\u0440\u0443\u0433\u043b\u044b\u043c */\n"
+"	\n"
+"}\n"
+"\n"
+"/* \u2500\u2500 QProgressBar \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500"
+                        "\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500*/\n"
+"QProgressBar {\n"
+"    border: 2px solid #909090;   /* \u0442\u0430\u043a\u0430\u044f \u0436\u0435 \u0440\u0430\u043c\u043a\u0430, \u043a\u0430\u043a \u0432 \u0434\u0440\u0443\u0433\u0438\u0445 \u043a\u043e\u043d\u0442\u0440\u043e\u043b\u0430\u0445 */\n"
+"    border-radius: 12px;\n"
+"    background: #404040;         /* \u043e\u0431\u0449\u0438\u0439 \u0442\u0451\u043c\u043d\u043e-\u0441\u0435\u0440\u044b\u0439 \u0444\u043e\u043d */\n"
+"    min-height: 24px;\n"
+"\n"
+"    text-align: center;          /* \u043f\u0440\u043e\u0446\u0435\u043d\u0442/\u0442\u0435\u043a\u0441\u0442 \u043f\u043e \u0446\u0435\u043d\u0442\u0440\u0443 */\n"
+"    color: white;                /* \u0431\u0435\u043b\u044b\u0435 \u0431\u0443\u043a\u0432\u044b \u043f\u043e\u0432\u0435\u0440\u0445 \u0441\u0438\u043d\u0435\u0433\u043e */\n"
+"}\n"
+"")
+        self.progressBar_2 = QProgressBar(self.page_10)
+        self.progressBar_2.setObjectName(u"progressBar_2")
+        self.progressBar_2.setGeometry(QRect(210, 67, 591, 31))
+        self.progressBar_2.setLayoutDirection(Qt.LayoutDirection.LeftToRight)
+        self.progressBar_2.setValue(24)
+        self.stackedWidget_3.addWidget(self.page_10)
+        self.page_12 = QWidget()
+        self.page_12.setObjectName(u"page_12")
+        self.textBrowser_10 = QTextBrowser(self.page_12)
+        self.textBrowser_10.setObjectName(u"textBrowser_10")
+        self.textBrowser_10.setGeometry(QRect(210, 50, 601, 71))
+        self.stackedWidget_3.addWidget(self.page_12)
+        self.page_13 = QWidget()
+        self.page_13.setObjectName(u"page_13")
+        self.textBrowser_11 = QTextBrowser(self.page_13)
+        self.textBrowser_11.setObjectName(u"textBrowser_11")
+        self.textBrowser_11.setGeometry(QRect(210, 50, 601, 71))
+        self.stackedWidget_3.addWidget(self.page_13)
+        self.page_11 = QWidget()
+        self.page_11.setObjectName(u"page_11")
+        self.pushButton_7 = QPushButton(self.page_11)
+        self.pushButton_7.setObjectName(u"pushButton_7")
+        self.pushButton_7.setGeometry(QRect(200, 40, 200, 70))
+        sizePolicy = QSizePolicy(QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Preferred)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.pushButton_7.sizePolicy().hasHeightForWidth())
+        self.pushButton_7.setSizePolicy(sizePolicy)
+        self.pushButton_7.setMinimumSize(QSize(200, 70))
+        self.pushButton_7.setMaximumSize(QSize(0, 0))
+        self.stackedWidget_3.addWidget(self.page_11)
+
+        self.gridLayout_9.addWidget(self.stackedWidget_3, 1, 0, 1, 1)
+
         self.verticalLayout = QVBoxLayout()
         self.verticalLayout.setObjectName(u"verticalLayout")
         self.textBrowser = QTextBrowser(self.page)
         self.textBrowser.setObjectName(u"textBrowser")
-        sizePolicy = QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Preferred)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.textBrowser.sizePolicy().hasHeightForWidth())
-        self.textBrowser.setSizePolicy(sizePolicy)
+        sizePolicy1 = QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Preferred)
+        sizePolicy1.setHorizontalStretch(0)
+        sizePolicy1.setVerticalStretch(0)
+        sizePolicy1.setHeightForWidth(self.textBrowser.sizePolicy().hasHeightForWidth())
+        self.textBrowser.setSizePolicy(sizePolicy1)
 
         self.verticalLayout.addWidget(self.textBrowser)
 
@@ -373,17 +432,22 @@ class Ui_MainWindow(object):
         self.pushButton_6 = QPushButton(self.splitter)
         self.pushButton_6.setObjectName(u"pushButton_6")
         self.pushButton_6.setEnabled(False)
-        sizePolicy1 = QSizePolicy(QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Preferred)
-        sizePolicy1.setHorizontalStretch(0)
-        sizePolicy1.setVerticalStretch(0)
-        sizePolicy1.setHeightForWidth(self.pushButton_6.sizePolicy().hasHeightForWidth())
-        self.pushButton_6.setSizePolicy(sizePolicy1)
+        sizePolicy.setHeightForWidth(self.pushButton_6.sizePolicy().hasHeightForWidth())
+        self.pushButton_6.setSizePolicy(sizePolicy)
         self.splitter.addWidget(self.pushButton_6)
 
         self.verticalLayout.addWidget(self.splitter)
 
+        self.frame_6 = QFrame(self.page)
+        self.frame_6.setObjectName(u"frame_6")
+        self.frame_6.setFrameShape(QFrame.Shape.StyledPanel)
+        self.frame_6.setFrameShadow(QFrame.Shadow.Raised)
+
+        self.verticalLayout.addWidget(self.frame_6)
+
         self.frame_2 = QFrame(self.page)
         self.frame_2.setObjectName(u"frame_2")
+        self.frame_2.setMinimumSize(QSize(0, 100))
         self.frame_2.setFrameShape(QFrame.Shape.StyledPanel)
         self.frame_2.setFrameShadow(QFrame.Shadow.Raised)
 
@@ -400,8 +464,8 @@ class Ui_MainWindow(object):
 
         self.pushButton = QPushButton(self.page)
         self.pushButton.setObjectName(u"pushButton")
-        sizePolicy1.setHeightForWidth(self.pushButton.sizePolicy().hasHeightForWidth())
-        self.pushButton.setSizePolicy(sizePolicy1)
+        sizePolicy.setHeightForWidth(self.pushButton.sizePolicy().hasHeightForWidth())
+        self.pushButton.setSizePolicy(sizePolicy)
         self.pushButton.setMinimumSize(QSize(0, 4))
         self.pushButton.setMaximumSize(QSize(200, 70))
 
@@ -409,7 +473,7 @@ class Ui_MainWindow(object):
 
         self.frame_3 = QFrame(self.page)
         self.frame_3.setObjectName(u"frame_3")
-        self.frame_3.setMinimumSize(QSize(70, 0))
+        self.frame_3.setMinimumSize(QSize(70, 100))
         self.frame_3.setFrameShape(QFrame.Shape.StyledPanel)
         self.frame_3.setFrameShadow(QFrame.Shadow.Raised)
 
@@ -417,8 +481,8 @@ class Ui_MainWindow(object):
 
         self.pushButton_2 = QPushButton(self.page)
         self.pushButton_2.setObjectName(u"pushButton_2")
-        sizePolicy1.setHeightForWidth(self.pushButton_2.sizePolicy().hasHeightForWidth())
-        self.pushButton_2.setSizePolicy(sizePolicy1)
+        sizePolicy.setHeightForWidth(self.pushButton_2.sizePolicy().hasHeightForWidth())
+        self.pushButton_2.setSizePolicy(sizePolicy)
         self.pushButton_2.setMinimumSize(QSize(0, 0))
         self.pushButton_2.setMaximumSize(QSize(200, 70))
 
@@ -436,6 +500,14 @@ class Ui_MainWindow(object):
 
 
         self.gridLayout_9.addLayout(self.verticalLayout, 0, 0, 1, 1)
+
+        self.frame_14 = QFrame(self.page)
+        self.frame_14.setObjectName(u"frame_14")
+        self.frame_14.setMinimumSize(QSize(0, 100))
+        self.frame_14.setFrameShape(QFrame.Shape.StyledPanel)
+        self.frame_14.setFrameShadow(QFrame.Shadow.Raised)
+
+        self.gridLayout_9.addWidget(self.frame_14, 2, 0, 1, 1)
 
         self.stackedWidget.addWidget(self.page)
         self.page_4 = QWidget()
@@ -822,37 +894,17 @@ class Ui_MainWindow(object):
         self.page_7.setLayoutDirection(Qt.LayoutDirection.RightToLeft)
         self.page_7.setStyleSheet(u"/* \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 \u041f\u0420\u041e\u0413\u0420\u0415\u0421\u0421-\u0411\u0410\u0420 \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 */\n"
 "\n"
-"/* \u00ab\u043f\u0443\u0441\u0442\u0430\u044f\u00bb \u0434\u043e\u0440\u043e\u0436\u043a\u0430 */\n"
-"QProgressBar {\n"
-"    border: 2px solid #909090;   /* \u0442\u0430 \u0436\u0435 \u0442\u043e\u043b\u0449\u0438\u043d\u0430 \u0438 \u0446\u0432\u0435\u0442 \u0440\u0430\u043c\u043a\u0438          */\n"
-"    border-radius: 12px;         /* \u043e\u0434\u0438\u043d\u0430\u043a\u043e\u0432\u044b\u0439 \u0440\u0430\u0434\u0438\u0443\u0441, \u043a\u0430\u043a \u0443 \u043e\u0441\u0442\u0430\u043b\u044c\u043d\u044b\u0445  */\n"
-"    background: #404040;         /* \u043e\u0431\u0449\u0438\u0439 \u0444\u043e\u043d \u0432\u0438\u0434\u0436\u0435\u0442\u043e\u0432                  */\n"
-"    min-height: 24px;            /* \u043d\u0435 \u0434\u0430\u0451\u043c \u0441\u043f\u043b\u044e\u0449\u0438\u0432\u0430\u0442\u044c"
-                        "\u0441\u044f                */\n"
-"\n"
-"    /* \u0435\u0441\u043b\u0438 \u0445\u043e\u0442\u0438\u0442\u0435 \u043f\u0440\u043e\u0446\u0435\u043d\u0442 \u0432\u043d\u0443\u0442\u0440\u0438 \u2014 \u0440\u0430\u0441\u043a\u043e\u043c\u043c\u0435\u043d\u0442\u0438\u0440\u0443\u0439\u0442\u0435:\n"
-"       text-align: center;\n"
-"       color: white; */\n"
-"}\n"
-"\n"
 "/* \u00ab\u0437\u0430\u043f\u043e\u043b\u043d\u0435\u043d\u043d\u0430\u044f\u00bb \u0447\u0430\u0441\u0442\u044c (\u0433\u043e\u0440\u0438\u0437\u043e\u043d\u0442\u0430\u043b\u044c\u043d\u0430\u044f) */\n"
 "QProgressBar::chunk {\n"
 "    background: #2d97ff;         /* \u0432\u0430\u0448 \u0444\u0438\u0440\u043c\u0435\u043d\u043d\u044b\u0439 \u0441\u0438\u043d\u0438\u0439                 */\n"
 "    border-radius: 12px;         /* \u0447\u0442\u043e\u0431\u044b \u043a\u0440\u0430\u0439 \u0437\u0430\u043f\u043e\u043b\u043d\u0435\u043d\u0438\u044f \u0442\u043e\u0436\u0435 \u0431\u044b\u043b \u043a\u0440\u0443\u0433\u043b\u044b\u043c */\n"
+"	\n"
 "}\n"
 "\n"
-"/*"
-                        " \u0435\u0441\u043b\u0438 \u0432\u0434\u0440\u0443\u0433 \u043f\u043e\u043d\u0430\u0434\u043e\u0431\u0438\u0442\u0441\u044f \u0432\u0435\u0440\u0442\u0438\u043a\u0430\u043b\u044c\u043d\u044b\u0439 \u0431\u0430\u0440 \u2014\n"
-"   \u0442\u043e\u0442 \u0436\u0435 \u0441\u0442\u0438\u043b\u044c \u0434\u043b\u044f \u0432\u0435\u0440\u0442\u0438\u043a\u0430\u043b\u044c\u043d\u043e\u0433\u043e chunk\u2019\u0430  */\n"
-"QProgressBar:vertical::chunk {\n"
-"    background: #2d97ff;\n"
-"    border-radius: 12px;\n"
-"}\n"
-"\n"
-"/* \u2500\u2500 QProgressBar \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500*/\n"
+"/* \u2500\u2500 QProgressBar \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500"
+                        "\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500*/\n"
 "QProgressBar {\n"
-"    border: 2px solid #909090;   /* \u0442\u0430\u043a\u0430\u044f \u0436\u0435 \u0440\u0430\u043c\u043a\u0430, \u043a\u0430\u043a \u0432 \u0434\u0440\u0443\u0433\u0438\u0445 \u043a\u043e\u043d"
-                        "\u0442\u0440\u043e\u043b\u0430\u0445 */\n"
+"    border: 2px solid #909090;   /* \u0442\u0430\u043a\u0430\u044f \u0436\u0435 \u0440\u0430\u043c\u043a\u0430, \u043a\u0430\u043a \u0432 \u0434\u0440\u0443\u0433\u0438\u0445 \u043a\u043e\u043d\u0442\u0440\u043e\u043b\u0430\u0445 */\n"
 "    border-radius: 12px;\n"
 "    background: #404040;         /* \u043e\u0431\u0449\u0438\u0439 \u0442\u0451\u043c\u043d\u043e-\u0441\u0435\u0440\u044b\u0439 \u0444\u043e\u043d */\n"
 "    min-height: 24px;\n"
@@ -860,11 +912,7 @@ class Ui_MainWindow(object):
 "    text-align: center;          /* \u043f\u0440\u043e\u0446\u0435\u043d\u0442/\u0442\u0435\u043a\u0441\u0442 \u043f\u043e \u0446\u0435\u043d\u0442\u0440\u0443 */\n"
 "    color: white;                /* \u0431\u0435\u043b\u044b\u0435 \u0431\u0443\u043a\u0432\u044b \u043f\u043e\u0432\u0435\u0440\u0445 \u0441\u0438\u043d\u0435\u0433\u043e */\n"
 "}\n"
-"\n"
-"QProgressBar::chunk {\n"
-"    background: #2d97ff;         /* \u0444\u0438\u0440\u043c\u0435\u043d\u043d\u044b\u0439 \u0441\u0438\u043d\u0438\u0439 */\n"
-"    border-radius: 12px;         /* \u0441\u043a\u0440\u0443\u0433\u043b\u044f\u0435\u043c \u0442\u0430\u043a \u0436\u0435, \u043a\u0430\u043a \u0434\u043e\u0440\u043e\u0436\u043a\u0443 */\n"
-"}")
+"")
         self.progressBar = QProgressBar(self.page_7)
         self.progressBar.setObjectName(u"progressBar")
         self.progressBar.setGeometry(QRect(10, 37, 411, 31))
@@ -2470,8 +2518,8 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
 
-        self.stackedWidget.setCurrentIndex(1)
-        self.stackedWidget_2.setCurrentIndex(1)
+        self.stackedWidget.setCurrentIndex(0)
+        self.stackedWidget_2.setCurrentIndex(2)
 
 
         QMetaObject.connectSlotsByName(MainWindow)
@@ -2479,6 +2527,23 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"UMVH_Configurator", None))
+        self.textBrowser_10.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"hr { height: 1px; border-width: 0; }\n"
+"li.unchecked::marker { content: \"\\2610\"; }\n"
+"li.checked::marker { content: \"\\2612\"; }\n"
+"</style></head><body style=\" font-family:'Noto Sans SC'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
+"<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:14pt;\">\u041f\u0440\u043e\u0448\u0438\u0432\u043a\u0430 \u0437\u0430\u0433\u0440\u0443\u0436\u0435\u043d\u0430 \u0443\u0441\u043f\u0435\u0448\u043d\u043e</span></p></body></html>", None))
+        self.textBrowser_11.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"hr { height: 1px; border-width: 0; }\n"
+"li.unchecked::marker { content: \"\\2610\"; }\n"
+"li.checked::marker { content: \"\\2612\"; }\n"
+"</style></head><body style=\" font-family:'Noto Sans SC'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
+"<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:14pt;\">\u041f\u0440\u043e\u0438\u0437\u043e\u0448\u043b\u0430 \u043e\u0448\u0438\u0431\u043a\u0430 \u043e\u0431\u043d\u043e\u0432\u043b\u0435\u043d\u0438\u044f</span></p></body></html>", None))
+        self.pushButton_7.setText(QCoreApplication.translate("MainWindow", u"\u041e\u0431\u043d\u043e\u0432\u043b\u0435\u043d\u0438\u0435 \u041f\u041e \u0438\u0437 \u0437\u0430\u0433\u0440\u0443\u0437\u0447\u0438\u043a\u0430", None))
         self.textBrowser.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
