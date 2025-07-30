@@ -181,6 +181,7 @@ class FirmwareUpdateWorker(QObject, PacketSender):
 
     progress = Signal(int, str)
     finished = Signal(bool)
+    error = Signal()
 
     def __init__(self, serial_port: serial.Serial, slave_id: int, filename: str):
         super().__init__()
@@ -198,6 +199,7 @@ class FirmwareUpdateWorker(QObject, PacketSender):
             with open(self.filename, "rb") as f:
                 firmware_data = f.read()
         except Exception:
+            self.error.emit()
             self.finished.emit(False)
             return
 
@@ -205,6 +207,7 @@ class FirmwareUpdateWorker(QObject, PacketSender):
 
         # ---- 0x2B ----
         if not self._send_start():
+            self.error.emit()
             self.finished.emit(False)
             return
 
@@ -226,18 +229,21 @@ class FirmwareUpdateWorker(QObject, PacketSender):
             self.serial_port.parity = DEFAULT_PARITY
             self.serial_port.stopbits = DEFAULT_STOPBITS
         except serial.SerialException:
+            self.error.emit()
             self.finished.emit(False)
             return
 
         first_ack = False
         for i in range(total_packets):
             if not self._running:
+                self.error.emit()
                 self.finished.emit(False)
                 return
             chunk = firmware_data[i * MAX_PAYLOAD_SIZE : (i + 1) * MAX_PAYLOAD_SIZE]
             if not self._send_packet(i + 1, total_packets, chunk):
                 # \u043e\u0448\u0438\u0431\u043a\u0430 \u043e\u0442\u043f\u0440\u0430\u0432\u043a\u0438
                 self._restore_serial(orig_cfg)
+                self.error.emit()
                 self.finished.emit(False)
                 return
 
@@ -278,6 +284,7 @@ class BootloaderUpdateWorker(QObject, PacketSender):
 
     progress = Signal(int, str)
     finished = Signal(bool)
+    error = Signal()
 
     def __init__(self, port_name: str, slave_id: int, filename: str):
         super().__init__()
@@ -307,10 +314,12 @@ class BootloaderUpdateWorker(QObject, PacketSender):
             first_ack = False
             for i in range(total_packets):
                 if not self._running:
+                    self.error.emit()
                     self.finished.emit(False)
                     return
                 chunk = firmware_data[i * MAX_PAYLOAD_SIZE : (i + 1) * MAX_PAYLOAD_SIZE]
                 if not self._send_packet(i + 1, total_packets, chunk):
+                    self.error.emit()
                     self.finished.emit(False)
                     return
                 if not first_ack:
@@ -320,6 +329,7 @@ class BootloaderUpdateWorker(QObject, PacketSender):
                 self.progress.emit(pct, msg)
             self.finished.emit(True)
         except Exception:
+            self.error.emit()
             self.finished.emit(False)
         finally:
             try:
@@ -723,6 +733,7 @@ class UMVH(QMainWindow):
         self.updater.moveToThread(self.update_thread)
         self.update_thread.started.connect(self.updater.run)
         self.updater.progress.connect(self.update_progress)
+        self.updater.error.connect(self._handle_comm_error)
         self.updater.finished.connect(self.update_finished)
         self.updater.finished.connect(self.update_thread.quit)
         self.update_thread.start()
@@ -774,6 +785,7 @@ class UMVH(QMainWindow):
         self.boot_updater.moveToThread(self.boot_thread)
         self.boot_thread.started.connect(self.boot_updater.run)
         self.boot_updater.progress.connect(self.boot_update_progress)
+        self.boot_updater.error.connect(self._handle_comm_error)
         self.boot_updater.finished.connect(self.boot_update_finished)
         self.boot_updater.finished.connect(self.boot_thread.quit)
         self.boot_thread.finished.connect(self.boot_updater.deleteLater)
@@ -857,9 +869,13 @@ class UMVH(QMainWindow):
     def _handle_comm_error(self):
         """Отображает страницу ошибки и возвращается на главную."""
         self.stop_polling()
+        if self.updater:
+            self.updater.stop()
         if self.update_thread:
             self.update_thread.quit()
             self.update_thread.wait()
+        if self.boot_updater:
+            self.boot_updater.stop()
         if self.boot_thread:
             self.boot_thread.quit()
             self.boot_thread.wait()
