@@ -32,6 +32,30 @@ DEFAULT_PARITY   = serial.PARITY_NONE
 DEFAULT_STOPBITS = serial.STOPBITS_ONE
 
 
+class PacketSender:
+    """Mixin with common packet sending logic."""
+
+    def _send_packet(self, idx: int, total: int, payload: bytes) -> bool:
+        frame = bytearray()
+        frame += struct.pack(">BB", self.slave_id, FUNC_CODE_FIRMWARE)
+        frame += idx.to_bytes(2, "big")
+        frame += total.to_bytes(2, "big")
+        frame += payload
+        crc = AutoConnectWorker._calc_crc(frame)
+        frame += crc.to_bytes(2, "little")
+
+        for _ in range(MAX_RETRIES):
+            try:
+                self.serial_port.write(frame)
+                resp = self.serial_port.read(8)
+                if len(resp) >= 4:
+                    return True
+            except (serial.SerialException, OSError):
+                pass
+            time.sleep(RETRY_DELAY)
+        return False
+
+
 class AutoConnectWorker(QObject):
     """Поток для приёма Modbus пакета с настройками."""
 
@@ -152,7 +176,7 @@ class RegisterPoller(QObject):
         return recv == calc
 
 
-class FirmwareUpdateWorker(QObject):
+class FirmwareUpdateWorker(QObject, PacketSender):
     """\u041e\u0431\u043d\u043e\u0432\u043b\u0435\u043d\u0438\u0435 \u041f\u041e \u0432 \u043e\u0442\u0434\u0435\u043b\u044c\u043d\u043e\u043c \u043f\u043e\u0442\u043e\u043a\u0435."""
 
     progress = Signal(int, str)
@@ -247,29 +271,9 @@ class FirmwareUpdateWorker(QObject):
         except serial.SerialException:
             return False
 
-    def _send_packet(self, idx: int, total: int, payload: bytes) -> bool:
-        frame = bytearray()
-        frame += struct.pack(">BB", self.slave_id, FUNC_CODE_FIRMWARE)
-        frame += idx.to_bytes(2, "big")
-        frame += total.to_bytes(2, "big")
-        frame += payload
-        crc = AutoConnectWorker._calc_crc(frame)
-        frame += crc.to_bytes(2, "little")
-
-        for _ in range(MAX_RETRIES):
-            try:
-                self.serial_port.write(frame)
-                resp = self.serial_port.read(8)
-                if len(resp) >= 4:
-                    return True
-            except (serial.SerialException, OSError):
-                # ошибка передачи - пробуем ещё раз
-                pass
-            time.sleep(RETRY_DELAY)
-        return False
 
 
-class BootloaderUpdateWorker(QObject):
+class BootloaderUpdateWorker(QObject, PacketSender):
     """Обновление ПО напрямую из загрузчика (только пакеты 0x2A)."""
 
     progress = Signal(int, str)
@@ -287,7 +291,6 @@ class BootloaderUpdateWorker(QObject):
         self._running = False
 
     def run(self):
-        # открываем порт с дефолтными настройками
         try:
             self.serial_port = serial.Serial(
                 self.port_name,
@@ -297,79 +300,34 @@ class BootloaderUpdateWorker(QObject):
                 stopbits=DEFAULT_STOPBITS,
                 timeout=1,
             )
-        except (serial.SerialException, OSError):  # если порт не открыть
-            self.finished.emit(False)
-            return
-
-        try:
             with open(self.filename, "rb") as f:
                 firmware_data = f.read()
+
+            total_packets = math.ceil(len(firmware_data) / MAX_PAYLOAD_SIZE)
+            first_ack = False
+            for i in range(total_packets):
+                if not self._running:
+                    self.finished.emit(False)
+                    return
+                chunk = firmware_data[i * MAX_PAYLOAD_SIZE : (i + 1) * MAX_PAYLOAD_SIZE]
+                if not self._send_packet(i + 1, total_packets, chunk):
+                    self.finished.emit(False)
+                    return
+                if not first_ack:
+                    first_ack = True
+                pct = int((i + 1) * 100 / total_packets)
+                msg = "" if first_ack else "подготовка к обновлению"
+                self.progress.emit(pct, msg)
+            self.finished.emit(True)
         except Exception:
-            # закрываем порт, если файл не открыт
+            self.finished.emit(False)
+        finally:
             try:
                 if self.serial_port:
                     self.serial_port.close()
             except (serial.SerialException, OSError):
                 pass
-            self.finished.emit(False)
-            return
 
-        total_packets = math.ceil(len(firmware_data) / MAX_PAYLOAD_SIZE)
-
-        first_ack = False
-        for i in range(total_packets):
-            if not self._running:
-                try:
-                    if self.serial_port:
-                        self.serial_port.close()
-                except (serial.SerialException, OSError):
-                    pass
-                self.finished.emit(False)
-                return
-            chunk = firmware_data[i * MAX_PAYLOAD_SIZE : (i + 1) * MAX_PAYLOAD_SIZE]
-            if not self._send_packet(i + 1, total_packets, chunk):
-                # в случае ошибки отправки закрываем порт и сообщаем о неудаче
-                try:
-                    if self.serial_port:
-                        self.serial_port.close()
-                except (serial.SerialException, OSError):
-                    pass
-                self.finished.emit(False)
-                return
-
-            if not first_ack:
-                first_ack = True
-
-            pct = int((i + 1) * 100 / total_packets)
-            msg = "" if first_ack else "подготовка к обновлению"
-            self.progress.emit(pct, msg)
-
-        try:
-            if self.serial_port:
-                self.serial_port.close()
-        except (serial.SerialException, OSError):
-            pass
-        self.finished.emit(True)
-
-    def _send_packet(self, idx: int, total: int, payload: bytes) -> bool:
-        frame = bytearray()
-        frame += struct.pack(">BB", self.slave_id, FUNC_CODE_FIRMWARE)
-        frame += idx.to_bytes(2, "big")
-        frame += total.to_bytes(2, "big")
-        frame += payload
-        crc = AutoConnectWorker._calc_crc(frame)
-        frame += crc.to_bytes(2, "little")
-
-        for _ in range(MAX_RETRIES):
-            try:
-                self.serial_port.write(frame)
-                resp = self.serial_port.read(8)
-                if len(resp) >= 4:
-                    return True
-            except serial.SerialException:
-                pass
-            time.sleep(RETRY_DELAY)
-        return False
 
 class UMVH(QMainWindow):
     def __init__(self):
@@ -818,6 +776,7 @@ class UMVH(QMainWindow):
         self.boot_updater.progress.connect(self.boot_update_progress)
         self.boot_updater.finished.connect(self.boot_update_finished)
         self.boot_updater.finished.connect(self.boot_thread.quit)
+        self.boot_thread.finished.connect(self.boot_updater.deleteLater)
         self.boot_thread.start()
 
     def boot_update_progress(self, percent: int, msg: str):
@@ -826,12 +785,16 @@ class UMVH(QMainWindow):
         self.ui.progressBar_2.setValue(percent)
 
     def boot_update_finished(self, success: bool):
+        if self.boot_thread and self.boot_thread.isRunning():
+            self.boot_thread.wait()
+
         if success:
             self.ui.stackedWidget_3.setCurrentWidget(self.ui.page_12)
             QTimer.singleShot(5000, self._boot_finish_success)
         else:
             self.ui.stackedWidget_3.setCurrentWidget(self.ui.page_13)
             QTimer.singleShot(5000, self._boot_finish_failure)
+
         self.boot_thread = None
         self.boot_updater = None
 
@@ -909,6 +872,8 @@ class UMVH(QMainWindow):
         if self.update_thread:
             self.update_thread.quit()
             self.update_thread.wait()
+        if self.boot_updater:
+            self.boot_updater.stop()
         if self.boot_thread:
             self.boot_thread.quit()
             self.boot_thread.wait()
