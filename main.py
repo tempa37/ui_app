@@ -801,8 +801,10 @@ class UMVH(QMainWindow):
             self.boot_thread.wait()
 
         if success:
-            self.ui.stackedWidget_3.setCurrentWidget(self.ui.page_12)
-            QTimer.singleShot(5000, self._boot_finish_success)
+            # при успешном обновлении
+            # сразу возвращаем интерфейс
+            # в исходное состояние
+            self._boot_finish_success()
         else:
             self.ui.stackedWidget_3.setCurrentWidget(self.ui.page_13)
             QTimer.singleShot(5000, self._boot_finish_failure)
