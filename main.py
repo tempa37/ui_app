@@ -1,6 +1,6 @@
 import sys
 
-from PySide6.QtCore    import Qt, QObject, Signal, QThread
+from PySide6.QtCore    import Qt, QObject, Signal, QThread, QMetaObject
 from PySide6.QtWidgets import QApplication, QMainWindow, QComboBox, QFileDialog
 from PySide6.QtCore import QTimer
 import math
@@ -736,6 +736,9 @@ class UMVH(QMainWindow):
         self.updater.error.connect(self._handle_comm_error)
         self.updater.finished.connect(self.update_finished)
         self.updater.finished.connect(self.update_thread.quit)
+        self.update_thread.finished.connect(
+            lambda: self.updater.deleteLater(), Qt.QueuedConnection
+        )
         self.update_thread.start()
 
     def update_progress(self, percent: int, msg: str):
@@ -746,10 +749,24 @@ class UMVH(QMainWindow):
     def update_finished(self, success: bool):
         if success:
             self.ui.stackedWidget_2.setCurrentWidget(self.ui.page_9)
-            QTimer.singleShot(5000, self._finish_success)
+            QTimer.singleShot(
+                5000,
+                lambda: QMetaObject.invokeMethod(
+                    self,
+                    "_finish_success",
+                    Qt.QueuedConnection,
+                ),
+            )
         else:
             self.ui.stackedWidget_2.setCurrentWidget(self.ui.page_8)
-            QTimer.singleShot(5000, self._finish_failure)
+            QTimer.singleShot(
+                5000,
+                lambda: QMetaObject.invokeMethod(
+                    self,
+                    "_finish_failure",
+                    Qt.QueuedConnection,
+                ),
+            )
 
     def _finish_success(self):
         self.ui.stackedWidget_2.setCurrentWidget(self.ui.page_6)
@@ -788,7 +805,9 @@ class UMVH(QMainWindow):
         self.boot_updater.error.connect(self._handle_comm_error)
         self.boot_updater.finished.connect(self.boot_update_finished)
         self.boot_updater.finished.connect(self.boot_thread.quit)
-        self.boot_thread.finished.connect(self.boot_updater.deleteLater)
+        self.boot_thread.finished.connect(
+            lambda: self.boot_updater.deleteLater(), Qt.QueuedConnection
+        )
         self.boot_thread.start()
 
     def boot_update_progress(self, percent: int, msg: str):
@@ -797,15 +816,30 @@ class UMVH(QMainWindow):
         self.ui.progressBar_2.setValue(percent)
 
     def boot_update_finished(self, success: bool):
-        if self.boot_thread and self.boot_thread.isRunning():
-            self.boot_thread.wait()
+
+        if self.boot_thread:
+            self.boot_thread.quit()
 
         if success:
             self.ui.stackedWidget_3.setCurrentWidget(self.ui.page_12)
-            QTimer.singleShot(5000, self._boot_finish_success)
+            QTimer.singleShot(
+                5000,
+                lambda: QMetaObject.invokeMethod(
+                    self,
+                    "_boot_finish_success",
+                    Qt.QueuedConnection,
+                ),
+            )
         else:
             self.ui.stackedWidget_3.setCurrentWidget(self.ui.page_13)
-            QTimer.singleShot(5000, self._boot_finish_failure)
+            QTimer.singleShot(
+                5000,
+                lambda: QMetaObject.invokeMethod(
+                    self,
+                    "_boot_finish_failure",
+                    Qt.QueuedConnection,
+                ),
+            )
 
         self.boot_thread = None
         self.boot_updater = None
@@ -868,17 +902,19 @@ class UMVH(QMainWindow):
 
     def _handle_comm_error(self):
         """Отображает страницу ошибки и возвращается на главную."""
+        if QThread.currentThread() is not QApplication.instance().thread():
+            QMetaObject.invokeMethod(self, "_handle_comm_error", Qt.QueuedConnection)
+            return
+
         self.stop_polling()
         if self.updater:
             self.updater.stop()
         if self.update_thread:
             self.update_thread.quit()
-            self.update_thread.wait()
         if self.boot_updater:
             self.boot_updater.stop()
         if self.boot_thread:
             self.boot_thread.quit()
-            self.boot_thread.wait()
         if self.serial_port:
             self.serial_port.close()
         self.switch_to(self.ui.page_5)
