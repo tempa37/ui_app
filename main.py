@@ -800,11 +800,13 @@ class UMVH(QMainWindow):
 
     def _boot_finish_success(self):
         self.ui.stackedWidget_3.setCurrentWidget(self.ui.page_11)
+        # сбрасываем состояние приложения после успешного обновления
+        self._reset_app()
 
     def _boot_finish_failure(self):
-        # после сообщения об ошибке возвращаем на главную страницу
+        # соединение потеряно или произошла ошибка
         self.ui.stackedWidget_3.setCurrentWidget(self.ui.page_11)
-        self.switch_to(self.ui.page)
+        self._reset_app()
 
     def apply_settings(self):
         """Отправляет изменённые настройки на устройство."""
@@ -865,6 +867,43 @@ class UMVH(QMainWindow):
             self.serial_port.close()
         self.switch_to(self.ui.page_5)
         QTimer.singleShot(5000, lambda: self.switch_to(self.ui.page))
+
+    def _reset_app(self):
+        """Полный сброс состояния приложения."""
+        # Останавливаем все потоки и закрываем открытые порты
+        self.stop_polling()
+        if self.worker_thread:
+            self.worker_thread.quit()
+            self.worker_thread.wait()
+            self.worker_thread = None
+        self.worker = None
+        if self.update_thread:
+            self.update_thread.quit()
+            self.update_thread.wait()
+            self.update_thread = None
+        self.updater = None
+        if self.boot_updater:
+            self.boot_updater.stop()
+        if self.boot_thread:
+            self.boot_thread.quit()
+            self.boot_thread.wait()
+            self.boot_thread = None
+        self.boot_updater = None
+        if self.serial_port:
+            self.serial_port.close()
+            self.serial_port = None
+
+        # Сбрасываем внутренние переменные
+        self.selected_port = None
+        self.serial_config = {}
+        self._saved_regs.clear()
+        self._changed_regs.clear()
+
+        # Обновляем список портов и возвращаем интерфейс в начальное состояние
+        self.populate_com_ports()
+        self.switch_to(self.ui.page)
+        self.ui.stackedWidget_2.setCurrentWidget(self.ui.page_6)
+        self.ui.stackedWidget_3.setCurrentWidget(self.ui.page_11)
 
     def closeEvent(self, event):
         """Гарантируем остановку потоков при закрытии окна."""
