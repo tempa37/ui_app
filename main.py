@@ -732,9 +732,16 @@ class UMVH(QMainWindow):
         self.updater = FirmwareUpdateWorker(self.serial_port, 1, filename)
         self.updater.moveToThread(self.update_thread)
         self.update_thread.started.connect(self.updater.run)
-        self.updater.progress.connect(self.update_progress)
-        self.updater.error.connect(self._handle_comm_error)
-        self.updater.finished.connect(self.update_finished)
+        # используем QueuedConnection, чтобы слоты выполнялись в GUI-потоке
+        self.updater.progress.connect(
+            self.update_progress, Qt.QueuedConnection
+        )
+        self.updater.error.connect(
+            self._handle_comm_error, Qt.QueuedConnection
+        )
+        self.updater.finished.connect(
+            self.update_finished, Qt.QueuedConnection
+        )
         self.updater.finished.connect(self.update_thread.quit)
         self.update_thread.start()
 
@@ -784,9 +791,17 @@ class UMVH(QMainWindow):
         self.boot_updater = BootloaderUpdateWorker(self.selected_port, 1, filename)
         self.boot_updater.moveToThread(self.boot_thread)
         self.boot_thread.started.connect(self.boot_updater.run)
-        self.boot_updater.progress.connect(self.boot_update_progress)
-        self.boot_updater.error.connect(self._handle_comm_error)
-        self.boot_updater.finished.connect(self.boot_update_finished)
+        # Все сигналы обновления направляем через очередь сообщений,
+        # чтобы изменение интерфейса выполнялось в главном потоке
+        self.boot_updater.progress.connect(
+            self.boot_update_progress, Qt.QueuedConnection
+        )
+        self.boot_updater.error.connect(
+            self._handle_comm_error, Qt.QueuedConnection
+        )
+        self.boot_updater.finished.connect(
+            self.boot_update_finished, Qt.QueuedConnection
+        )
         self.boot_updater.finished.connect(self.boot_thread.quit)
         self.boot_thread.finished.connect(self.boot_updater.deleteLater)
         self.boot_thread.start()
