@@ -14,6 +14,7 @@ from ui_main import Ui_MainWindow
 # --- константы для обновления ---
 FUNC_CODE_FIRMWARE = 0x2A
 FUNC_CODE_START    = 0x2B
+BOOTLOADER_ID      = 1
 
 MAX_PACKET_SIZE    = 91
 HEADER_SIZE        = 5
@@ -249,7 +250,7 @@ class FirmwareUpdateWorker(QObject):
 
     def _send_packet(self, idx: int, total: int, payload: bytes) -> bool:
         frame = bytearray()
-        frame += struct.pack(">BB", self.slave_id, FUNC_CODE_FIRMWARE)
+        frame += struct.pack(">BB", BOOTLOADER_ID, FUNC_CODE_FIRMWARE)
         frame += idx.to_bytes(2, "big")
         frame += total.to_bytes(2, "big")
         frame += payload
@@ -274,7 +275,7 @@ class BootloaderUpdateWorker(QObject):
     progress = Signal(int, str)
     finished = Signal(bool)
 
-    def __init__(self, port_name: str, filename: str, slave_id: int = 1):
+    def __init__(self, port_name: str, filename: str, slave_id: int = BOOTLOADER_ID):
         super().__init__()
         self.port_name = port_name
         self.filename = filename
@@ -755,10 +756,11 @@ class UMVH(QMainWindow):
         self.ui.stackedWidget_2.setCurrentWidget(self.ui.page_7)
 
         self.update_thread = QThread()
+        slave = self.serial_config.get("usart_id", self.ui.spinBox_2.value())
         # \u043f\u043e \u0442\u0440\u0435\u0431\u043e\u0432\u0430\u043d\u0438\ю
         # \u043f\u043e\u0441\u044b\u043b\u0430\u0435\u043c \u0431\u043b\u043e\u043a\u0438
         # 0x2A \u043d\u0430 USART ID = 1
-        self.updater = FirmwareUpdateWorker(self.serial_port, 1, filename)
+        self.updater = FirmwareUpdateWorker(self.serial_port, slave, filename)
         self.updater.moveToThread(self.update_thread)
         self.update_thread.started.connect(self.updater.run)
         self.updater.progress.connect(self.update_progress)
