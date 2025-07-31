@@ -442,6 +442,7 @@ class UMVH(QMainWindow):
         # обработчики изменений на page_4
         self.ui.pushButton_4.clicked.connect(self.apply_settings)
         self.ui.comboBox_10.currentTextChanged.connect(self._on_setting_changed)
+        self.ui.comboBox_10.currentTextChanged.connect(self._update_sensor_controls_state)
         self.ui.comboBox_9.currentIndexChanged.connect(self._on_setting_changed)
         self.ui.spinBox_7.valueChanged.connect(self._on_setting_changed)
         self.ui.spinBox_6.valueChanged.connect(self._on_setting_changed)
@@ -454,6 +455,9 @@ class UMVH(QMainWindow):
         self.ui.spinBox_2.valueChanged.connect(self._on_setting_changed)
         self.ui.OS_update.clicked.connect(self.select_firmware_file)
         self.ui.pushButton_7.clicked.connect(self.select_bootloader_file)
+
+        # устанавливаем состояние полей датчиков согласно текущему выбору
+        self._update_sensor_controls_state()
 
     def switch_to(self, page_widget):
         self.ui.stackedWidget.setCurrentWidget(page_widget)
@@ -588,6 +592,7 @@ class UMVH(QMainWindow):
 
         self._fill_settings_ui()
         self._capture_page4_settings()
+        self._update_sensor_controls_state()
         self.switch_to(self.ui.page_4)
         self.start_polling()
 
@@ -610,6 +615,12 @@ class UMVH(QMainWindow):
     def _on_setting_changed(self):
         """Обработчик изменения любых настроек на page_4."""
         current = self._get_current_regs()
+        # удаляем из списка изменённых те регистры,
+        # которые перестали присутствовать в current
+        for reg in list(self._changed_regs):
+            if reg not in current:
+                del self._changed_regs[reg]
+
         for reg, val in current.items():
             if self._saved_regs.get(reg) != val:
                 self._changed_regs[reg] = val
@@ -622,22 +633,29 @@ class UMVH(QMainWindow):
             sensor = int(self.ui.comboBox_9.currentText().split()[0], 16)
         except ValueError:
             sensor = 0
+        port_text = self.ui.comboBox_10.currentText()
         try:
-            port = int(self.ui.comboBox_10.currentText())
+            port = int(port_text)
         except ValueError:
             port = 0
-        regs = {
-            17: (port << 8) | sensor,
-            18: self.ui.spinBox_7.value(),
-            19: self.ui.spinBox_6.value(),
-            20: self.ui.spinBox_5.value(),
-            21: self.ui.spinBox_3.value(),
+
+        regs = {}
+        if port_text != "нет":
+            # регистры, связанные с выбором датчиков,
+            # добавляем только если выбран конкретный порт
+            regs[17] = (port << 8) | sensor
+            regs[18] = self.ui.spinBox_7.value()
+            regs[19] = self.ui.spinBox_6.value()
+            regs[20] = self.ui.spinBox_5.value()
+            regs[21] = self.ui.spinBox_3.value()
+
+        regs.update({
             30: int(self.ui.comboBox_5.currentText()) // 100,
             31: int(self.ui.comboBox_6.currentText()),
             32: self.ui.comboBox_7.currentIndex(),
             33: int(self.ui.comboBox_8.currentText()),
             35: self.ui.spinBox_2.value(),
-        }
+        })
         return regs
 
     def _apply_new_serial(self):
@@ -667,6 +685,36 @@ class UMVH(QMainWindow):
         self._fill_settings_ui()
         self.stop_polling()
         self.start_polling()
+
+    def _reset_page4_inputs(self):
+        """Сбрасывает поля настроек на странице после отправки."""
+        self.ui.comboBox_10.setCurrentIndex(0)
+        self.ui.comboBox_9.setCurrentIndex(0)
+        self.ui.spinBox_7.setValue(0)
+        self.ui.spinBox_6.setValue(0)
+        self.ui.spinBox_5.setValue(0)
+        self.ui.spinBox_3.setValue(0)
+        self.ui.textEditSP.clear()
+        # обновляем состояние и запоминаем новые значения
+        self._update_sensor_controls_state()
+        self._capture_page4_settings()
+
+    def _update_sensor_controls_state(self):
+        """Активирует или отключает поля датчиков в зависимости от выбора порта."""
+        no_port = self.ui.comboBox_10.currentText() == "нет"
+        widgets = [self.ui.comboBox_9, self.ui.spinBox_7,
+                   self.ui.spinBox_6, self.ui.spinBox_5, self.ui.spinBox_3]
+        for w in widgets:
+            w.setDisabled(no_port)
+            if no_port:
+                w.setStyleSheet("background-color: rgb(230,230,230);")
+            else:
+                w.setStyleSheet("")
+        # также меняем оттенок самого combobox с портами
+        if no_port:
+            self.ui.comboBox_10.setStyleSheet("background-color: rgb(230,230,230);")
+        else:
+            self.ui.comboBox_10.setStyleSheet("")
 
     def stop_auto_connect(self):
         """Останавливаем поток автоподключения и возвращаемся на главную."""
@@ -841,6 +889,9 @@ class UMVH(QMainWindow):
 
         if any(r in regs for r in (30, 31, 32, 33, 35)):
             self._apply_new_serial()
+
+        # сбрасываем поля настроек после отправки
+        self._reset_page4_inputs()
 
     def _write_register(self, addr: int, value: int) -> bool:
         """Запись одного регистра Modbus."""
