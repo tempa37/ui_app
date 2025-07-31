@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'untitled2.ui'
+## Form generated from reading UI file 'untitled.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.9.1
 ##
@@ -1395,6 +1395,7 @@ class Ui_MainWindow(object):
         self.comboBox_10.addItem("")
         self.comboBox_10.addItem("")
         self.comboBox_10.addItem("")
+        self.comboBox_10.addItem("")
         self.comboBox_10.setObjectName(u"comboBox_10")
         self.comboBox_10.setGeometry(QRect(10, 60, 271, 40))
         sizePolicy3.setHeightForWidth(self.comboBox_10.sizePolicy().hasHeightForWidth())
@@ -2518,7 +2519,7 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
 
-        self.stackedWidget.setCurrentIndex(0)
+        self.stackedWidget.setCurrentIndex(1)
         self.stackedWidget_2.setCurrentIndex(2)
 
 
@@ -3012,14 +3013,15 @@ class Ui_MainWindow(object):
         self.comboBox_9.setItemText(2, QCoreApplication.translate("MainWindow", u"0x02 (\u0414\u0430\u0442\u0447\u0438\u043a \u0442\u0435\u043c\u043f\u0435\u0440\u0430\u0442\u0443\u0440\u044b)", None))
         self.comboBox_9.setItemText(3, QCoreApplication.translate("MainWindow", u"0x04 (\u0414\u0430\u0442\u0447\u0438\u043a \u043d\u0430\u043f\u0440\u044f\u0436\u0435\u043d\u0438\u044f)", None))
 
-        self.comboBox_10.setItemText(0, QCoreApplication.translate("MainWindow", u"1", None))
-        self.comboBox_10.setItemText(1, QCoreApplication.translate("MainWindow", u"2", None))
-        self.comboBox_10.setItemText(2, QCoreApplication.translate("MainWindow", u"3", None))
-        self.comboBox_10.setItemText(3, QCoreApplication.translate("MainWindow", u"4", None))
-        self.comboBox_10.setItemText(4, QCoreApplication.translate("MainWindow", u"5", None))
-        self.comboBox_10.setItemText(5, QCoreApplication.translate("MainWindow", u"6", None))
-        self.comboBox_10.setItemText(6, QCoreApplication.translate("MainWindow", u"7", None))
-        self.comboBox_10.setItemText(7, QCoreApplication.translate("MainWindow", u"8", None))
+        self.comboBox_10.setItemText(0, QCoreApplication.translate("MainWindow", u"\u043d\u0435\u0442", None))
+        self.comboBox_10.setItemText(1, QCoreApplication.translate("MainWindow", u"1", None))
+        self.comboBox_10.setItemText(2, QCoreApplication.translate("MainWindow", u"2", None))
+        self.comboBox_10.setItemText(3, QCoreApplication.translate("MainWindow", u"3", None))
+        self.comboBox_10.setItemText(4, QCoreApplication.translate("MainWindow", u"4", None))
+        self.comboBox_10.setItemText(5, QCoreApplication.translate("MainWindow", u"5", None))
+        self.comboBox_10.setItemText(6, QCoreApplication.translate("MainWindow", u"6", None))
+        self.comboBox_10.setItemText(7, QCoreApplication.translate("MainWindow", u"7", None))
+        self.comboBox_10.setItemText(8, QCoreApplication.translate("MainWindow", u"8", None))
 
         self.spinBox_3.setSuffix(QCoreApplication.translate("MainWindow", u"                X\u00b9", None))
         self.textBrowser_67.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"

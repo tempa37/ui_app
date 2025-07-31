@@ -83,7 +83,7 @@ font-family: Noto Sans SC</string>
           <enum>Qt::LayoutDirection::RightToLeft</enum>
          </property>
          <property name="currentIndex">
-          <number>0</number>
+          <number>1</number>
          </property>
          <widget class="QWidget" name="page">
           <property name="styleSheet">
@@ -2734,6 +2734,11 @@ li.checked::marker { content: &quot;\2612&quot;; }
                  <property name="layoutDirection">
                   <enum>Qt::LayoutDirection::LeftToRight</enum>
                  </property>
+                 <item>
+                  <property name="text">
+                   <string>нет</string>
+                  </property>
+                 </item>
                  <item>
                   <property name="text">
                    <string>1</string>
