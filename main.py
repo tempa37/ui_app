@@ -442,6 +442,7 @@ class UMVH(QMainWindow):
         # обработчики изменений на page_4
         self.ui.pushButton_4.clicked.connect(self.apply_settings)
         self.ui.comboBox_10.currentTextChanged.connect(self._on_setting_changed)
+        self.ui.comboBox_10.currentTextChanged.connect(self._comboBox10_changed)
         self.ui.comboBox_9.currentIndexChanged.connect(self._on_setting_changed)
         self.ui.spinBox_7.valueChanged.connect(self._on_setting_changed)
         self.ui.spinBox_6.valueChanged.connect(self._on_setting_changed)
@@ -454,6 +455,9 @@ class UMVH(QMainWindow):
         self.ui.spinBox_2.valueChanged.connect(self._on_setting_changed)
         self.ui.OS_update.clicked.connect(self.select_firmware_file)
         self.ui.pushButton_7.clicked.connect(self.select_bootloader_file)
+
+        # устанавливаем состояние полей в зависимости от comboBox_10
+        self._comboBox10_changed(self.ui.comboBox_10.currentText())
 
     def switch_to(self, page_widget):
         self.ui.stackedWidget.setCurrentWidget(page_widget)
@@ -616,28 +620,45 @@ class UMVH(QMainWindow):
             elif reg in self._changed_regs:
                 del self._changed_regs[reg]
 
+    def _comboBox10_changed(self, text: str):
+        """Включает или выключает связанные поля при выборе порта."""
+        disabled = not text.isdigit()
+        widgets = [
+            self.ui.comboBox_9,
+            self.ui.spinBox_7,
+            self.ui.spinBox_6,
+            self.ui.spinBox_5,
+            self.ui.spinBox_3,
+        ]
+        for w in widgets:
+            w.setEnabled(not disabled)
+            # лёгкая заливка для визуального отличия неактивного состояния
+            w.setStyleSheet("background-color: rgb(235,235,235);" if disabled else "")
+
     def _get_current_regs(self) -> dict[int, int]:
         """Возвращает словарь регистр -> значение из UI."""
         try:
             sensor = int(self.ui.comboBox_9.currentText().split()[0], 16)
         except ValueError:
             sensor = 0
-        try:
-            port = int(self.ui.comboBox_10.currentText())
-        except ValueError:
-            port = 0
+        port_text = self.ui.comboBox_10.currentText()
         regs = {
-            17: (port << 8) | sensor,
-            18: self.ui.spinBox_7.value(),
-            19: self.ui.spinBox_6.value(),
-            20: self.ui.spinBox_5.value(),
-            21: self.ui.spinBox_3.value(),
             30: int(self.ui.comboBox_5.currentText()) // 100,
             31: int(self.ui.comboBox_6.currentText()),
             32: self.ui.comboBox_7.currentIndex(),
             33: int(self.ui.comboBox_8.currentText()),
             35: self.ui.spinBox_2.value(),
         }
+        # если выбран конкретный порт, добавляем связанные регистры
+        if port_text.isdigit():
+            port = int(port_text)
+            regs.update({
+                17: (port << 8) | sensor,
+                18: self.ui.spinBox_7.value(),
+                19: self.ui.spinBox_6.value(),
+                20: self.ui.spinBox_5.value(),
+                21: self.ui.spinBox_3.value(),
+            })
         return regs
 
     def _apply_new_serial(self):
@@ -841,6 +862,15 @@ class UMVH(QMainWindow):
 
         if any(r in regs for r in (30, 31, 32, 33, 35)):
             self._apply_new_serial()
+
+        # сбрасываем значения полей после успешной отправки
+        self.ui.comboBox_10.setCurrentIndex(0)
+        self.ui.comboBox_9.setCurrentIndex(0)
+        self.ui.spinBox_7.setValue(0)
+        self.ui.spinBox_6.setValue(0)
+        self.ui.spinBox_5.setValue(0)
+        self.ui.spinBox_3.setValue(0)
+        self.ui.textEditSP.clear()
 
     def _write_register(self, addr: int, value: int) -> bool:
         """Запись одного регистра Modbus."""
