@@ -185,6 +185,8 @@ class FirmwareUpdateWorker(QObject):
             return
 
         time.sleep(7)
+        # firmware blocks must be sent to bootloader on USART ID = 1
+        self.slave_id = 1
 
         # ---- \u0441\u043c\u0435\u043d\u0430 \u043d\u0430 \u0434\u0435\u0444\u043e\u043b\u0442\u043d\u044b\u0435 \u043d\u0430\u0441\u0442\u0440\u043e\u0439\u043a\u0438 ----
         orig_cfg = (
@@ -758,7 +760,8 @@ class UMVH(QMainWindow):
         # \u043f\u043e \u0442\u0440\u0435\u0431\u043e\u0432\u0430\u043d\u0438\ю
         # \u043f\u043e\u0441\u044b\u043b\u0430\u0435\u043c \u0431\u043b\u043e\u043a\u0438
         # 0x2A \u043d\u0430 USART ID = 1
-        self.updater = FirmwareUpdateWorker(self.serial_port, 1, filename)
+        slave = self.serial_config.get("usart_id", self.ui.spinBox_2.value())
+        self.updater = FirmwareUpdateWorker(self.serial_port, slave, filename)
         self.updater.moveToThread(self.update_thread)
         self.update_thread.started.connect(self.updater.run)
         self.updater.progress.connect(self.update_progress)
