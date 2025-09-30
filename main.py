@@ -50,6 +50,18 @@ DEFAULT_BYTESIZE = serial.EIGHTBITS
 DEFAULT_PARITY   = serial.PARITY_NONE
 DEFAULT_STOPBITS = serial.STOPBITS_ONE
 
+# --- настройки режима автоподключения ---------------------------------
+# при входе на страницу ожидания работаем с 8N1 на скорости 115200 бод
+AUTO_BAUDRATE = 115200
+AUTO_BYTESIZE = serial.EIGHTBITS
+AUTO_PARITY = serial.PARITY_NONE
+AUTO_STOPBITS = serial.STOPBITS_ONE
+# команда 0x41 для запроса параметров отправляется каждые 200 мс
+AUTO_COMMAND = b"\x41"
+AUTO_COMMAND_INTERVAL = 0.2
+# ожидаем пакет фиксированной длины (17 байт с CRC в конце)
+AUTO_PACKET_SIZE = 17
+
 
 
 
@@ -73,26 +85,42 @@ class AutoConnectWorker(QObject):
         try:
             ser = serial.Serial(
                 self.port,
-                baudrate=DEFAULT_BAUDRATE,
-                bytesize=DEFAULT_BYTESIZE,
-                parity=DEFAULT_PARITY,
-                stopbits=DEFAULT_STOPBITS,
-                timeout=1,
+                baudrate=AUTO_BAUDRATE,  # скорость для режима автопоиска
+                bytesize=AUTO_BYTESIZE,  # 8 бит данных
+                parity=AUTO_PARITY,      # без чётности (8N1)
+                stopbits=AUTO_STOPBITS,  # один стоп-бит
+                timeout=0.05,            # небольшой таймаут для частой отправки 0x41
             )
         except serial.SerialException as exc:
             self.error.emit(str(exc))
             return
 
-        while self._running:
-            data = ser.read(17)
-            if len(data) < 17:
-                continue
+        last_cmd_time = 0.0
+        buffer = bytearray()
 
-            if self._check_crc(data):
-                settings = self._parse_regs(data)
-                ser.close()
-                self.finished.emit(settings)
-                return
+        while self._running:
+            now = time.monotonic()
+            if now - last_cmd_time >= AUTO_COMMAND_INTERVAL:
+                try:
+                    ser.write(AUTO_COMMAND)  # циклически отправляем запрос 0x41
+                except serial.SerialException as exc:
+                    ser.close()
+                    self.error.emit(str(exc))
+                    return
+                last_cmd_time = now
+
+            chunk = ser.read(AUTO_PACKET_SIZE)
+            if chunk:
+                buffer.extend(chunk)  # накапливаем байты, чтобы не потерять границы пакета
+
+                while len(buffer) >= AUTO_PACKET_SIZE:
+                    packet = bytes(buffer[:AUTO_PACKET_SIZE])
+                    if self._check_crc(packet):
+                        settings = self._parse_regs(packet)
+                        ser.close()
+                        self.finished.emit(settings)
+                        return
+                    del buffer[0]  # сдвигаем окно на один байт и ищем валидный пакет
 
         ser.close()
 
