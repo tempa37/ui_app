@@ -45,7 +45,7 @@ REG_USART_ID = 35 + REGISTER_OFFSET  # регистр номера USART
 # --- настройки USART для автоподключения и отправки 0x2A ---------
 # используются при приёме пакета автоподключения и во время
 # обновления прошивки
-DEFAULT_BAUDRATE = 115200  # скорость по умолчанию для автоподключения (115 200 бод)
+DEFAULT_BAUDRATE = 56000  # скорость по умолчанию для автоподключения (115 200 бод)
 DEFAULT_BYTESIZE = serial.EIGHTBITS
 DEFAULT_PARITY   = serial.PARITY_NONE
 DEFAULT_STOPBITS = serial.STOPBITS_ONE
