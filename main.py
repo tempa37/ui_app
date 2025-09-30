@@ -26,6 +26,22 @@ MAX_PAYLOAD_SIZE   = MAX_PACKET_SIZE - HEADER_SIZE - CRC_SIZE
 MAX_RETRIES        = 3
 RETRY_DELAY        = 1
 
+# --- сдвиг карты регистров --------------------------------------------
+REGISTER_OFFSET = 9  # учитываем добавление 9 неиспользуемых регистров
+REG_SENSOR_READ_START = 22 + REGISTER_OFFSET  # начало блока датчиков с учётом смещения
+REG_SENSOR_READ_COUNT = 8  # размер блока датчиков (не изменился, только адрес)
+REG_PORT_SENSOR_BIND = 17 + REGISTER_OFFSET  # регистр привязки порта и датчика
+REG_SENSOR_MIN = 18 + REGISTER_OFFSET  # регистр минимального значения
+REG_SENSOR_MAX = 19 + REGISTER_OFFSET  # регистр максимального значения
+REG_SENSOR_ALARM = 20 + REGISTER_OFFSET  # регистр аварийного порога
+REG_SENSOR_DELAY = 21 + REGISTER_OFFSET  # регистр задержки
+REG_BAUD = 30 + REGISTER_OFFSET  # регистр скорости UART
+REG_BITS = 31 + REGISTER_OFFSET  # регистр количества бит данных
+REG_PARITY = 32 + REGISTER_OFFSET  # регистр чётности
+REG_STOP = 33 + REGISTER_OFFSET  # регистр стоп-битов
+REG_PASSWORD = 34 + REGISTER_OFFSET  # регистр пароля
+REG_USART_ID = 35 + REGISTER_OFFSET  # регистр номера USART
+
 # --- настройки USART для автоподключения и отправки 0x2A ---------
 # используются при приёме пакета автоподключения и во время
 # обновления прошивки
@@ -114,7 +130,7 @@ class AutoConnectWorker(QObject):
 
 
 class RegisterPoller(QObject):
-    """Поток опроса регистров 22-29 Modbus-устройства."""
+    """Поток опроса регистров 31-38 Modbus-устройства (смещение +9)."""  # обновили описание из-за новой карты
 
     data_ready = Signal(list)
     error = Signal(str)
@@ -133,8 +149,9 @@ class RegisterPoller(QObject):
     def run(self):
         while self._running:
             try:
-                # формируем запрос на чтение 8 регистров начиная с адреса 22
-                req = struct.pack(">BBHH", self.slave_id, 3, 22, 8)
+                # формируем запрос на чтение 8 регистров начиная с нового адреса
+                start_addr = REG_SENSOR_READ_START  # используем адрес с учётом смещения
+                req = struct.pack(">BBHH", self.slave_id, 3, start_addr, REG_SENSOR_READ_COUNT)  # подставляем новые значения
                 crc = AutoConnectWorker._calc_crc(req)
                 self.serial_port.write(req + crc.to_bytes(2, "little"))
                 resp = self.serial_port.read(21)
@@ -146,7 +163,7 @@ class RegisterPoller(QObject):
                     time.sleep(1)
                     continue
                 self._fail_count = 0
-                regs = [int.from_bytes(resp[3 + i * 2 : 5 + i * 2], "big") for i in range(8)]
+                regs = [int.from_bytes(resp[3 + i * 2 : 5 + i * 2], "big") for i in range(REG_SENSOR_READ_COUNT)]  # длину цикла тоже берём из константы
                 self.data_ready.emit(regs)
             except serial.SerialException as exc:
                 self.error.emit(str(exc))
@@ -573,7 +590,7 @@ class UMVH(QMainWindow):
             return
 
         # формируем запрос чтения одного регистра для проверки связи
-        req = struct.pack(">BBHH", slave, 3, 22, 1)
+        req = struct.pack(">BBHH", slave, 3, REG_SENSOR_READ_START, 1)  # используем новый адрес регистра для проверки связи
         crc = AutoConnectWorker._calc_crc(req)
         ser.write(req + crc.to_bytes(2, "little"))
         resp = ser.read(7)
@@ -671,11 +688,11 @@ class UMVH(QMainWindow):
             sensor = 0
         port_text = self.ui.comboBox_10.currentText()
         regs = {
-            30: int(self.ui.comboBox_5.currentText()) // 100,
-            31: int(self.ui.comboBox_6.currentText()),
-            32: self.ui.comboBox_7.currentIndex(),
-            33: int(self.ui.comboBox_8.currentText()),
-            35: self.ui.spinBox_2.value(),
+            REG_BAUD: int(self.ui.comboBox_5.currentText()) // 100,  # все ключи берём с учётом смещения
+            REG_BITS: int(self.ui.comboBox_6.currentText()),
+            REG_PARITY: self.ui.comboBox_7.currentIndex(),
+            REG_STOP: int(self.ui.comboBox_8.currentText()),
+            REG_USART_ID: self.ui.spinBox_2.value(),
         }
         # если выбран конкретный порт, добавляем связанные регистры
         if port_text.isdigit():
@@ -683,11 +700,11 @@ class UMVH(QMainWindow):
             port_dev = self._map_port_ui_to_device(port_ui)  # <<< ДОБАВЛЕНО СЮДА
 
             regs.update({
-                17: (port_dev << 8) | sensor,  # <<< port_dev вместо port_ui
-                18: self.ui.spinBox_7.value(),
-                19: self.ui.spinBox_6.value(),
-                20: self.ui.spinBox_5.value(),
-                21: self.ui.spinBox_3.value(),
+                REG_PORT_SENSOR_BIND: (port_dev << 8) | sensor,  # учли сдвиг регистра привязки
+                REG_SENSOR_MIN: self.ui.spinBox_7.value(),
+                REG_SENSOR_MAX: self.ui.spinBox_6.value(),
+                REG_SENSOR_ALARM: self.ui.spinBox_5.value(),
+                REG_SENSOR_DELAY: self.ui.spinBox_3.value(),
             })
         return regs
 
@@ -876,25 +893,36 @@ class UMVH(QMainWindow):
         pwd_text = self.ui.textEditSP.toPlainText().strip()
         if pwd_text:
             try:
-                regs[34] = int(pwd_text)
+                regs[REG_PASSWORD] = int(pwd_text)  # пароль тоже пишем в новый адрес
             except ValueError:
                 pass
 
-        order = [17, 18, 19, 20, 21, 30, 31, 32, 33, 35]
+        order = [
+            REG_PORT_SENSOR_BIND,
+            REG_SENSOR_MIN,
+            REG_SENSOR_MAX,
+            REG_SENSOR_ALARM,
+            REG_SENSOR_DELAY,
+            REG_BAUD,
+            REG_BITS,
+            REG_PARITY,
+            REG_STOP,
+            REG_USART_ID,
+        ]  # порядок отправки с учётом смещённых адресов
         for reg in order:
             if reg in regs:
                 if not self._write_register(reg, regs[reg]):
                     self._handle_comm_error()
                     return
-        if 34 in regs:
-            if not self._write_register(34, regs[34]):
+        if REG_PASSWORD in regs:
+            if not self._write_register(REG_PASSWORD, regs[REG_PASSWORD]):  # отдельная отправка пароля на новом адресе
                 self._handle_comm_error()
                 return
 
         self._saved_regs.update(regs)
         self._changed_regs.clear()
 
-        if any(r in regs for r in (30, 31, 32, 33, 35)):
+        if any(r in regs for r in (REG_BAUD, REG_BITS, REG_PARITY, REG_STOP, REG_USART_ID)):
             self._apply_new_serial()
 
         # сбрасываем значения полей после успешной отправки
