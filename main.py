@@ -29,7 +29,8 @@ RETRY_DELAY        = 1
 # --- настройки USART для автоподключения и отправки 0x2A ---------
 # используются при приёме пакета автоподключения и во время
 # обновления прошивки
-DEFAULT_BAUDRATE = 56000
+# скорость 115200 бод хранится как 1152 (baud/100), поэтому здесь задаём реальное значение
+DEFAULT_BAUDRATE = 115200
 DEFAULT_BYTESIZE = serial.EIGHTBITS
 DEFAULT_PARITY   = serial.PARITY_NONE
 DEFAULT_STOPBITS = serial.STOPBITS_ONE
@@ -61,22 +62,48 @@ class AutoConnectWorker(QObject):
                 bytesize=DEFAULT_BYTESIZE,
                 parity=DEFAULT_PARITY,
                 stopbits=DEFAULT_STOPBITS,
-                timeout=1,
+                timeout=0.1,  # меньший таймаут позволяет отправлять запросы каждые 200 мс
             )
         except serial.SerialException as exc:
             self.error.emit(str(exc))
             return
 
-        while self._running:
-            data = ser.read(17)
-            if len(data) < 17:
-                continue
+        # буфер для накопления входящих байт ответа
+        buffer = bytearray()
+        # отметка времени последней отправки команды автопоиска
+        last_request = 0.0
 
-            if self._check_crc(data):
-                settings = self._parse_regs(data)
+        while self._running:
+            now = time.monotonic()
+            if now - last_request >= 0.2:
+                try:
+                    ser.write(b"\x41")  # отправляем 0x41 с заданным периодом
+                except serial.SerialException as exc:
+                    self.error.emit(str(exc))
+                    ser.close()
+                    return
+                last_request = now
+
+            try:
+                chunk = ser.read(17)
+            except serial.SerialException as exc:
+                self.error.emit(str(exc))
                 ser.close()
-                self.finished.emit(settings)
                 return
+
+            if chunk:
+                buffer.extend(chunk)
+
+            # пробуем извлечь полный пакет настроек из буфера
+            while len(buffer) >= 17:
+                packet = bytes(buffer[:17])
+                del buffer[:17]
+
+                if self._check_crc(packet):
+                    settings = self._parse_regs(packet)
+                    ser.close()
+                    self.finished.emit(settings)
+                    return
 
         ser.close()
 
