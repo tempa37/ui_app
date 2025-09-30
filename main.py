@@ -45,10 +45,15 @@ REG_USART_ID = 35 + REGISTER_OFFSET  # регистр номера USART
 # --- настройки USART для автоподключения и отправки 0x2A ---------
 # используются при приёме пакета автоподключения и во время
 # обновления прошивки
-DEFAULT_BAUDRATE = 56000
+DEFAULT_BAUDRATE = 115200  # скорость по умолчанию для автоподключения (115 200 бод)
 DEFAULT_BYTESIZE = serial.EIGHTBITS
 DEFAULT_PARITY   = serial.PARITY_NONE
 DEFAULT_STOPBITS = serial.STOPBITS_ONE
+
+# --- параметры автозапроса настроек -----------------------------------
+AUTO_CONNECT_CMD = b"\x41"      # команда, которую нужно слать устройству в режиме автоподключения
+AUTO_CONNECT_INTERVAL = 0.2     # период отправки команды 0x41 в секундах (200 мс)
+AUTO_CONNECT_RESPONSE_LEN = 17  # ожидаемый размер ответа с настройками (байт)
 
 
 
@@ -77,22 +82,35 @@ class AutoConnectWorker(QObject):
                 bytesize=DEFAULT_BYTESIZE,
                 parity=DEFAULT_PARITY,
                 stopbits=DEFAULT_STOPBITS,
-                timeout=1,
+                timeout=AUTO_CONNECT_INTERVAL,  # выставляем таймаут, равный требуемой паузе между командами
             )
         except serial.SerialException as exc:
             self.error.emit(str(exc))
             return
 
-        while self._running:
-            data = ser.read(17)
-            if len(data) < 17:
-                continue
+        try:
+            ser.reset_input_buffer()  # очищаем входной буфер перед началом обмена
+        except serial.SerialException:
+            pass
 
-            if self._check_crc(data):
+        while self._running:
+            loop_started = time.monotonic()  # фиксируем время, чтобы выдержать паузу 200 мс
+            try:
+                ser.write(AUTO_CONNECT_CMD)  # отправляем команду 0x41 на устройство
+            except serial.SerialException as exc:
+                self.error.emit(str(exc))
+                break
+
+            data = ser.read(AUTO_CONNECT_RESPONSE_LEN)  # ждём ответ с настройками
+            if len(data) >= AUTO_CONNECT_RESPONSE_LEN and self._check_crc(data):
                 settings = self._parse_regs(data)
-                ser.close()
+                ser.close()  # сразу закрываем порт, чтобы освободить ресурс перед выходом из потока
                 self.finished.emit(settings)
                 return
+
+            remaining = AUTO_CONNECT_INTERVAL - (time.monotonic() - loop_started)
+            if remaining > 0:
+                time.sleep(remaining)  # дожидаемся остаток периода, чтобы выдержать тайминг 200 мс
 
         ser.close()
 
@@ -541,6 +559,7 @@ class UMVH(QMainWindow):
     # ------------------------------------------------------------------
     def start_auto_connect(self):
         """Запуск автоподключения и переход на страницу ожидания."""
+        self._set_autoconnect_defaults()  # при входе на страницу выставляем базовые параметры 115200 8N1
         self.switch_to(self.ui.page_2)
         if not self.selected_port:
             return
@@ -554,6 +573,19 @@ class UMVH(QMainWindow):
         self.worker.error.connect(self._auto_connect_error)
         self.worker.finished.connect(self.worker_thread.quit)
         self.worker_thread.start()
+
+    def _set_autoconnect_defaults(self):
+        """Выставляем значения виджетов автоподключения на 115200 8N1."""
+        idx_baud = self.ui.comboBox.findText("115200")
+        if idx_baud != -1:
+            self.ui.comboBox.setCurrentIndex(idx_baud)  # скорость 115 200 бод
+
+        idx_bits = self.ui.comboBox_2.findText("8")
+        if idx_bits != -1:
+            self.ui.comboBox_2.setCurrentIndex(idx_bits)  # 8 бит данных
+
+        self.ui.comboBox_4.setCurrentIndex(0)  # без чётности (8N1)
+        self.ui.comboBox_3.setCurrentIndex(0)  # один стоп-бит
 
     def _auto_connect_error(self, message: str):
         # при ошибке просто выводим её в текстовое поле
