@@ -1091,6 +1091,10 @@ class UMVH(QMainWindow):
             except ValueError:
                 pass
 
+        if REG_PASSWORD in regs and REG_PORT_SENSOR_BIND not in regs:
+            # пароль должен сопровождаться актуальными параметрами режима и датчика
+            regs[REG_PORT_SENSOR_BIND] = self._compose_calibration_register()
+
         order = [
             REG_PORT_SENSOR_BIND,
             REG_CAL_POINT_X1,
