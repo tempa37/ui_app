@@ -1,8 +1,7 @@
 import sys
 
-from PySide6.QtCore    import Qt, QObject, Signal, QThread
+from PySide6.QtCore    import Qt, QObject, Signal, QThread, QTimer, QSignalBlocker
 from PySide6.QtWidgets import QApplication, QMainWindow, QComboBox, QFileDialog
-from PySide6.QtCore import QTimer
 import math
 import serial
 import serial.tools.list_ports
@@ -41,6 +40,13 @@ REG_PARITY = 32 + REGISTER_OFFSET  # регистр чётности
 REG_STOP = 33 + REGISTER_OFFSET  # регистр стоп-битов
 REG_PASSWORD = 34 + REGISTER_OFFSET  # регистр пароля
 REG_USART_ID = 35 + REGISTER_OFFSET  # регистр номера USART
+REG_CALIBRATION_MODE = 26 + REGISTER_OFFSET  # регистр выбора режима калибровки (формат Y000 0000)
+
+# регистры точек калибровки совпадают с текущими константами, переименовываем для читаемости
+REG_CALIBRATION_X1 = REG_SENSOR_MIN
+REG_CALIBRATION_Y1 = REG_SENSOR_MAX
+REG_CALIBRATION_X2 = REG_SENSOR_ALARM
+REG_CALIBRATION_Y2 = REG_SENSOR_DELAY
 
 # --- настройки USART для автоподключения и отправки 0x2A ---------
 # используются при приёме пакета автоподключения и во время
@@ -454,6 +460,9 @@ class UMVH(QMainWindow):
         self.bl_update_thread = None
         self.bl_updater = None
 
+        # текущий режим калибровки (0 - две точки, 1 - четыре точки)
+        self._calibration_mode = 0
+
         # словарь ячеек таблицы датчиков для быстрого доступа
         self.sensor_cells = {
             row: {
@@ -504,6 +513,13 @@ class UMVH(QMainWindow):
         self.ui.spinBox_2.valueChanged.connect(self._on_setting_changed)
         self.ui.OS_update.clicked.connect(self.select_firmware_file)
         self.ui.pushButton_7.clicked.connect(self.select_bootloader_file)
+
+        # --- калибровка --------------------------------------------------
+        # выбор режима калибровки: 2 или 4 точки
+        self.ui.comboBox_12.currentIndexChanged.connect(self._calibration_mode_changed)
+        # отдельные кнопки для записи точек Y1 и Y2 в режиме двух точек
+        self.ui.pushButton_8.clicked.connect(self._send_calibration_y1)
+        self.ui.pushButton_9.clicked.connect(self._send_calibration_y2)
 
         # устанавливаем состояние полей в зависимости от comboBox_10
         self._comboBox10_changed(self.ui.comboBox_10.currentText())
@@ -668,6 +684,8 @@ class UMVH(QMainWindow):
             return
 
         self._fill_settings_ui()
+        # при подключении сразу узнаём активный режим калибровки
+        self._load_calibration_mode()
         self._capture_page4_settings()
         self.switch_to(self.ui.page_4)
         self.start_polling()
@@ -706,11 +724,64 @@ class UMVH(QMainWindow):
             self.ui.spinBox_6,
             self.ui.spinBox_5,
             self.ui.spinBox_3,
+            self.ui.spinBox_8,
+            self.ui.spinBox_9,
+            self.ui.pushButton_8,
+            self.ui.pushButton_9,
         ]
         for w in widgets:
             w.setEnabled(not disabled)
             # лёгкая заливка для визуального отличия неактивного состояния
             w.setStyleSheet("background-color: rgb(235,235,235);" if disabled else "")
+
+    def _update_calibration_mode_ui(self, mode: int):
+        """Переключает интерфейс калибровки в зависимости от выбранного режима."""
+        self._calibration_mode = 1 if mode else 0
+        target_page = self.ui.page_17 if self._calibration_mode == 0 else self.ui.page_16
+        self.ui.stackedWidget_4.setCurrentWidget(target_page)
+        # синхронизируем combobox без вызова обработчика
+        with QSignalBlocker(self.ui.comboBox_12):
+            self.ui.comboBox_12.setCurrentIndex(self._calibration_mode)
+
+    def _load_calibration_mode(self):
+        """Считывает режим калибровки из регистра устройства."""
+        if not self.serial_port:
+            return
+        regs = self._read_registers(REG_CALIBRATION_MODE, 1)
+        if not regs:
+            return
+        value = regs[0]
+        # устройство может вернуть 0/1 или 0/0x80, учитываем оба варианта
+        mode = 1 if (value & 0x01) or (value & 0x80) else 0
+        self._update_calibration_mode_ui(mode)
+
+    def _calibration_mode_changed(self, index: int):
+        """Отправляет выбранный режим калибровки в устройство и перечитывает его."""
+        if not self.serial_port:
+            self._update_calibration_mode_ui(index)
+            return
+        # согласно ТЗ: 0 - две точки, 1 - четыре точки
+        value = 1 if index else 0
+        if not self._write_register(REG_CALIBRATION_MODE, value):
+            self._handle_comm_error()
+            return
+        # перечитываем регистр после записи, чтобы отобразить фактическое значение
+        self._load_calibration_mode()
+
+    def _send_calibration_point(self, register: int, value: int):
+        """Общая функция записи точки калибровки в указанный регистр."""
+        if not self.serial_port:
+            return
+        if not self._write_register(register, value):
+            self._handle_comm_error()
+
+    def _send_calibration_y1(self):
+        """Запись значения Y1 для режима двух точек."""
+        self._send_calibration_point(REG_CALIBRATION_Y1, self.ui.spinBox_8.value())
+
+    def _send_calibration_y2(self):
+        """Запись значения Y2 для режима двух точек."""
+        self._send_calibration_point(REG_CALIBRATION_Y2, self.ui.spinBox_9.value())
 
     def _get_current_regs(self) -> dict[int, int]:
         """Возвращает словарь регистр -> значение из UI."""
@@ -733,10 +804,10 @@ class UMVH(QMainWindow):
 
             regs.update({
                 REG_PORT_SENSOR_BIND: (port_dev << 8) | sensor,  # учли сдвиг регистра привязки
-                REG_SENSOR_MIN: self.ui.spinBox_7.value(),
-                REG_SENSOR_MAX: self.ui.spinBox_6.value(),
-                REG_SENSOR_ALARM: self.ui.spinBox_5.value(),
-                REG_SENSOR_DELAY: self.ui.spinBox_3.value(),
+                REG_CALIBRATION_X1: self.ui.spinBox_7.value(),
+                REG_CALIBRATION_Y1: self.ui.spinBox_6.value(),
+                REG_CALIBRATION_X2: self.ui.spinBox_5.value(),
+                REG_CALIBRATION_Y2: self.ui.spinBox_3.value(),
             })
         return regs
 
@@ -765,6 +836,8 @@ class UMVH(QMainWindow):
             return
         self.serial_config = cfg
         self._fill_settings_ui()
+        # перечитываем режим калибровки после смены параметров порта
+        self._load_calibration_mode()
         self.stop_polling()
         self.start_polling()
 
@@ -931,10 +1004,10 @@ class UMVH(QMainWindow):
 
         order = [
             REG_PORT_SENSOR_BIND,
-            REG_SENSOR_MIN,
-            REG_SENSOR_MAX,
-            REG_SENSOR_ALARM,
-            REG_SENSOR_DELAY,
+            REG_CALIBRATION_X1,
+            REG_CALIBRATION_Y1,
+            REG_CALIBRATION_X2,
+            REG_CALIBRATION_Y2,
             REG_BAUD,
             REG_BITS,
             REG_PARITY,
@@ -981,6 +1054,28 @@ class UMVH(QMainWindow):
             return recv_crc == calc_crc
         except serial.SerialException:
             return False
+
+    def _read_registers(self, addr: int, count: int) -> list[int] | None:
+        """Чтение одного или нескольких регистров Modbus."""
+        try:
+            slave = self.serial_config.get("usart_id", 1)
+            req = struct.pack(">BBHH", slave, 3, addr, count)
+            crc = AutoConnectWorker._calc_crc(req)
+            self.serial_port.write(req + crc.to_bytes(2, "little"))
+            expected = 5 + count * 2  # адрес, функция, байты данных, CRC
+            resp = self.serial_port.read(expected)
+            if len(resp) != expected:
+                return None
+            recv_crc = int.from_bytes(resp[-2:], "little")
+            calc_crc = AutoConnectWorker._calc_crc(resp[:-2])
+            if recv_crc != calc_crc:
+                return None
+            byte_count = resp[2]
+            if byte_count != count * 2:
+                return None
+            return [int.from_bytes(resp[3 + i * 2 : 5 + i * 2], "big") for i in range(count)]
+        except serial.SerialException:
+            return None
 
     def _handle_comm_error(self):
         """Отображает страницу ошибки и возвращается на главную."""
