@@ -617,6 +617,33 @@ class UMVH(QMainWindow):
             sensor_code = self._calibration_reg_value & 0xF
         return ((mode & 0x1) << 15) | ((port_dev & 0xF) << 4) | sensor_code
 
+    def _ensure_calibration_register(self, desired: int | None = None) -> bool:
+        """Проверяем, что регистр с режимом/портом/датчиком актуален."""
+        if not self.serial_port:
+            return False
+
+        # соберём желаемое значение, если его не передали явно
+        if desired is None:
+            desired = self._compose_calibration_register()
+
+        # перечитываем регистр, чтобы убедиться что устройство хранит те же параметры
+        actual = self._read_register(REG_PORT_SENSOR_BIND)
+        if actual is None:
+            return False
+
+        self._calibration_reg_value = actual
+        if actual == desired:
+            return True  # ничего отправлять не нужно — значения совпадают
+
+        # если обнаружили расхождение — отправляем новое значение и сохраняем его локально
+        if not self._write_register(REG_PORT_SENSOR_BIND, desired):
+            return False
+
+        self._calibration_reg_value = desired
+        self._saved_regs[REG_PORT_SENSOR_BIND] = desired
+        self._changed_regs.pop(REG_PORT_SENSOR_BIND, None)
+        return True
+
     def _refresh_calibration_register(self, update_saved: bool = False) -> int | None:
         """Читаем регистр 0x001A и обновляем связанные элементы интерфейса."""
         value = self._read_register(REG_PORT_SENSOR_BIND)
@@ -694,6 +721,10 @@ class UMVH(QMainWindow):
     def _send_calibration_point(self, register: int, value: int, widgets: tuple):
         """Отправляем значение точки калибровки и обновляем связанные поля."""
         if not self.serial_port:
+            return
+        # перед отправкой точки убеждаемся, что слейв знает выбранный режим/порт/датчик
+        if not self._ensure_calibration_register():
+            self._handle_comm_error()
             return
         if not self._write_register(register, value):
             self._handle_comm_error()
@@ -1091,9 +1122,18 @@ class UMVH(QMainWindow):
             except ValueError:
                 pass
 
+        desired_cal_reg = None
         if REG_PASSWORD in regs and REG_PORT_SENSOR_BIND not in regs:
             # пароль должен сопровождаться актуальными параметрами режима и датчика
-            regs[REG_PORT_SENSOR_BIND] = self._compose_calibration_register()
+            desired_cal_reg = self._compose_calibration_register()
+            regs[REG_PORT_SENSOR_BIND] = desired_cal_reg
+
+        if desired_cal_reg is not None:
+            # если регистр добавлен только для пароля — актуализируем его заранее и избегаем повторной отправки
+            if not self._ensure_calibration_register(desired_cal_reg):
+                self._handle_comm_error()
+                return
+            regs.pop(REG_PORT_SENSOR_BIND, None)
 
         order = [
             REG_PORT_SENSOR_BIND,
