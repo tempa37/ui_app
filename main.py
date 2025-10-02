@@ -1,4 +1,5 @@
 import sys
+from contextlib import contextmanager
 
 from PySide6.QtCore    import Qt, QObject, Signal, QThread
 from PySide6.QtWidgets import QApplication, QMainWindow, QComboBox, QFileDialog
@@ -30,11 +31,11 @@ RETRY_DELAY        = 1
 REGISTER_OFFSET = 9  # учитываем добавление 9 неиспользуемых регистров
 REG_SENSOR_READ_START = 22 + REGISTER_OFFSET  # начало блока датчиков с учётом смещения
 REG_SENSOR_READ_COUNT = 8  # размер блока датчиков (не изменился, только адрес)
-REG_PORT_SENSOR_BIND = 17 + REGISTER_OFFSET  # регистр привязки порта и датчика
-REG_SENSOR_MIN = 18 + REGISTER_OFFSET  # регистр минимального значения
-REG_SENSOR_MAX = 19 + REGISTER_OFFSET  # регистр максимального значения
-REG_SENSOR_ALARM = 20 + REGISTER_OFFSET  # регистр аварийного порога
-REG_SENSOR_DELAY = 21 + REGISTER_OFFSET  # регистр задержки
+REG_PORT_SENSOR_BIND = 17 + REGISTER_OFFSET  # регистр привязки порта, датчика и режима калибровки
+REG_CAL_POINT_X1 = 18 + REGISTER_OFFSET  # точка калибровки X1
+REG_CAL_POINT_Y1 = 19 + REGISTER_OFFSET  # точка калибровки Y1
+REG_CAL_POINT_X2 = 20 + REGISTER_OFFSET  # точка калибровки X2
+REG_CAL_POINT_Y2 = 21 + REGISTER_OFFSET  # точка калибровки Y2
 REG_BAUD = 30 + REGISTER_OFFSET  # регистр скорости UART
 REG_BITS = 31 + REGISTER_OFFSET  # регистр количества бит данных
 REG_PARITY = 32 + REGISTER_OFFSET  # регистр чётности
@@ -453,6 +454,7 @@ class UMVH(QMainWindow):
         self.updater = None
         self.bl_update_thread = None
         self.bl_updater = None
+        self._calibration_reg_value = 0  # локальное хранение последнего значения регистра 0x001A
 
         # словарь ячеек таблицы датчиков для быстрого доступа
         self.sensor_cells = {
@@ -504,9 +506,13 @@ class UMVH(QMainWindow):
         self.ui.spinBox_2.valueChanged.connect(self._on_setting_changed)
         self.ui.OS_update.clicked.connect(self.select_firmware_file)
         self.ui.pushButton_7.clicked.connect(self.select_bootloader_file)
+        self.ui.comboBox_12.currentIndexChanged.connect(self._on_calibration_mode_changed)
+        self.ui.pushButton_8.clicked.connect(self._send_calibration_y1)
+        self.ui.pushButton_9.clicked.connect(self._send_calibration_y2)
 
         # устанавливаем состояние полей в зависимости от comboBox_10
         self._comboBox10_changed(self.ui.comboBox_10.currentText())
+        self._apply_calibration_mode_ui(self.ui.comboBox_12.currentIndex())
 
     def switch_to(self, page_widget):
         self.ui.stackedWidget.setCurrentWidget(page_widget)
@@ -548,6 +554,29 @@ class UMVH(QMainWindow):
             return port
         return 2 if port == 1 else 1 if port == 2 else port
 
+    def _map_port_device_to_ui(self, port: int) -> int:
+        """Device→UI: преобразуем номер порта из устройства в отображаемый в интерфейсе."""
+        if not self.SWAP_1_2_ENABLED:
+            return port
+        return 2 if port == 1 else 1 if port == 2 else port
+
+    @contextmanager
+    def _block_widget_signals(self, *widgets):
+        """Временное отключение сигналов заданных виджетов."""
+        states: list[bool] = []
+        try:
+            for widget in widgets:
+                if widget is None:
+                    states.append(False)
+                    continue
+                states.append(widget.blockSignals(True))
+            yield
+        finally:
+            for widget, state in zip(widgets, states):
+                if widget is None:
+                    continue
+                widget.blockSignals(state)
+
     def _swap_regs_for_ui(self, regs: list[int]) -> list[int]:
         """Device→UI: перед отображением меняем местами строки портов 1↔2."""
         if not self.SWAP_1_2_ENABLED:
@@ -556,6 +585,168 @@ class UMVH(QMainWindow):
             regs = regs.copy()
             regs[0], regs[1] = regs[1], regs[0]  # 0→порт1, 1→порт2
         return regs
+
+    # --- работа с калибровкой --------------------------------------------
+    def _apply_calibration_mode_ui(self, mode: int):
+        """Переключаем страницу с набором точек калибровки."""
+        if mode == 0:
+            self.ui.stackedWidget_4.setCurrentWidget(self.ui.page_17)  # режим с двумя точками (Y1/Y2)
+        else:
+            self.ui.stackedWidget_4.setCurrentWidget(self.ui.page_16)  # режим с четырьмя точками (X1/Y1/X2/Y2)
+
+    def _find_sensor_index(self, sensor_code: int) -> int:
+        """Находим индекс пункта comboBox_9 по коду датчика."""
+        prefix = f"0x{sensor_code & 0xF:02X}"
+        for idx in range(self.ui.comboBox_9.count()):
+            if self.ui.comboBox_9.itemText(idx).startswith(prefix):
+                return idx
+        return -1
+
+    def _compose_calibration_register(self, mode: int | None = None) -> int:
+        """Формируем значение регистра 0x001A из текущих настроек."""
+        if mode is None:
+            mode = 1 if self.ui.comboBox_12.currentIndex() == 1 else 0
+        port_text = self.ui.comboBox_10.currentText()
+        if port_text.isdigit():
+            port_dev = self._map_port_ui_to_device(int(port_text))
+        else:
+            port_dev = (self._calibration_reg_value >> 4) & 0xF  # используем сохранённое значение
+        try:
+            sensor_code = int(self.ui.comboBox_9.currentText().split()[0], 16) & 0xF
+        except ValueError:
+            sensor_code = self._calibration_reg_value & 0xF
+        return ((mode & 0x1) << 15) | ((port_dev & 0xF) << 4) | sensor_code
+
+    def _ensure_calibration_register(self, desired: int | None = None) -> bool:
+        """Проверяем, что регистр с режимом/портом/датчиком актуален."""
+        if not self.serial_port:
+            return False
+
+        # соберём желаемое значение, если его не передали явно
+        if desired is None:
+            desired = self._compose_calibration_register()
+
+        # перечитываем регистр, чтобы убедиться что устройство хранит те же параметры
+        actual = self._read_register(REG_PORT_SENSOR_BIND)
+        if actual is None:
+            return False
+
+        self._calibration_reg_value = actual
+        if actual == desired:
+            return True  # ничего отправлять не нужно — значения совпадают
+
+        # если обнаружили расхождение — отправляем новое значение и сохраняем его локально
+        if not self._write_register(REG_PORT_SENSOR_BIND, desired):
+            return False
+
+        self._calibration_reg_value = desired
+        self._saved_regs[REG_PORT_SENSOR_BIND] = desired
+        self._changed_regs.pop(REG_PORT_SENSOR_BIND, None)
+        return True
+
+    def _refresh_calibration_register(self, update_saved: bool = False) -> int | None:
+        """Читаем регистр 0x001A и обновляем связанные элементы интерфейса."""
+        value = self._read_register(REG_PORT_SENSOR_BIND)
+        if value is None:
+            return None
+        self._calibration_reg_value = value
+        mode = (value >> 15) & 0x1
+        port_dev = (value >> 4) & 0xF
+        sensor_code = value & 0xF
+
+        with self._block_widget_signals(self.ui.comboBox_12):
+            self.ui.comboBox_12.setCurrentIndex(mode if mode in (0, 1) else 0)
+        self._apply_calibration_mode_ui(self.ui.comboBox_12.currentIndex())
+
+        ui_port = self._map_port_device_to_ui(port_dev)
+        with self._block_widget_signals(self.ui.comboBox_10):
+            if ui_port and self.ui.comboBox_10.findText(str(ui_port)) != -1:
+                self.ui.comboBox_10.setCurrentText(str(ui_port))
+            else:
+                self.ui.comboBox_10.setCurrentIndex(0)
+
+        sensor_idx = self._find_sensor_index(sensor_code)
+        if sensor_idx != -1:
+            with self._block_widget_signals(self.ui.comboBox_9):
+                self.ui.comboBox_9.setCurrentIndex(sensor_idx)
+        self._comboBox10_changed(self.ui.comboBox_10.currentText())
+
+        if update_saved:
+            self._saved_regs[REG_PORT_SENSOR_BIND] = value
+            self._changed_regs.pop(REG_PORT_SENSOR_BIND, None)
+        return value
+
+    def _refresh_calibration_points(self, update_saved: bool = False):
+        """Обновляем значения точек калибровки из устройства."""
+        mapping: list[tuple[int, tuple]] = [
+            (REG_CAL_POINT_X1, (self.ui.spinBox_7,)),
+            (REG_CAL_POINT_Y1, (self.ui.spinBox_6, self.ui.spinBox_8)),
+            (REG_CAL_POINT_X2, (self.ui.spinBox_5,)),
+            (REG_CAL_POINT_Y2, (self.ui.spinBox_3, self.ui.spinBox_9)),
+        ]
+        for addr, widgets in mapping:
+            value = self._read_register(addr)
+            if value is None:
+                continue
+            with self._block_widget_signals(*widgets):
+                for widget in widgets:
+                    widget.setValue(value)
+            if update_saved:
+                self._saved_regs[addr] = value
+                self._changed_regs.pop(addr, None)
+
+    def _initialize_calibration_ui(self):
+        """Читаем регистры калибровки при подключении и показываем актуальные данные."""
+        if not self.serial_port:
+            return
+        self._refresh_calibration_register()
+        self._refresh_calibration_points()
+
+    def _on_calibration_mode_changed(self, index: int):
+        """Обработчик переключения режима калибровки (2 или 4 точки)."""
+        self._apply_calibration_mode_ui(index)
+        if not self.serial_port:
+            return
+        new_value = self._compose_calibration_register(mode=index)
+        if new_value == self._calibration_reg_value:
+            return
+        if not self._write_register(REG_PORT_SENSOR_BIND, new_value):
+            self._handle_comm_error()
+            return
+        self._calibration_reg_value = new_value
+        self._saved_regs[REG_PORT_SENSOR_BIND] = new_value
+        self._changed_regs.pop(REG_PORT_SENSOR_BIND, None)
+        self._refresh_calibration_register()
+
+    def _send_calibration_point(self, register: int, value: int, widgets: tuple):
+        """Отправляем значение точки калибровки и обновляем связанные поля."""
+        if not self.serial_port:
+            return
+        # перед отправкой точки убеждаемся, что слейв знает выбранный режим/порт/датчик
+        if not self._ensure_calibration_register():
+            self._handle_comm_error()
+            return
+        if not self._write_register(register, value):
+            self._handle_comm_error()
+            return
+        read_back = self._read_register(register)
+        if read_back is not None:
+            value = read_back
+        with self._block_widget_signals(*widgets):
+            for widget in widgets:
+                widget.setValue(value)
+        self._saved_regs[register] = value
+        self._changed_regs.pop(register, None)
+
+    def _send_calibration_y1(self):
+        """Записываем точку Y1 в устройство (режим 2 точки)."""
+        widgets = (self.ui.spinBox_6, self.ui.spinBox_8)
+        self._send_calibration_point(REG_CAL_POINT_Y1, self.ui.spinBox_8.value(), widgets)
+
+    def _send_calibration_y2(self):
+        """Записываем точку Y2 в устройство (режим 2 точки)."""
+        widgets = (self.ui.spinBox_3, self.ui.spinBox_9)
+        self._send_calibration_point(REG_CAL_POINT_Y2, self.ui.spinBox_9.value(), widgets)
     # ------------------------------------------------------------------
     def start_auto_connect(self):
         """Запуск автоподключения и переход на страницу ожидания."""
@@ -668,6 +859,7 @@ class UMVH(QMainWindow):
             return
 
         self._fill_settings_ui()
+        self._initialize_calibration_ui()
         self._capture_page4_settings()
         self.switch_to(self.ui.page_4)
         self.start_polling()
@@ -729,14 +921,15 @@ class UMVH(QMainWindow):
         # если выбран конкретный порт, добавляем связанные регистры
         if port_text.isdigit():
             port_ui = int(port_text)
-            port_dev = self._map_port_ui_to_device(port_ui)  # <<< ДОБАВЛЕНО СЮДА
-
+            port_dev = self._map_port_ui_to_device(port_ui)  # учитываем обмен портов 1↔2
+            mode_bit = 1 if self.ui.comboBox_12.currentIndex() == 1 else 0  # формируем бит режима (0 - 2 точки, 1 - 4 точки)
+            sensor_code = sensor & 0xF  # оставляем только младшие 4 бита типа датчика
             regs.update({
-                REG_PORT_SENSOR_BIND: (port_dev << 8) | sensor,  # учли сдвиг регистра привязки
-                REG_SENSOR_MIN: self.ui.spinBox_7.value(),
-                REG_SENSOR_MAX: self.ui.spinBox_6.value(),
-                REG_SENSOR_ALARM: self.ui.spinBox_5.value(),
-                REG_SENSOR_DELAY: self.ui.spinBox_3.value(),
+                REG_PORT_SENSOR_BIND: (mode_bit << 15) | ((port_dev & 0xF) << 4) | sensor_code,
+                REG_CAL_POINT_X1: self.ui.spinBox_7.value(),
+                REG_CAL_POINT_Y1: self.ui.spinBox_6.value(),
+                REG_CAL_POINT_X2: self.ui.spinBox_5.value(),
+                REG_CAL_POINT_Y2: self.ui.spinBox_3.value(),
             })
         return regs
 
@@ -917,47 +1110,69 @@ class UMVH(QMainWindow):
         self.bl_update_thread = None
 
     def apply_settings(self):
-        """Отправляет изменённые настройки на устройство."""
-        if not self.serial_port or not self._changed_regs:
+        """Отправляет изменённые настройки на устройство (в т.ч. только пароль)."""
+        if not self.serial_port:
             return
 
+        # 1) Берём все изменения со страницы
         regs = self._changed_regs.copy()
+
+        # 2) Если режим "2 точки" — X1/X2 не отправляем
+        if self.ui.comboBox_12.currentIndex() == 0:
+            regs.pop(REG_CAL_POINT_X1, None)
+            regs.pop(REG_CAL_POINT_X2, None)
+
+        # 3) Пароль добавляем всегда, даже если других изменений нет
         pwd_text = self.ui.textEditSP.toPlainText().strip()
         if pwd_text:
             try:
-                regs[REG_PASSWORD] = int(pwd_text)  # пароль тоже пишем в новый адрес
+                # int(..., 0) позволяет "1234" и "0x1234"
+                pwd_val = int(pwd_text, 0)
+                if 0 <= pwd_val <= 0xFFFF:
+                    regs[REG_PASSWORD] = pwd_val
             except ValueError:
+                # Неверный формат пароля — просто игнорируем
                 pass
 
+        # 4) Если после всего нечего отправлять — выходим
+        if not regs:
+            return
+
+        # 5) Если шлём пароль, а REG_PORT_SENSOR_BIND не меняем —
+        #    сначала убедимся, что на устройстве актуальны режим/порт/датчик
+        if REG_PASSWORD in regs and REG_PORT_SENSOR_BIND not in regs:
+            desired = self._compose_calibration_register()
+            if not self._ensure_calibration_register(desired):
+                self._handle_comm_error()
+                return
+            # REG_PORT_SENSOR_BIND в общий цикл не добавляем — уже актуализировали
+
+        # 6) Порядок записи регистров
         order = [
             REG_PORT_SENSOR_BIND,
-            REG_SENSOR_MIN,
-            REG_SENSOR_MAX,
-            REG_SENSOR_ALARM,
-            REG_SENSOR_DELAY,
-            REG_BAUD,
-            REG_BITS,
-            REG_PARITY,
-            REG_STOP,
-            REG_USART_ID,
-        ]  # порядок отправки с учётом смещённых адресов
+            REG_CAL_POINT_X1, REG_CAL_POINT_Y1,
+            REG_CAL_POINT_X2, REG_CAL_POINT_Y2,
+            REG_BAUD, REG_BITS, REG_PARITY, REG_STOP, REG_USART_ID,
+        ]
         for reg in order:
             if reg in regs:
                 if not self._write_register(reg, regs[reg]):
                     self._handle_comm_error()
                     return
+
+        # 7) Пароль — в самом конце, отдельно
         if REG_PASSWORD in regs:
-            if not self._write_register(REG_PASSWORD, regs[REG_PASSWORD]):  # отдельная отправка пароля на новом адресе
+            if not self._write_register(REG_PASSWORD, regs[REG_PASSWORD]):
                 self._handle_comm_error()
                 return
 
+        # 8) Локальное состояние
         self._saved_regs.update(regs)
         self._changed_regs.clear()
-
         if any(r in regs for r in (REG_BAUD, REG_BITS, REG_PARITY, REG_STOP, REG_USART_ID)):
             self._apply_new_serial()
 
-        # сбрасываем значения полей после успешной отправки
+        # 9) Сброс UI
         self.ui.comboBox_10.setCurrentIndex(0)
         self.ui.comboBox_9.setCurrentIndex(0)
         self.ui.spinBox_7.setValue(0)
@@ -965,6 +1180,25 @@ class UMVH(QMainWindow):
         self.ui.spinBox_5.setValue(0)
         self.ui.spinBox_3.setValue(0)
         self.ui.textEditSP.clear()
+
+    def _read_register(self, addr: int) -> int | None:
+        """Чтение одного регистра Modbus."""
+        if not self.serial_port:
+            return None
+        try:
+            slave = self.serial_config.get("usart_id", 1)
+            req = struct.pack(">BBHH", slave, 3, addr, 1)
+            crc = AutoConnectWorker._calc_crc(req)
+            self.serial_port.write(req + crc.to_bytes(2, "little"))
+            resp = self.serial_port.read(7)
+            if len(resp) != 7:
+                return None
+            recv_crc = int.from_bytes(resp[-2:], "little")
+            if recv_crc != AutoConnectWorker._calc_crc(resp[:-2]):
+                return None
+            return int.from_bytes(resp[3:5], "big")
+        except serial.SerialException:
+            return None
 
     def _write_register(self, addr: int, value: int) -> bool:
         """Запись одного регистра Modbus."""
