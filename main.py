@@ -2,7 +2,7 @@ import sys
 from contextlib import contextmanager
 
 from PySide6.QtCore    import Qt, QObject, Signal, QThread
-from PySide6.QtWidgets import QApplication, QMainWindow, QComboBox, QFileDialog
+from PySide6.QtWidgets import QApplication, QMainWindow, QComboBox, QFileDialog, QMessageBox
 from PySide6.QtCore import QTimer
 import math
 import serial
@@ -586,6 +586,11 @@ class UMVH(QMainWindow):
             regs[0], regs[1] = regs[1], regs[0]  # 0→порт1, 1→порт2
         return regs
 
+    def _show_calibration_error(self, text: str):
+        """Выводим предупреждение о некорректных точках калибровки."""
+        # Используем QMessageBox, чтобы пользователь сразу увидел причину отказа
+        QMessageBox.warning(self, "Некорректная калибровка", text)
+
     # --- работа с калибровкой --------------------------------------------
     def _apply_calibration_mode_ui(self, mode: int):
         """Переключаем страницу с набором точек калибровки."""
@@ -726,6 +731,20 @@ class UMVH(QMainWindow):
         if not self._ensure_calibration_register():
             self._handle_comm_error()
             return
+        # В режиме двух точек проверяем, что новая пара Y1/Y2 не даёт отрицательный наклон
+        if self.ui.comboBox_12.currentIndex() == 0 and register in (REG_CAL_POINT_Y1, REG_CAL_POINT_Y2):
+            other_reg = REG_CAL_POINT_Y2 if register == REG_CAL_POINT_Y1 else REG_CAL_POINT_Y1
+            other_value = self._read_register(other_reg)
+            if other_value is None:
+                # если считаться с устройства не удалось — берём локально сохранённое/текущее значение
+                other_value = self._saved_regs.get(other_reg)
+            if other_value is None:
+                other_value = self.ui.spinBox_9.value() if other_reg == REG_CAL_POINT_Y2 else self.ui.spinBox_8.value()
+            new_y1 = value if register == REG_CAL_POINT_Y1 else other_value
+            new_y2 = value if register == REG_CAL_POINT_Y2 else other_value
+            if new_y1 > new_y2:
+                self._show_calibration_error("Нельзя задать точки: значение Y1 не должно превышать Y2.")
+                return
         if not self._write_register(register, value):
             self._handle_comm_error()
             return
@@ -1122,6 +1141,27 @@ class UMVH(QMainWindow):
             regs.pop(REG_CAL_POINT_X1, None)
             regs.pop(REG_CAL_POINT_X2, None)
 
+        mode_index = self.ui.comboBox_12.currentIndex()
+        # 2a) Перед отправкой проверяем валидность точек калибровки
+        if mode_index == 1 and any(r in regs for r in (REG_CAL_POINT_X1, REG_CAL_POINT_Y1, REG_CAL_POINT_X2, REG_CAL_POINT_Y2)):
+            # Сливаем новые значения с сохранёнными, чтобы оценить итоговую конфигурацию
+            x1 = regs.get(REG_CAL_POINT_X1, self._saved_regs.get(REG_CAL_POINT_X1, self.ui.spinBox_7.value()))
+            y1 = regs.get(REG_CAL_POINT_Y1, self._saved_regs.get(REG_CAL_POINT_Y1, self.ui.spinBox_6.value()))
+            x2 = regs.get(REG_CAL_POINT_X2, self._saved_regs.get(REG_CAL_POINT_X2, self.ui.spinBox_5.value()))
+            y2 = regs.get(REG_CAL_POINT_Y2, self._saved_regs.get(REG_CAL_POINT_Y2, self.ui.spinBox_3.value()))
+            if x1 > x2 or y1 > y2:
+                # Комментируем отказ, чтобы следующему разработчику было понятно условие
+                self._show_calibration_error(
+                    "Невозможно отправить точки калибровки: X1 должен быть не больше X2, а Y1 — не больше Y2."
+                )
+                return
+        elif mode_index == 0 and any(r in regs for r in (REG_CAL_POINT_Y1, REG_CAL_POINT_Y2)):
+            y1 = regs.get(REG_CAL_POINT_Y1, self._saved_regs.get(REG_CAL_POINT_Y1, self.ui.spinBox_8.value()))
+            y2 = regs.get(REG_CAL_POINT_Y2, self._saved_regs.get(REG_CAL_POINT_Y2, self.ui.spinBox_9.value()))
+            if y1 > y2:
+                self._show_calibration_error("Невозможно отправить точки калибровки: Y1 не должен превышать Y2.")
+                return
+
         # 3) Пароль добавляем всегда, даже если других изменений нет
         pwd_text = self.ui.textEditSP.toPlainText().strip()
         if pwd_text:
@@ -1146,6 +1186,26 @@ class UMVH(QMainWindow):
                 self._handle_comm_error()
                 return
             # REG_PORT_SENSOR_BIND в общий цикл не добавляем — уже актуализировали
+
+        # 5a) В режиме двух точек дополнительно проверяем фактические значения перед отправкой пароля
+        if (
+            mode_index == 0
+            and REG_PASSWORD in regs
+            and REG_CAL_POINT_Y1 not in regs
+            and REG_CAL_POINT_Y2 not in regs
+        ):
+            # Считываем текущие значения из устройства, чтобы не подтверждать отрицательный наклон
+            y1_current = self._read_register(REG_CAL_POINT_Y1)
+            y2_current = self._read_register(REG_CAL_POINT_Y2)
+            if y1_current is None:
+                y1_current = self._saved_regs.get(REG_CAL_POINT_Y1)
+            if y2_current is None:
+                y2_current = self._saved_regs.get(REG_CAL_POINT_Y2)
+            if y1_current is not None and y2_current is not None and y1_current > y2_current:
+                self._show_calibration_error(
+                    "Пароль не отправлен: текущие значения Y1 и Y2 приводят к отрицательному наклону интерполяции."
+                )
+                return
 
         # 6) Порядок записи регистров
         order = [
