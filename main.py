@@ -2,7 +2,7 @@ import sys
 from contextlib import contextmanager
 
 from PySide6.QtCore    import Qt, QObject, Signal, QThread
-from PySide6.QtWidgets import QApplication, QMainWindow, QComboBox, QFileDialog
+from PySide6.QtWidgets import QApplication, QMainWindow, QComboBox, QFileDialog, QMessageBox
 from PySide6.QtCore import QTimer
 import math
 import serial
@@ -695,6 +695,10 @@ class UMVH(QMainWindow):
                 self._saved_regs[addr] = value
                 self._changed_regs.pop(addr, None)
 
+    def _has_negative_interpolation(self, x1: int, x2: int, y1: int, y2: int) -> bool:
+        """Возвращает True, если точки задают отрицательный наклон."""
+        return x1 > x2 or y1 > y2
+
     def _initialize_calibration_ui(self):
         """Читаем регистры калибровки при подключении и показываем актуальные данные."""
         if not self.serial_port:
@@ -1138,6 +1142,20 @@ class UMVH(QMainWindow):
         if not regs:
             return
 
+        # Проверка для режима с четырьмя точками: запрещаем отрицательный наклон
+        if self.ui.comboBox_12.currentIndex() == 1:
+            x1 = regs.get(REG_CAL_POINT_X1, self.ui.spinBox_7.value())
+            x2 = regs.get(REG_CAL_POINT_X2, self.ui.spinBox_5.value())
+            y1 = regs.get(REG_CAL_POINT_Y1, self.ui.spinBox_6.value())
+            y2 = regs.get(REG_CAL_POINT_Y2, self.ui.spinBox_3.value())
+            if self._has_negative_interpolation(x1, x2, y1, y2):
+                QMessageBox.warning(
+                    self,
+                    "Некорректные точки",
+                    "Нельзя отправлять точки калибровки с отрицательным наклоном (X1 ≤ X2 и Y1 ≤ Y2).",
+                )
+                return
+
         # 5) Если шлём пароль, а REG_PORT_SENSOR_BIND не меняем —
         #    сначала убедимся, что на устройстве актуальны режим/порт/датчик
         if REG_PASSWORD in regs and REG_PORT_SENSOR_BIND not in regs:
@@ -1146,6 +1164,33 @@ class UMVH(QMainWindow):
                 self._handle_comm_error()
                 return
             # REG_PORT_SENSOR_BIND в общий цикл не добавляем — уже актуализировали
+
+            # При режиме двух точек перед отправкой пароля дополнительно проверяем наклон по данным из устройства
+            if (desired >> 15) & 0x1 == 0:
+                points: dict[int, int] = {}
+                for addr in (
+                    REG_CAL_POINT_X1,
+                    REG_CAL_POINT_X2,
+                    REG_CAL_POINT_Y1,
+                    REG_CAL_POINT_Y2,
+                ):
+                    value = self._read_register(addr)
+                    if value is None:
+                        self._handle_comm_error()
+                        return
+                    points[addr] = value
+                if self._has_negative_interpolation(
+                    points.get(REG_CAL_POINT_X1, 0),
+                    points.get(REG_CAL_POINT_X2, 0),
+                    points.get(REG_CAL_POINT_Y1, 0),
+                    points.get(REG_CAL_POINT_Y2, 0),
+                ):
+                    QMessageBox.warning(
+                        self,
+                        "Некорректные точки",
+                        "Пароль не отправлен: точки калибровки образуют отрицательный наклон.",
+                    )
+                    return
 
         # 6) Порядок записи регистров
         order = [
