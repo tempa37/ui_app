@@ -512,6 +512,11 @@ class UMVH(QMainWindow):
                 self._calibration_cell_defaults[widget] = (widget.styleSheet(), widget.toHtml())
                 self._calibration_cell_states[widget] = False
             self._calibration_matrix_cells[port] = cells
+        self._scale_hint_defaults: dict[QTextBrowser, tuple[str, str]] = {}
+        for name in ("textBrowser_70", "textBrowser_72"):
+            browser = getattr(self.ui, name, None)
+            if browser is not None:
+                self._scale_hint_defaults[browser] = (browser.toPlainText(), browser.toHtml())
         # словари для отслеживания изменений настроек
         self._saved_regs: dict[int, int] = {}
         self._changed_regs: dict[int, int] = {}
@@ -684,11 +689,44 @@ class UMVH(QMainWindow):
 
     def _set_calibration_page(self, page: QWidget):
         self.ui.stackedWidget_4.setCurrentWidget(page)
+        if page is getattr(self.ui, "page_15", None):
+            self._apply_scale_hint(getattr(self.ui, "textBrowser_70", None))
+        elif page is getattr(self.ui, "page_18", None):
+            self._apply_scale_hint(getattr(self.ui, "textBrowser_72", None))
 
     def _update_text_browser(self, browser: QTextBrowser | None, value: str):
         if browser is None:
             return
         browser.setPlainText(value)
+
+    def _apply_scale_hint(self, browser: QTextBrowser | None):
+        if browser is None:
+            return
+        defaults = self._scale_hint_defaults.get(browser)
+        if defaults is None:
+            defaults = (browser.toPlainText(), browser.toHtml())
+            self._scale_hint_defaults[browser] = defaults
+        base_plain, base_html = defaults
+        suffix = self._sensor_scale_suffix(self._calibration_sensor)
+        if suffix:
+            new_plain = f"{base_plain} /{suffix}"
+        else:
+            new_plain = base_plain
+        if base_plain in base_html:
+            browser.setHtml(base_html.replace(base_plain, new_plain, 1))
+        else:
+            browser.setPlainText(new_plain)
+
+    @staticmethod
+    def _sensor_scale_suffix(sensor: int | None) -> str:
+        if sensor is None:
+            return ""
+        code = sensor & 0xFF
+        if code in (0x04, 0x06):
+            return "100"
+        if code == 0x02:
+            return "10"
+        return ""
 
     def _format_sensor_type(self, sensor_code: int | None) -> str:
         if sensor_code is None:
