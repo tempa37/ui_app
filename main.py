@@ -983,8 +983,12 @@ class UMVH(QMainWindow):
             QMessageBox.warning(self, "Калибровка", "Выберите номер порта.")
             return
         sensor_text = self.ui.comboBox_14.currentText().strip()
+        sensor_code_text = self._trim_sensor_code(sensor_text)
+        if not sensor_code_text:
+            QMessageBox.warning(self, "Калибровка", "Выберите тип датчика.")
+            return
         try:
-            sensor_code = int(sensor_text.split()[0], 16)
+            sensor_code = int(sensor_code_text, 16)
         except ValueError:
             QMessageBox.warning(self, "Калибровка", "Выберите тип датчика.")
             return
