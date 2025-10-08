@@ -694,6 +694,15 @@ class UMVH(QMainWindow):
             return False
         return True
 
+    def _remember_calibration_target(self, mode: int, port: int, sensor: int) -> bool:
+        """Записываем выбор порта/датчика и сохраняем его в состоянии."""
+        if not self._write_calibration_register(mode, port, sensor):
+            return False
+        self._calibration_port = port
+        self._calibration_sensor = sensor
+        self._update_calibration_headers()
+        return True
+
     def _send_password(self, text: str) -> bool:
         pwd = text.strip()
         if not pwd:
@@ -774,11 +783,8 @@ class UMVH(QMainWindow):
         sensor = self._get_sensor_type_from_device(port)
         if sensor is None:
             return
-        if not self._write_calibration_register(0, port, sensor):
+        if not self._remember_calibration_target(0, port, sensor):
             return
-        self._calibration_port = port
-        self._calibration_sensor = sensor
-        self._update_calibration_headers()
         self._set_calibration_page(self.ui.page_14)
 
     def _back_to_two_point_port_selection(self):
@@ -863,11 +869,8 @@ class UMVH(QMainWindow):
             QMessageBox.warning(self, "Калибровка", "Выберите тип датчика.")
             return
         port = int(port_text)
-        if not self._write_calibration_register(1, port, sensor_code):
+        if not self._remember_calibration_target(1, port, sensor_code):
             return
-        self._calibration_port = port
-        self._calibration_sensor = sensor_code
-        self._update_calibration_headers()
         self._set_calibration_page(self.ui.page_20)
 
     def _four_point_back_to_select(self):
