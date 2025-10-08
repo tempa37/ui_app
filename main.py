@@ -36,9 +36,11 @@ MAX_RETRIES        = 3
 RETRY_DELAY        = 1
 
 # --- карта регистров ---------------------------------------------------
+REG_SENSOR_TYPE_BASE = 0x000A  # тип датчика для портов 1-8
+REG_SENSOR_TYPE_COUNT = 8
 REG_SENSOR_READ_START = 0x0012  # показания датчиков портов 1-8
 REG_SENSOR_READ_COUNT = 8
-REG_SENSOR_TYPE_BASE = 0x000A  # тип датчика для портов 1-8
+REG_SENSOR_POLL_COUNT = REG_SENSOR_TYPE_COUNT + REG_SENSOR_READ_COUNT
 REG_PORT_SENSOR_BIND = 0x001A  # выбор режима, порта и типа датчика
 REG_CAL_POINT_X1 = 0x001B
 REG_CAL_POINT_Y1 = 0x001C
@@ -159,7 +161,7 @@ class AutoConnectWorker(QObject):
 class RegisterPoller(QObject):
     """Поток опроса регистров 31-38 Modbus-устройства (смещение +9)."""  # обновили описание из-за новой карты
 
-    data_ready = Signal(list)
+    data_ready = Signal(list, list)
     error = Signal(str)
     connection_lost = Signal()
 
@@ -176,13 +178,14 @@ class RegisterPoller(QObject):
     def run(self):
         while self._running:
             try:
-                # формируем запрос на чтение 8 регистров начиная с нового адреса
-                start_addr = REG_SENSOR_READ_START  # используем адрес с учётом смещения
-                req = struct.pack(">BBHH", self.slave_id, 3, start_addr, REG_SENSOR_READ_COUNT)  # подставляем новые значения
+                # формируем запрос на чтение типов и показаний датчиков
+                start_addr = REG_SENSOR_TYPE_BASE
+                req = struct.pack(">BBHH", self.slave_id, 3, start_addr, REG_SENSOR_POLL_COUNT)
                 crc = AutoConnectWorker._calc_crc(req)
                 self.serial_port.write(req + crc.to_bytes(2, "little"))
-                resp = self.serial_port.read(21)
-                if len(resp) < 21 or not self._check_crc(resp):
+                expected_len = 5 + REG_SENSOR_POLL_COUNT * 2
+                resp = self.serial_port.read(expected_len)
+                if len(resp) < expected_len or not self._check_crc(resp):
                     self._fail_count += 1
                     if self._fail_count >= 5:
                         self.connection_lost.emit()
@@ -190,8 +193,10 @@ class RegisterPoller(QObject):
                     time.sleep(1)
                     continue
                 self._fail_count = 0
-                regs = [int.from_bytes(resp[3 + i * 2 : 5 + i * 2], "big") for i in range(REG_SENSOR_READ_COUNT)]  # длину цикла тоже берём из константы
-                self.data_ready.emit(regs)
+                regs = [int.from_bytes(resp[3 + i * 2 : 5 + i * 2], "big") for i in range(REG_SENSOR_POLL_COUNT)]
+                sensor_types = regs[:REG_SENSOR_TYPE_COUNT]
+                sensor_values = regs[REG_SENSOR_TYPE_COUNT:]
+                self.data_ready.emit(sensor_types, sensor_values)
             except serial.SerialException as exc:
                 self.error.emit(str(exc))
                 break
@@ -467,6 +472,7 @@ class UMVH(QMainWindow):
         self._calibration_sensor: int | None = None
         self._two_point_data: dict[str, int | None] = {"x1": None, "y1": None, "x2": None, "y2": None}
         self._four_point_data: dict[str, int | None] = {"x1": None, "y1": None, "x2": None, "y2": None}
+        self._latest_sensor_types: list[int] = [0] * REG_SENSOR_TYPE_COUNT
         self._latest_sensor_values: list[int] = [0] * REG_SENSOR_READ_COUNT
 
         self.sensor_value_widgets = [
@@ -719,6 +725,15 @@ class UMVH(QMainWindow):
         if 0 <= idx < len(self._latest_sensor_values):
             return self._latest_sensor_values[idx]
         return 0
+
+    @staticmethod
+    def _apply_sensor_scaling(value: int, sensor_type: int) -> int:
+        code = sensor_type & 0xFF
+        if code in (0x04, 0x06):
+            return value * 100
+        if code == 0x02:
+            return value * 10
+        return value
 
     def _update_live_sensor_widgets(self):
         port = self._calibration_port
@@ -1136,15 +1151,18 @@ class UMVH(QMainWindow):
         # выводим ошибку чтения в текстовое поле на странице ожидания
         self.ui.textBrowser_2.setText(msg)
 
-    def update_sensor_table(self, regs: list[int]):
+    def update_sensor_table(self, sensor_types: list[int], regs: list[int]):
         """Обновляем показания датчиков и связанные элементы UI."""
+        sensor_types = self._swap_regs_for_ui(sensor_types)
         regs = self._swap_regs_for_ui(regs)
+        self._latest_sensor_types = sensor_types
         self._latest_sensor_values = regs
 
-        for widget, value in zip(self.sensor_value_widgets, regs):
+        for widget, raw_value, sensor_type in zip(self.sensor_value_widgets, regs, sensor_types):
             if widget is None:
                 continue
-            widget.setPlainText(str(value))
+            scaled_value = self._apply_sensor_scaling(raw_value, sensor_type)
+            widget.setPlainText(str(scaled_value))
 
         self._update_live_sensor_widgets()
 
