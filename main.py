@@ -819,6 +819,9 @@ class UMVH(QMainWindow):
         if not self._write_register(REG_CAL_POINT_Y2, 0):
             self._handle_comm_error()
             return
+        if self._calibration_port and self._calibration_sensor is not None:
+            if not self._write_calibration_register(0, self._calibration_port, self._calibration_sensor):
+                return
         self._set_calibration_page(self.ui.page_15)
         self._update_live_sensor_widgets()
 
@@ -898,10 +901,20 @@ class UMVH(QMainWindow):
     def _four_point_to_password(self):
         if not self._calibration_port:
             return
-        self._four_point_data["x1"] = self.ui.spinBox_20.value()
-        self._four_point_data["x2"] = self.ui.spinBox_18.value()
-        self._four_point_data["y1"] = self.ui.spinBox_19.value()
-        self._four_point_data["y2"] = self.ui.spinBox_17.value()
+        values = {
+            REG_CAL_POINT_X1: self.ui.spinBox_20.value(),
+            REG_CAL_POINT_X2: self.ui.spinBox_18.value(),
+            REG_CAL_POINT_Y1: self.ui.spinBox_19.value(),
+            REG_CAL_POINT_Y2: self.ui.spinBox_17.value(),
+        }
+        for reg, value in values.items():
+            if not self._write_register(reg, value):
+                self._handle_comm_error()
+                return
+        self._four_point_data["x1"] = values[REG_CAL_POINT_X1]
+        self._four_point_data["x2"] = values[REG_CAL_POINT_X2]
+        self._four_point_data["y1"] = values[REG_CAL_POINT_Y1]
+        self._four_point_data["y2"] = values[REG_CAL_POINT_Y2]
         self._set_calibration_page(self.ui.page_21)
 
     def _four_point_back_to_values(self):
