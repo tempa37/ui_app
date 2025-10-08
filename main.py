@@ -831,6 +831,16 @@ class UMVH(QMainWindow):
             return value / 10
         return value
 
+    def _format_scaled_sensor_value(self, value: int, sensor: int | None) -> str | None:
+        if sensor is None:
+            return None
+        code = sensor & 0xFF
+        if code in (0x04, 0x06):
+            return f"{value / 100:.2f}"
+        if code == 0x02:
+            return f"{value / 10:.1f}"
+        return None
+
     def _update_live_sensor_widgets(self):
         port = self._calibration_port
         if not port:
@@ -854,6 +864,11 @@ class UMVH(QMainWindow):
             result = max(0, min(int(round(result)), 0xFFFF))
             block = self.ui.spinBox_3.blockSignals(True)
             self.ui.spinBox_3.setValue(result)
+            formatted = self._format_scaled_sensor_value(result, self._calibration_sensor)
+            if formatted is not None:
+                editor = self.ui.spinBox_3.lineEdit()
+                if editor is not None:
+                    editor.setText(formatted)
             self.ui.spinBox_3.blockSignals(block)
 
     def _start_two_point_calibration(self):
