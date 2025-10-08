@@ -727,12 +727,12 @@ class UMVH(QMainWindow):
         return 0
 
     @staticmethod
-    def _apply_sensor_scaling(value: int, sensor_type: int) -> int:
+    def _apply_sensor_scaling(value: int, sensor_type: int) -> float | int:
         code = sensor_type & 0xFF
         if code in (0x04, 0x06):
-            return value * 100
+            return value / 100
         if code == 0x02:
-            return value * 10
+            return value / 10
         return value
 
     def _update_live_sensor_widgets(self):
