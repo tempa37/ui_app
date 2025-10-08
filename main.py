@@ -694,6 +694,21 @@ class UMVH(QMainWindow):
             return False
         return True
 
+    @staticmethod
+    def _trim_sensor_code(text: str) -> str:
+        token = text.strip()
+        if not token:
+            return ""
+        allowed = set("0123456789abcdefABCDEFxX")
+        result_chars: list[str] = []
+        for ch in token:
+            if ch not in allowed:
+                break
+            result_chars.append(ch)
+            if len(result_chars) >= 4:
+                break
+        return "".join(result_chars)
+
     def _remember_calibration_target(self, mode: int, port: int, sensor: int) -> bool:
         """Записываем выбор порта/датчика и сохраняем его в состоянии."""
         if not self._write_calibration_register(mode, port, sensor):
@@ -863,8 +878,12 @@ class UMVH(QMainWindow):
             QMessageBox.warning(self, "Калибровка", "Выберите номер порта.")
             return
         sensor_text = self.ui.comboBox_12.currentText().strip()
+        sensor_code_text = self._trim_sensor_code(sensor_text)
+        if not sensor_code_text:
+            QMessageBox.warning(self, "Калибровка", "Выберите тип датчика.")
+            return
         try:
-            sensor_code = int(sensor_text.split()[0], 16)
+            sensor_code = int(sensor_code_text, 16)
         except ValueError:
             QMessageBox.warning(self, "Калибровка", "Выберите тип датчика.")
             return
