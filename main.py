@@ -46,6 +46,8 @@ REG_CAL_POINT_X1 = 0x001B
 REG_CAL_POINT_Y1 = 0x001C
 REG_CAL_POINT_X2 = 0x001D
 REG_CAL_POINT_Y2 = 0x001E
+REG_CAL_STATUS_START = 0x001F  # битовые маски откалиброванных датчиков
+REG_CAL_STATUS_COUNT = 8
 REG_BAUD = 0x0027
 REG_BITS = 0x0028
 REG_PARITY = 0x0029
@@ -159,9 +161,9 @@ class AutoConnectWorker(QObject):
 
 
 class RegisterPoller(QObject):
-    """Поток опроса регистров 31-38 Modbus-устройства (смещение +9)."""  # обновили описание из-за новой карты
+    """Поток опроса регистров устройства."""
 
-    data_ready = Signal(list, list)
+    data_ready = Signal(list, list, list)
     error = Signal(str)
     connection_lost = Signal()
 
@@ -178,25 +180,18 @@ class RegisterPoller(QObject):
     def run(self):
         while self._running:
             try:
-                # формируем запрос на чтение типов и показаний датчиков
-                start_addr = REG_SENSOR_TYPE_BASE
-                req = struct.pack(">BBHH", self.slave_id, 3, start_addr, REG_SENSOR_POLL_COUNT)
-                crc = AutoConnectWorker._calc_crc(req)
-                self.serial_port.write(req + crc.to_bytes(2, "little"))
-                expected_len = 5 + REG_SENSOR_POLL_COUNT * 2
-                resp = self.serial_port.read(expected_len)
-                if len(resp) < expected_len or not self._check_crc(resp):
-                    self._fail_count += 1
-                    if self._fail_count >= 5:
-                        self.connection_lost.emit()
-                        break
-                    time.sleep(1)
+                sensor_regs = self._read_registers(REG_SENSOR_TYPE_BASE, REG_SENSOR_POLL_COUNT)
+                if sensor_regs is None:
                     continue
+                sensor_types = sensor_regs[:REG_SENSOR_TYPE_COUNT]
+                sensor_values = sensor_regs[REG_SENSOR_TYPE_COUNT:]
+
+                status_regs = self._read_registers(REG_CAL_STATUS_START, REG_CAL_STATUS_COUNT)
+                if status_regs is None:
+                    continue
+
                 self._fail_count = 0
-                regs = [int.from_bytes(resp[3 + i * 2 : 5 + i * 2], "big") for i in range(REG_SENSOR_POLL_COUNT)]
-                sensor_types = regs[:REG_SENSOR_TYPE_COUNT]
-                sensor_values = regs[REG_SENSOR_TYPE_COUNT:]
-                self.data_ready.emit(sensor_types, sensor_values)
+                self.data_ready.emit(sensor_types, sensor_values, status_regs)
             except serial.SerialException as exc:
                 self.error.emit(str(exc))
                 break
@@ -206,6 +201,27 @@ class RegisterPoller(QObject):
         recv = int.from_bytes(packet[-2:], "little")
         calc = AutoConnectWorker._calc_crc(packet[:-2])
         return recv == calc
+
+    def _read_registers(self, start_addr: int, count: int) -> list[int] | None:
+        req = struct.pack(">BBHH", self.slave_id, 3, start_addr, count)
+        crc = AutoConnectWorker._calc_crc(req)
+        try:
+            self.serial_port.write(req + crc.to_bytes(2, "little"))
+            expected_len = 5 + count * 2
+            resp = self.serial_port.read(expected_len)
+        except serial.SerialException as exc:
+            self.error.emit(str(exc))
+            self._running = False
+            return None
+        if len(resp) < expected_len or not self._check_crc(resp):
+            self._fail_count += 1
+            if self._fail_count >= 5:
+                self.connection_lost.emit()
+                self._running = False
+            time.sleep(1)
+            return None
+        regs = [int.from_bytes(resp[3 + i * 2 : 5 + i * 2], "big") for i in range(count)]
+        return regs
 
 
 class FirmwareUpdateWorker(QObject):
@@ -474,10 +490,28 @@ class UMVH(QMainWindow):
         self._four_point_data: dict[str, int | None] = {"x1": None, "y1": None, "x2": None, "y2": None}
         self._latest_sensor_types: list[int] = [0] * REG_SENSOR_TYPE_COUNT
         self._latest_sensor_values: list[int] = [0] * REG_SENSOR_READ_COUNT
+        self._latest_calibration_masks: list[int] = [0] * REG_CAL_STATUS_COUNT
 
         self.sensor_value_widgets = [
             getattr(self.ui, f"s{row}s0x04_3") for row in range(1, REG_SENSOR_READ_COUNT + 1)
         ]
+        self._calibration_matrix_cells: dict[int, dict[int, QTextBrowser]] = {}
+        self._calibration_cell_defaults: dict[QTextBrowser, tuple[str, str]] = {}
+        self._calibration_cell_states: dict[QTextBrowser, bool] = {}
+        self._calibration_highlight_style = "background-color:rgb(140, 140, 140);"
+        reference_browser = getattr(self.ui, "textBrowser_25", None)
+        if reference_browser is not None and reference_browser.styleSheet():
+            self._calibration_highlight_style = reference_browser.styleSheet()
+        for port in range(1, REG_SENSOR_TYPE_COUNT + 1):
+            cells: dict[int, QTextBrowser] = {}
+            for sensor_code in (0x04, 0x02, 0x01, 0x00):
+                widget = getattr(self.ui, f"s{port}s0x{sensor_code:02X}", None)
+                if widget is None:
+                    continue
+                cells[sensor_code] = widget
+                self._calibration_cell_defaults[widget] = (widget.styleSheet(), widget.toHtml())
+                self._calibration_cell_states[widget] = False
+            self._calibration_matrix_cells[port] = cells
         # словари для отслеживания изменений настроек
         self._saved_regs: dict[int, int] = {}
         self._changed_regs: dict[int, int] = {}
@@ -1186,12 +1220,14 @@ class UMVH(QMainWindow):
         # выводим ошибку чтения в текстовое поле на странице ожидания
         self.ui.textBrowser_2.setText(msg)
 
-    def update_sensor_table(self, sensor_types: list[int], regs: list[int]):
+    def update_sensor_table(self, sensor_types: list[int], regs: list[int], calibration_masks: list[int]):
         """Обновляем показания датчиков и связанные элементы UI."""
         sensor_types = self._swap_regs_for_ui(sensor_types)
         regs = self._swap_regs_for_ui(regs)
+        calibration_masks = self._swap_regs_for_ui(calibration_masks)
         self._latest_sensor_types = sensor_types
         self._latest_sensor_values = regs
+        self._latest_calibration_masks = calibration_masks[:]
 
         for widget, raw_value, sensor_type in zip(self.sensor_value_widgets, regs, sensor_types):
             if widget is None:
@@ -1200,6 +1236,30 @@ class UMVH(QMainWindow):
             widget.setPlainText(str(scaled_value))
 
         self._update_live_sensor_widgets()
+        self._update_calibration_matrix(calibration_masks)
+
+    def _update_calibration_matrix(self, masks: list[int]):
+        for port_index, mask in enumerate(masks, start=1):
+            cells = self._calibration_matrix_cells.get(port_index, {})
+            for sensor_code, widget in cells.items():
+                if widget is None:
+                    continue
+                bit_index = sensor_code & 0x0F
+                highlighted = bool(mask & (1 << bit_index))
+                previous = self._calibration_cell_states.get(widget)
+                if previous is not None and highlighted == previous:
+                    continue
+                default_style, default_html = self._calibration_cell_defaults.get(widget, ("", ""))
+                if highlighted:
+                    widget.setStyleSheet(self._calibration_highlight_style)
+                    widget.setHtml("<p align=\"center\">Задано</p>")
+                else:
+                    widget.setStyleSheet(default_style)
+                    if default_html:
+                        widget.setHtml(default_html)
+                    else:
+                        widget.clear()
+                self._calibration_cell_states[widget] = highlighted
 
     # --- \u043e\u0431\u043d\u043e\u0432\u043b\u0435\u043d\u0438\u0435 \u041f\u041e ---------------------------------
     def select_firmware_file(self):
