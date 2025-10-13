@@ -724,6 +724,7 @@ class UMVH(QMainWindow):
             self._apply_scale_hint(getattr(self.ui, "textBrowser_70", None))
         elif page is getattr(self.ui, "page_18", None):
             self._apply_scale_hint(getattr(self.ui, "textBrowser_72", None))
+        self._update_four_point_value_edit_state()
 
     def _update_text_browser(self, browser: QTextBrowser | None, value: str):
         if browser is None:
@@ -788,6 +789,23 @@ class UMVH(QMainWindow):
 
         self._update_text_browser(getattr(self.ui, "textBrowser_105", None), port_text)
         self._update_text_browser(getattr(self.ui, "textBrowser_107", None), text)
+        self._update_four_point_value_edit_state()
+
+    def _update_four_point_value_edit_state(self):
+        page_20 = getattr(self.ui, "page_20", None)
+        spin_x1 = getattr(self.ui, "spinBox_20", None)
+        spin_x2 = getattr(self.ui, "spinBox_18", None)
+        if not all((page_20, spin_x1, spin_x2)):
+            return
+
+        on_page_20 = self.ui.stackedWidget_4.currentWidget() is page_20
+        is_namur_sensor = (
+            self._calibration_sensor is not None
+            and (self._calibration_sensor & 0xFF) == 0x01
+        )
+        enabled = not (on_page_20 and is_namur_sensor)
+        for widget in (spin_x1, spin_x2):
+            widget.setEnabled(enabled)
 
     def _write_calibration_register(self, mode: int, port: int, sensor: int) -> bool:
         port_device = self._map_port_ui_to_device(port)
