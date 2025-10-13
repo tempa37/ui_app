@@ -841,6 +841,16 @@ class UMVH(QMainWindow):
             return f"{value / 10:.1f}"
         return None
 
+    @staticmethod
+    def _has_negative_slope(x1: int | None, y1: int | None, x2: int | None, y2: int | None) -> bool:
+        if None in (x1, y1, x2, y2):
+            return False
+        dx = x2 - x1
+        if dx == 0:
+            return False
+        dy = y2 - y1
+        return dx * dy < 0
+
     def _update_live_sensor_widgets(self):
         port = self._calibration_port
         if not port:
@@ -945,6 +955,23 @@ class UMVH(QMainWindow):
     def _two_point_finalize(self):
         if not self._calibration_port:
             return
+        y1 = self._two_point_data.get("y1")
+        if y1 is None:
+            y1 = self.ui.spinBox_10.value()
+            self._two_point_data["y1"] = y1
+        y2 = self._two_point_data.get("y2")
+        if y2 is None:
+            y2 = self.ui.spinBox_13.value()
+            self._two_point_data["y2"] = y2
+        x1 = self._read_register(REG_CAL_POINT_X1)
+        x2 = self._read_register(REG_CAL_POINT_X2)
+        if x1 is None:
+            x1 = self._two_point_data.get("x1")
+        if x2 is None:
+            x2 = self._two_point_data.get("x2")
+        if self._has_negative_slope(x1, y1, x2, y2):
+            QMessageBox.warning(self, "Калибровка", "точки образуют отрицательный наклон")
+            return
         # при необходимости повторно записываем точки
         for key, reg in (("y1", REG_CAL_POINT_Y1), ("y2", REG_CAL_POINT_Y2)):
             value = self._two_point_data.get(key)
@@ -1017,6 +1044,14 @@ class UMVH(QMainWindow):
             REG_CAL_POINT_Y1: data.get("y1", self.ui.spinBox_19.value()),
             REG_CAL_POINT_Y2: data.get("y2", self.ui.spinBox_17.value()),
         }
+        if self._has_negative_slope(
+            values.get(REG_CAL_POINT_X1),
+            values.get(REG_CAL_POINT_Y1),
+            values.get(REG_CAL_POINT_X2),
+            values.get(REG_CAL_POINT_Y2),
+        ):
+            QMessageBox.warning(self, "Калибровка", "точки образуют отрицательный наклон")
+            return
         for reg, value in values.items():
             if not self._write_register(reg, value):
                 self._handle_comm_error()
