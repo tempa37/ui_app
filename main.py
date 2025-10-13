@@ -927,25 +927,61 @@ class UMVH(QMainWindow):
         self._set_calibration_page(self.ui.page_14)
 
     def _back_to_two_point_port_selection(self):
+        if self._calibration_port and self._calibration_sensor is not None:
+            if not self._write_calibration_register(0, self._calibration_port, self._calibration_sensor):
+                return
+            for reg in (REG_CAL_POINT_X1, REG_CAL_POINT_Y1, REG_CAL_POINT_X2, REG_CAL_POINT_Y2):
+                if not self._write_register(reg, 0):
+                    self._handle_comm_error()
+                    return
+            self._two_point_data.update({"x1": 0, "y1": 0, "x2": 0, "y2": 0})
+            for widget in (self.ui.spinBox_10, self.ui.spinBox_13):
+                if widget is not None:
+                    block = widget.blockSignals(True)
+                    widget.setValue(0)
+                    widget.blockSignals(block)
         self._set_calibration_page(self.ui.page_17)
 
     def _two_point_submit_password(self):
         if not self._calibration_port:
             return
-        if not self._send_password(self.ui.textEditSP_2.toPlainText()):
-            return
-        self.ui.textEditSP_2.clear()
-        # сбрасываем значения точек
-        self._two_point_data.update({"x1": None, "y1": None, "x2": None, "y2": None})
-        if not self._write_register(REG_CAL_POINT_Y1, 0):
-            self._handle_comm_error()
-            return
-        if not self._write_register(REG_CAL_POINT_Y2, 0):
-            self._handle_comm_error()
-            return
-        if self._calibration_port and self._calibration_sensor is not None:
-            if not self._write_calibration_register(0, self._calibration_port, self._calibration_sensor):
+        password_text = self.ui.textEditSP_2.toPlainText()
+        pwd = password_text.strip()
+        password_value: int | None = None
+        if pwd:
+            try:
+                password_value = int(pwd, 0)
+            except ValueError:
+                QMessageBox.warning(self, "Пароль", "Неверный формат пароля.")
                 return
+            if not (0 <= password_value <= 0xFFFF):
+                QMessageBox.warning(self, "Пароль", "Пароль должен быть в диапазоне 0..65535.")
+                return
+        if self._calibration_sensor is None:
+            return
+        if not self._write_calibration_register(0, self._calibration_port, self._calibration_sensor):
+            return
+        defaults = (
+            (REG_CAL_POINT_X1, 10),
+            (REG_CAL_POINT_Y1, 10),
+            (REG_CAL_POINT_X2, 100),
+            (REG_CAL_POINT_Y2, 100),
+        )
+        for reg, value in defaults:
+            if not self._write_register(reg, value):
+                self._handle_comm_error()
+                return
+        self._two_point_data.update({"x1": 10, "y1": 10, "x2": 100, "y2": 100})
+        for widget, value in ((self.ui.spinBox_10, 10), (self.ui.spinBox_13, 100)):
+            if widget is not None:
+                block = widget.blockSignals(True)
+                widget.setValue(value)
+                widget.blockSignals(block)
+        if password_value is not None:
+            if not self._write_register(REG_PASSWORD, password_value):
+                self._handle_comm_error()
+                return
+        self.ui.textEditSP_2.clear()
         self._set_calibration_page(self.ui.page_15)
         self._update_live_sensor_widgets()
 
