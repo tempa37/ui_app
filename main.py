@@ -660,7 +660,7 @@ class UMVH(QMainWindow):
 
         self.ui.pushButton_15.clicked.connect(self._cancel_calibration)
         self.ui.pushButton_8.clicked.connect(self._confirm_two_point_port)
-        self.ui.pushButton_14.clicked.connect(self._back_to_two_point_port_selection)
+        self.ui.pushButton_14.clicked.connect(self._two_point_reset_calibration)
         self.ui.pushButton_13.clicked.connect(self._two_point_submit_password)
         self.ui.pushButton_16.clicked.connect(self._two_point_commit_y1)
         self.ui.pushButton_19.clicked.connect(self._cancel_calibration)
@@ -930,24 +930,37 @@ class UMVH(QMainWindow):
         self._set_calibration_page(self.ui.page_17)
 
     def _two_point_submit_password(self):
-        if not self._calibration_port:
+        if not self._calibration_port or self._calibration_sensor is None:
             return
+        if not self._write_calibration_register(0, self._calibration_port, self._calibration_sensor):
+            return
+        default_points = {
+            REG_CAL_POINT_X1: 10,
+            REG_CAL_POINT_Y1: 10,
+            REG_CAL_POINT_X2: 100,
+            REG_CAL_POINT_Y2: 100,
+        }
+        for reg, value in default_points.items():
+            if not self._write_register(reg, value):
+                self._handle_comm_error()
+                return
+        self._two_point_data.update({"x1": 10, "y1": 10, "x2": 100, "y2": 100})
         if not self._send_password(self.ui.textEditSP_2.toPlainText()):
             return
         self.ui.textEditSP_2.clear()
-        # сбрасываем значения точек
-        self._two_point_data.update({"x1": None, "y1": None, "x2": None, "y2": None})
-        if not self._write_register(REG_CAL_POINT_Y1, 0):
-            self._handle_comm_error()
-            return
-        if not self._write_register(REG_CAL_POINT_Y2, 0):
-            self._handle_comm_error()
-            return
-        if self._calibration_port and self._calibration_sensor is not None:
-            if not self._write_calibration_register(0, self._calibration_port, self._calibration_sensor):
-                return
         self._set_calibration_page(self.ui.page_15)
         self._update_live_sensor_widgets()
+
+    def _two_point_reset_calibration(self):
+        if not self._calibration_port:
+            self._back_to_two_point_port_selection()
+            return
+        for reg in (REG_CAL_POINT_X1, REG_CAL_POINT_Y1, REG_CAL_POINT_X2, REG_CAL_POINT_Y2):
+            if not self._write_register(reg, 0):
+                self._handle_comm_error()
+                return
+        self._two_point_data.update({"x1": 0, "y1": 0, "x2": 0, "y2": 0})
+        self._back_to_two_point_port_selection()
 
     def _two_point_commit_y1(self):
         if not self._calibration_port:
