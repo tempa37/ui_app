@@ -1,4 +1,5 @@
 import sys
+import threading
 from contextlib import contextmanager
 
 from PySide6.QtCore    import Qt, QObject, Signal, QThread
@@ -167,10 +168,11 @@ class RegisterPoller(QObject):
     error = Signal(str)
     connection_lost = Signal()
 
-    def __init__(self, serial_port: serial.Serial, slave_id: int):
+    def __init__(self, serial_port: serial.Serial, slave_id: int, lock: threading.Lock):
         super().__init__()
         self.serial_port = serial_port
         self.slave_id = slave_id
+        self._lock = lock
         self._running = True
         self._fail_count = 0
 
@@ -206,9 +208,10 @@ class RegisterPoller(QObject):
         req = struct.pack(">BBHH", self.slave_id, 3, start_addr, count)
         crc = AutoConnectWorker._calc_crc(req)
         try:
-            self.serial_port.write(req + crc.to_bytes(2, "little"))
-            expected_len = 5 + count * 2
-            resp = self.serial_port.read(expected_len)
+            with self._lock:
+                self.serial_port.write(req + crc.to_bytes(2, "little"))
+                expected_len = 5 + count * 2
+                resp = self.serial_port.read(expected_len)
         except serial.SerialException as exc:
             self.error.emit(str(exc))
             self._running = False
@@ -475,6 +478,7 @@ class UMVH(QMainWindow):
         self.selected_port = None  # переменная для хранения выбранного порта
         self.serial_config = {}
         self.serial_port = None
+        self._serial_lock = threading.Lock()
         self.worker_thread = None
         self.worker = None
         self.poll_thread = None
@@ -720,6 +724,7 @@ class UMVH(QMainWindow):
             self._apply_scale_hint(getattr(self.ui, "textBrowser_70", None))
         elif page is getattr(self.ui, "page_18", None):
             self._apply_scale_hint(getattr(self.ui, "textBrowser_72", None))
+        self._update_four_point_value_edit_state()
 
     def _update_text_browser(self, browser: QTextBrowser | None, value: str):
         if browser is None:
@@ -784,6 +789,23 @@ class UMVH(QMainWindow):
 
         self._update_text_browser(getattr(self.ui, "textBrowser_105", None), port_text)
         self._update_text_browser(getattr(self.ui, "textBrowser_107", None), text)
+        self._update_four_point_value_edit_state()
+
+    def _update_four_point_value_edit_state(self):
+        page_20 = getattr(self.ui, "page_20", None)
+        spin_x1 = getattr(self.ui, "spinBox_20", None)
+        spin_x2 = getattr(self.ui, "spinBox_18", None)
+        if not all((page_20, spin_x1, spin_x2)):
+            return
+
+        on_page_20 = self.ui.stackedWidget_4.currentWidget() is page_20
+        is_namur_sensor = (
+            self._calibration_sensor is not None
+            and (self._calibration_sensor & 0xFF) == 0x01
+        )
+        enabled = not (on_page_20 and is_namur_sensor)
+        for widget in (spin_x1, spin_x2):
+            widget.setEnabled(enabled)
 
     def _write_calibration_register(self, mode: int, port: int, sensor: int) -> bool:
         port_device = self._map_port_ui_to_device(port)
@@ -927,25 +949,52 @@ class UMVH(QMainWindow):
         self._set_calibration_page(self.ui.page_14)
 
     def _back_to_two_point_port_selection(self):
+        if self._calibration_port and self._calibration_sensor is not None:
+            for reg in (
+                REG_CAL_POINT_X1,
+                REG_CAL_POINT_X2,
+                REG_CAL_POINT_Y1,
+                REG_CAL_POINT_Y2,
+            ):
+                if not self._write_register(reg, 0):
+                    self._handle_comm_error()
+                    break
+            self._write_calibration_register(0, self._calibration_port, self._calibration_sensor)
+            self._two_point_data.update({"x1": None, "y1": None, "x2": None, "y2": None})
         self._set_calibration_page(self.ui.page_17)
 
     def _two_point_submit_password(self):
         if not self._calibration_port:
             return
+        if self._calibration_sensor is None:
+            return
+        port = self._calibration_port
+        sensor = self._calibration_sensor
+
+        if not self._write_calibration_register(1, port, sensor):
+            return
+
+        defaults = (
+            (REG_CAL_POINT_X1, 10),
+            (REG_CAL_POINT_Y1, 10),
+            (REG_CAL_POINT_X2, 100),
+            (REG_CAL_POINT_Y2, 100),
+        )
+
+        for reg, value in defaults:
+            if not self._write_register(reg, value):
+                self._handle_comm_error()
+                self._write_calibration_register(0, port, sensor)
+                return
+
         if not self._send_password(self.ui.textEditSP_2.toPlainText()):
+            self._write_calibration_register(0, port, sensor)
             return
         self.ui.textEditSP_2.clear()
-        # сбрасываем значения точек
-        self._two_point_data.update({"x1": None, "y1": None, "x2": None, "y2": None})
-        if not self._write_register(REG_CAL_POINT_Y1, 0):
-            self._handle_comm_error()
+        self._two_point_data.update({"x1": 10, "y1": 10, "x2": 100, "y2": 100})
+
+        if not self._write_calibration_register(0, port, sensor):
             return
-        if not self._write_register(REG_CAL_POINT_Y2, 0):
-            self._handle_comm_error()
-            return
-        if self._calibration_port and self._calibration_sensor is not None:
-            if not self._write_calibration_register(0, self._calibration_port, self._calibration_sensor):
-                return
         self._set_calibration_page(self.ui.page_15)
         self._update_live_sensor_widgets()
 
@@ -1417,7 +1466,7 @@ class UMVH(QMainWindow):
             return
         self.poll_thread = QThread()
         slave = self.serial_config.get("usart_id", 1)
-        self.poller = RegisterPoller(self.serial_port, slave)
+        self.poller = RegisterPoller(self.serial_port, slave, self._serial_lock)
         self.poller.moveToThread(self.poll_thread)
         self.poll_thread.started.connect(self.poller.run)
         self.poller.data_ready.connect(self.update_sensor_table)
@@ -1628,8 +1677,9 @@ class UMVH(QMainWindow):
             slave = self.serial_config.get("usart_id", 1)
             req = struct.pack(">BBHH", slave, 3, addr, 1)
             crc = AutoConnectWorker._calc_crc(req)
-            self.serial_port.write(req + crc.to_bytes(2, "little"))
-            resp = self.serial_port.read(7)
+            with self._serial_lock:
+                self.serial_port.write(req + crc.to_bytes(2, "little"))
+                resp = self.serial_port.read(7)
             if len(resp) != 7:
                 return None
             recv_crc = int.from_bytes(resp[-2:], "little")
@@ -1641,12 +1691,15 @@ class UMVH(QMainWindow):
 
     def _write_register(self, addr: int, value: int) -> bool:
         """Запись одного регистра Modbus."""
+        if not self.serial_port:
+            return False
         try:
             slave = self.serial_config.get("usart_id", 1)
             req = struct.pack(">BBHH", slave, 6, addr, value)
             crc = AutoConnectWorker._calc_crc(req)
-            self.serial_port.write(req + crc.to_bytes(2, "little"))
-            resp = self.serial_port.read(8)
+            with self._serial_lock:
+                self.serial_port.write(req + crc.to_bytes(2, "little"))
+                resp = self.serial_port.read(8)
             if len(resp) != 8:
                 return False
             recv_crc = int.from_bytes(resp[-2:], "little")
