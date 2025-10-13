@@ -517,6 +517,10 @@ class UMVH(QMainWindow):
             browser = getattr(self.ui, name, None)
             if browser is not None:
                 self._scale_hint_defaults[browser] = (browser.toPlainText(), browser.toHtml())
+        self._text_browser2_defaults: tuple[str, str] = (
+            self.ui.textBrowser_2.toPlainText(),
+            self.ui.textBrowser_2.toHtml(),
+        )
         # словари для отслеживания изменений настроек
         self._saved_regs: dict[int, int] = {}
         self._changed_regs: dict[int, int] = {}
@@ -1378,7 +1382,14 @@ class UMVH(QMainWindow):
             self._calibration_cell_states[widget] = False
 
         self.ui.textEditSP.clear()
-        self.ui.textBrowser_2.clear()
+        default_plain, default_html = getattr(self, "_text_browser2_defaults", ("", ""))
+        if default_plain.strip():
+            if default_html.strip():
+                self.ui.textBrowser_2.setHtml(default_html)
+            else:
+                self.ui.textBrowser_2.setPlainText(default_plain)
+        else:
+            self.ui.textBrowser_2.clear()
         for name in ("textEditSP_2", "textEditSP_3", "textEditSP_4", "textEditSP_5"):
             editor = getattr(self.ui, name, None)
             if editor is not None:
