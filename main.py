@@ -1,4 +1,5 @@
 import sys
+import threading
 from contextlib import contextmanager
 
 from PySide6.QtCore    import Qt, QObject, Signal, QThread
@@ -167,10 +168,11 @@ class RegisterPoller(QObject):
     error = Signal(str)
     connection_lost = Signal()
 
-    def __init__(self, serial_port: serial.Serial, slave_id: int):
+    def __init__(self, serial_port: serial.Serial, slave_id: int, lock: threading.Lock):
         super().__init__()
         self.serial_port = serial_port
         self.slave_id = slave_id
+        self._lock = lock
         self._running = True
         self._fail_count = 0
 
@@ -206,9 +208,10 @@ class RegisterPoller(QObject):
         req = struct.pack(">BBHH", self.slave_id, 3, start_addr, count)
         crc = AutoConnectWorker._calc_crc(req)
         try:
-            self.serial_port.write(req + crc.to_bytes(2, "little"))
-            expected_len = 5 + count * 2
-            resp = self.serial_port.read(expected_len)
+            with self._lock:
+                self.serial_port.write(req + crc.to_bytes(2, "little"))
+                expected_len = 5 + count * 2
+                resp = self.serial_port.read(expected_len)
         except serial.SerialException as exc:
             self.error.emit(str(exc))
             self._running = False
@@ -475,6 +478,7 @@ class UMVH(QMainWindow):
         self.selected_port = None  # переменная для хранения выбранного порта
         self.serial_config = {}
         self.serial_port = None
+        self._serial_lock = threading.Lock()
         self.worker_thread = None
         self.worker = None
         self.poll_thread = None
@@ -1444,7 +1448,7 @@ class UMVH(QMainWindow):
             return
         self.poll_thread = QThread()
         slave = self.serial_config.get("usart_id", 1)
-        self.poller = RegisterPoller(self.serial_port, slave)
+        self.poller = RegisterPoller(self.serial_port, slave, self._serial_lock)
         self.poller.moveToThread(self.poll_thread)
         self.poll_thread.started.connect(self.poller.run)
         self.poller.data_ready.connect(self.update_sensor_table)
@@ -1655,8 +1659,9 @@ class UMVH(QMainWindow):
             slave = self.serial_config.get("usart_id", 1)
             req = struct.pack(">BBHH", slave, 3, addr, 1)
             crc = AutoConnectWorker._calc_crc(req)
-            self.serial_port.write(req + crc.to_bytes(2, "little"))
-            resp = self.serial_port.read(7)
+            with self._serial_lock:
+                self.serial_port.write(req + crc.to_bytes(2, "little"))
+                resp = self.serial_port.read(7)
             if len(resp) != 7:
                 return None
             recv_crc = int.from_bytes(resp[-2:], "little")
@@ -1668,12 +1673,15 @@ class UMVH(QMainWindow):
 
     def _write_register(self, addr: int, value: int) -> bool:
         """Запись одного регистра Modbus."""
+        if not self.serial_port:
+            return False
         try:
             slave = self.serial_config.get("usart_id", 1)
             req = struct.pack(">BBHH", slave, 6, addr, value)
             crc = AutoConnectWorker._calc_crc(req)
-            self.serial_port.write(req + crc.to_bytes(2, "little"))
-            resp = self.serial_port.read(8)
+            with self._serial_lock:
+                self.serial_port.write(req + crc.to_bytes(2, "little"))
+                resp = self.serial_port.read(8)
             if len(resp) != 8:
                 return False
             recv_crc = int.from_bytes(resp[-2:], "little")
