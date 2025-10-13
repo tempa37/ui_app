@@ -521,6 +521,11 @@ class UMVH(QMainWindow):
         self._saved_regs: dict[int, int] = {}
         self._changed_regs: dict[int, int] = {}
         self.populate_com_ports()
+
+        # таймер для периодического обновления списка COM-портов на главной странице
+        self._com_port_timer = QTimer(self)
+        self._com_port_timer.setInterval(2000)
+        self._com_port_timer.timeout.connect(self.populate_com_ports)
         # реагируем на смену выбора пользователем
         self.ui.comboBox_11.currentTextChanged.connect(self.on_port_selected)
 
@@ -529,6 +534,9 @@ class UMVH(QMainWindow):
             self.ui.stackedWidget.setCurrentWidget(self.ui.page)
         except AttributeError:
             self.ui.stackedWidget.setCurrentIndex(0)
+
+        # запускаем обновление списка COM-портов, пока отображается главная страница
+        self._com_port_timer.start()
 
         # переход в режим автоподключения
         self.ui.pushButton.clicked.connect(self.start_auto_connect)
@@ -557,6 +565,11 @@ class UMVH(QMainWindow):
 
     def switch_to(self, page_widget):
         self.ui.stackedWidget.setCurrentWidget(page_widget)
+        if page_widget is self.ui.page:
+            self._com_port_timer.start()
+            self.populate_com_ports()
+        else:
+            self._com_port_timer.stop()
         if page_widget is self.ui.page_4:
             # при открытии page_4 показываем страницу выбора файла
             self.ui.stackedWidget_2.setCurrentWidget(self.ui.page_6)
@@ -573,17 +586,24 @@ class UMVH(QMainWindow):
 
         ports = sorted(ports, key=port_index)
 
-        self.ui.comboBox_11.clear()
-        for port in ports:
-            # добавляем имя устройства, например 'COM3'
-            self.ui.comboBox_11.addItem(port.device)
+        previous_selection = self.selected_port or self.ui.comboBox_11.currentText()
 
-        if ports:
-            # выбираем порт с наибольшим индексом
-            self.selected_port = ports[-1].device
-            self.ui.comboBox_11.setCurrentText(self.selected_port)
-        else:
-            self.selected_port = None
+        with self._block_widget_signals(self.ui.comboBox_11):
+            self.ui.comboBox_11.clear()
+            for port in ports:
+                # добавляем имя устройства, например 'COM3'
+                self.ui.comboBox_11.addItem(port.device)
+
+            if ports:
+                available_devices = {port.device for port in ports}
+                if previous_selection in available_devices:
+                    self.selected_port = previous_selection
+                else:
+                    # выбираем порт с наибольшим индексом
+                    self.selected_port = ports[-1].device
+                self.ui.comboBox_11.setCurrentText(self.selected_port)
+            else:
+                self.selected_port = None
 
     def on_port_selected(self, port_name: str):
         """Слот сохранения выбранного пользователем порта."""
