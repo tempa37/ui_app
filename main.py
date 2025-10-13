@@ -550,6 +550,9 @@ class UMVH(QMainWindow):
         self.ui.spinBox_2.valueChanged.connect(self._on_setting_changed)
         self.ui.OS_update.clicked.connect(self.select_firmware_file)
         self.ui.pushButton_7.clicked.connect(self.select_bootloader_file)
+        reset_button = getattr(self.ui, "pushButton_22", None)
+        if reset_button is not None:
+            reset_button.clicked.connect(self.reset_application_state)
         self._init_calibration_connections()
 
     def switch_to(self, page_widget):
@@ -1285,6 +1288,96 @@ class UMVH(QMainWindow):
             self.worker_thread.quit()
             self.worker_thread.wait()
         self.stop_polling()
+        self.switch_to(self.ui.page)
+
+    def reset_application_state(self):
+        """Возвращаем приложение в исходное состояние и освобождаем ресурсы."""
+        if self.worker:
+            self.worker.stop()
+        if self.worker_thread:
+            self.worker_thread.quit()
+            self.worker_thread.wait()
+        self.worker = None
+        self.worker_thread = None
+
+        if self.updater:
+            self.updater.stop()
+        if self.update_thread:
+            self.update_thread.quit()
+            self.update_thread.wait()
+        self.updater = None
+        self.update_thread = None
+
+        if self.bl_updater:
+            self.bl_updater.stop()
+        if self.bl_update_thread:
+            self.bl_update_thread.quit()
+            self.bl_update_thread.wait()
+        self.bl_updater = None
+        self.bl_update_thread = None
+
+        self.stop_polling()
+        self.poller = None
+        self.poll_thread = None
+
+        if self.serial_port:
+            try:
+                self.serial_port.close()
+            except serial.SerialException:
+                pass
+        self.serial_port = None
+        self.serial_config = {}
+
+        self.selected_port = None
+        self._saved_regs.clear()
+        self._changed_regs.clear()
+
+        self._current_calibration = None
+        self._calibration_port = None
+        self._calibration_sensor = None
+        self._two_point_data = {"x1": None, "y1": None, "x2": None, "y2": None}
+        self._four_point_data = {"x1": None, "y1": None, "x2": None, "y2": None}
+        self._latest_sensor_types = [0] * REG_SENSOR_TYPE_COUNT
+        self._latest_sensor_values = [0] * REG_SENSOR_READ_COUNT
+        self._latest_calibration_masks = [0] * REG_CAL_STATUS_COUNT
+
+        for widget in self.sensor_value_widgets:
+            if widget is not None:
+                widget.clear()
+
+        self._reset_calibration_state()
+
+        for widget, (style, html) in self._calibration_cell_defaults.items():
+            if widget is None:
+                continue
+            widget.setStyleSheet(style)
+            if html:
+                widget.setHtml(html)
+            else:
+                widget.clear()
+            self._calibration_cell_states[widget] = False
+
+        self.ui.textEditSP.clear()
+        self.ui.textBrowser_2.clear()
+        for name in ("textEditSP_2", "textEditSP_3", "textEditSP_4", "textEditSP_5"):
+            editor = getattr(self.ui, name, None)
+            if editor is not None:
+                editor.clear()
+
+        if hasattr(self.ui, "progressBar"):
+            self.ui.progressBar.setValue(0)
+            self.ui.progressBar.setFormat("%p%")
+        if hasattr(self.ui, "progressBar_2"):
+            self.ui.progressBar_2.setValue(0)
+            self.ui.progressBar_2.setFormat("%p%")
+
+        if hasattr(self.ui, "stackedWidget_2") and hasattr(self.ui, "page_6"):
+            self.ui.stackedWidget_2.setCurrentWidget(self.ui.page_6)
+        if hasattr(self.ui, "stackedWidget_3") and hasattr(self.ui, "page_11"):
+            self.ui.stackedWidget_3.setCurrentWidget(self.ui.page_11)
+
+        self._set_autoconnect_defaults()
+        self.populate_com_ports()
         self.switch_to(self.ui.page)
 
     # --- опрос регистров ------------------------------------------------
