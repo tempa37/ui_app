@@ -944,6 +944,15 @@ class UMVH(QMainWindow):
         sensor = self._get_sensor_type_from_device(port)
         if sensor is None:
             return
+        sensor_code = sensor & 0xFF
+        allowed_sensor_codes = {0x00, 0x01, 0x02, 0x04}
+        if sensor_code not in allowed_sensor_codes:
+            QMessageBox.warning(
+                self,
+                "Калибровка",
+                "в порту стоит датчик который нельзя откалибровать",
+            )
+            return
         if not self._remember_calibration_target(0, port, sensor):
             return
         self._set_calibration_page(self.ui.page_14)
