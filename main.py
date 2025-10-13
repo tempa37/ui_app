@@ -927,25 +927,52 @@ class UMVH(QMainWindow):
         self._set_calibration_page(self.ui.page_14)
 
     def _back_to_two_point_port_selection(self):
+        if self._calibration_port and self._calibration_sensor is not None:
+            for reg in (
+                REG_CAL_POINT_X1,
+                REG_CAL_POINT_X2,
+                REG_CAL_POINT_Y1,
+                REG_CAL_POINT_Y2,
+            ):
+                if not self._write_register(reg, 0):
+                    self._handle_comm_error()
+                    break
+            self._write_calibration_register(0, self._calibration_port, self._calibration_sensor)
+            self._two_point_data.update({"x1": None, "y1": None, "x2": None, "y2": None})
         self._set_calibration_page(self.ui.page_17)
 
     def _two_point_submit_password(self):
         if not self._calibration_port:
             return
+        if self._calibration_sensor is None:
+            return
+        port = self._calibration_port
+        sensor = self._calibration_sensor
+
+        if not self._write_calibration_register(1, port, sensor):
+            return
+
+        defaults = (
+            (REG_CAL_POINT_X1, 10),
+            (REG_CAL_POINT_Y1, 10),
+            (REG_CAL_POINT_X2, 100),
+            (REG_CAL_POINT_Y2, 100),
+        )
+
+        for reg, value in defaults:
+            if not self._write_register(reg, value):
+                self._handle_comm_error()
+                self._write_calibration_register(0, port, sensor)
+                return
+
         if not self._send_password(self.ui.textEditSP_2.toPlainText()):
+            self._write_calibration_register(0, port, sensor)
             return
         self.ui.textEditSP_2.clear()
-        # сбрасываем значения точек
-        self._two_point_data.update({"x1": None, "y1": None, "x2": None, "y2": None})
-        if not self._write_register(REG_CAL_POINT_Y1, 0):
-            self._handle_comm_error()
+        self._two_point_data.update({"x1": 10, "y1": 10, "x2": 100, "y2": 100})
+
+        if not self._write_calibration_register(0, port, sensor):
             return
-        if not self._write_register(REG_CAL_POINT_Y2, 0):
-            self._handle_comm_error()
-            return
-        if self._calibration_port and self._calibration_sensor is not None:
-            if not self._write_calibration_register(0, self._calibration_port, self._calibration_sensor):
-                return
         self._set_calibration_page(self.ui.page_15)
         self._update_live_sensor_widgets()
 
