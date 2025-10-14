@@ -490,6 +490,7 @@ class UMVH(QMainWindow):
         self._current_calibration: str | None = None
         self._calibration_port: int | None = None
         self._calibration_sensor: int | None = None
+        self._last_calibration_password: str = ""
         self._two_point_data: dict[str, int | None] = {"x1": None, "y1": None, "x2": None, "y2": None}
         self._four_point_data: dict[str, int | None] = {"x1": None, "y1": None, "x2": None, "y2": None}
         self._latest_sensor_types: list[int] = [0] * REG_SENSOR_TYPE_COUNT
@@ -667,7 +668,7 @@ class UMVH(QMainWindow):
         self.ui.pushButton_14.clicked.connect(self._back_to_two_point_port_selection)
         self.ui.pushButton_13.clicked.connect(self._two_point_submit_password)
         self.ui.pushButton_16.clicked.connect(self._two_point_commit_y1)
-        self.ui.pushButton_19.clicked.connect(self._cancel_calibration)
+        self.ui.pushButton_19.clicked.connect(self._two_point_clear_current_calibration)
         self.ui.pushButton_20.clicked.connect(self._back_to_two_point_y1)
         self.ui.pushButton_17.clicked.connect(self._two_point_commit_y2)
         self.ui.pushButton_21.clicked.connect(self._back_to_two_point_y2)
@@ -842,6 +843,7 @@ class UMVH(QMainWindow):
     def _send_password(self, text: str) -> bool:
         pwd = text.strip()
         if not pwd:
+            self._last_calibration_password = ""
             return True
         try:
             value = int(pwd, 0)
@@ -854,6 +856,7 @@ class UMVH(QMainWindow):
         if not self._write_register(REG_PASSWORD, value):
             self._handle_comm_error()
             return False
+        self._last_calibration_password = pwd
         return True
 
     def _get_sensor_type_from_device(self, port: int) -> int | None:
@@ -1006,6 +1009,37 @@ class UMVH(QMainWindow):
             return
         self._set_calibration_page(self.ui.page_15)
         self._update_live_sensor_widgets()
+
+    def _two_point_clear_current_calibration(self):
+        if not self._calibration_port or self._calibration_sensor is None:
+            self._reset_calibration_state()
+            return
+
+        port = self._calibration_port
+        sensor = self._calibration_sensor
+
+        if not self._write_calibration_register(1, port, sensor):
+            return
+
+        for reg in (REG_CAL_POINT_X1, REG_CAL_POINT_X2, REG_CAL_POINT_Y1, REG_CAL_POINT_Y2):
+            if not self._write_register(reg, 0):
+                self._handle_comm_error()
+                self._write_calibration_register(0, port, sensor)
+                return
+
+        password_text = self.ui.textEditSP_3.toPlainText()
+        if not password_text.strip():
+            password_text = self._last_calibration_password
+
+        if not self._send_password(password_text):
+            self._write_calibration_register(0, port, sensor)
+            return
+
+        if not self._write_calibration_register(0, port, sensor):
+            return
+
+        self._two_point_data.update({"x1": 0, "y1": 0, "x2": 0, "y2": 0})
+        self._reset_calibration_state()
 
     def _two_point_commit_y1(self):
         if not self._calibration_port:
