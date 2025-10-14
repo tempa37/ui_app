@@ -667,7 +667,7 @@ class UMVH(QMainWindow):
         self.ui.pushButton_14.clicked.connect(self._back_to_two_point_port_selection)
         self.ui.pushButton_13.clicked.connect(self._two_point_submit_password)
         self.ui.pushButton_16.clicked.connect(self._two_point_commit_y1)
-        self.ui.pushButton_19.clicked.connect(self._cancel_calibration)
+        self.ui.pushButton_19.clicked.connect(self._two_point_cancel_defaults)
         self.ui.pushButton_20.clicked.connect(self._back_to_two_point_y1)
         self.ui.pushButton_17.clicked.connect(self._two_point_commit_y2)
         self.ui.pushButton_21.clicked.connect(self._back_to_two_point_y2)
@@ -1006,6 +1006,37 @@ class UMVH(QMainWindow):
             return
         self._set_calibration_page(self.ui.page_15)
         self._update_live_sensor_widgets()
+
+    def _two_point_cancel_defaults(self):
+        if not self._calibration_port:
+            self._reset_calibration_state()
+            return
+        if self._calibration_sensor is None:
+            self._reset_calibration_state()
+            return
+
+        port = self._calibration_port
+        sensor = self._calibration_sensor
+
+        if not self._write_calibration_register(1, port, sensor):
+            return
+
+        for reg in (
+            REG_CAL_POINT_X1,
+            REG_CAL_POINT_Y1,
+            REG_CAL_POINT_X2,
+            REG_CAL_POINT_Y2,
+        ):
+            if not self._write_register(reg, 0):
+                self._handle_comm_error()
+                self._write_calibration_register(0, port, sensor)
+                return
+
+        if not self._write_calibration_register(0, port, sensor):
+            return
+
+        self._update_live_sensor_widgets()
+        self._reset_calibration_state()
 
     def _two_point_commit_y1(self):
         if not self._calibration_port:
