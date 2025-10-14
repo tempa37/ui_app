@@ -958,18 +958,37 @@ class UMVH(QMainWindow):
         self._set_calibration_page(self.ui.page_14)
 
     def _back_to_two_point_port_selection(self):
-        if self._calibration_port and self._calibration_sensor is not None:
-            for reg in (
-                REG_CAL_POINT_X1,
-                REG_CAL_POINT_X2,
-                REG_CAL_POINT_Y1,
-                REG_CAL_POINT_Y2,
-            ):
-                if not self._write_register(reg, 0):
-                    self._handle_comm_error()
-                    break
-            self._write_calibration_register(0, self._calibration_port, self._calibration_sensor)
-            self._two_point_data.update({"x1": None, "y1": None, "x2": None, "y2": None})
+        if not self._calibration_port or self._calibration_sensor is None:
+            self._set_calibration_page(self.ui.page_17)
+            return
+
+        port = self._calibration_port
+        sensor = self._calibration_sensor
+
+        if not self._write_calibration_register(1, port, sensor):
+            return
+
+        for reg in (
+            REG_CAL_POINT_X1,
+            REG_CAL_POINT_X2,
+            REG_CAL_POINT_Y1,
+            REG_CAL_POINT_Y2,
+        ):
+            if not self._write_register(reg, 0):
+                self._handle_comm_error()
+                self._write_calibration_register(0, port, sensor)
+                return
+
+        if not self._send_password(self.ui.textEditSP_2.toPlainText()):
+            self._write_calibration_register(0, port, sensor)
+            return
+
+        self.ui.textEditSP_2.clear()
+        self._two_point_data.update({"x1": None, "y1": None, "x2": None, "y2": None})
+
+        if not self._write_calibration_register(0, port, sensor):
+            return
+
         self._set_calibration_page(self.ui.page_17)
 
     def _two_point_submit_password(self):
