@@ -656,6 +656,22 @@ class UMVH(QMainWindow):
             regs[0], regs[1] = regs[1], regs[0]  # 0→порт1, 1→порт2
         return regs
 
+    def _order_sensor_values_for_ui(self, regs: list[int]) -> list[int]:
+        """Device→UI: возвращаем показания датчиков в порядке отображения."""
+        if not self.SWAP_1_2_ENABLED or len(regs) <= 1:
+            return regs
+
+        ordered: list[int] = [0] * len(regs)
+        for ui_index in range(len(regs)):
+            ui_port = ui_index + 1
+            device_port = self._map_port_ui_to_device(ui_port)
+            device_index = device_port - 1
+            if 0 <= device_index < len(regs):
+                ordered[ui_index] = regs[device_index]
+            else:
+                ordered[ui_index] = regs[ui_index]
+        return ordered
+
     # --- калибровка ---------------------------------------------------
     def _init_calibration_connections(self):
         """Настраиваем обработчики кнопок области калибровки."""
@@ -869,7 +885,8 @@ class UMVH(QMainWindow):
     def _get_latest_sensor_value(self, port: int | None) -> int:
         if not port:
             return 0
-        idx = port - 1
+        device_port = self._map_port_ui_to_device(port)
+        idx = device_port - 1
         if 0 <= idx < len(self._latest_sensor_values):
             return self._latest_sensor_values[idx]
         return 0
@@ -1530,21 +1547,23 @@ class UMVH(QMainWindow):
 
     def update_sensor_table(self, sensor_types: list[int], regs: list[int], calibration_masks: list[int]):
         """Обновляем показания датчиков и связанные элементы UI."""
-        sensor_types = self._swap_regs_for_ui(sensor_types)
-        regs = self._swap_regs_for_ui(regs)
-        calibration_masks = self._swap_regs_for_ui(calibration_masks)
-        self._latest_sensor_types = sensor_types
-        self._latest_sensor_values = regs
+        sensor_types_ui = self._swap_regs_for_ui(sensor_types)
+        regs_ui = self._order_sensor_values_for_ui(regs)
+        calibration_masks_ui = self._swap_regs_for_ui(calibration_masks)
+        self._latest_sensor_types = sensor_types[:]
+        self._latest_sensor_values = regs[:]
         self._latest_calibration_masks = calibration_masks[:]
 
-        for widget, raw_value, sensor_type in zip(self.sensor_value_widgets, regs, sensor_types):
+        for widget, raw_value, sensor_type in zip(
+            self.sensor_value_widgets, regs_ui, sensor_types_ui
+        ):
             if widget is None:
                 continue
             scaled_value = self._apply_sensor_scaling(raw_value, sensor_type)
             widget.setPlainText(str(scaled_value))
 
         self._update_live_sensor_widgets()
-        self._update_calibration_matrix(calibration_masks)
+        self._update_calibration_matrix(calibration_masks_ui)
 
     def _update_calibration_matrix(self, masks: list[int]):
         for port_index, mask in enumerate(masks, start=1):
