@@ -962,7 +962,10 @@ class UMVH(QMainWindow):
         if sensor is None:
             return
         sensor_code = sensor & 0xFF
-        allowed_sensor_codes = {0x00, 0x01, 0x02, 0x04, SENSOR_TYPE_REGISTER_VOLTAGE}
+        if sensor_code == SENSOR_TYPE_CANONICAL_VOLTAGE:
+            QMessageBox.warning(self, "Калибровка", "В порту отсутствует датчик")
+            return
+        allowed_sensor_codes = {0x01, 0x02, 0x04, SENSOR_TYPE_REGISTER_VOLTAGE}
         if sensor_code not in allowed_sensor_codes:
             QMessageBox.warning(
                 self,
