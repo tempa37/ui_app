@@ -1530,14 +1530,18 @@ class UMVH(QMainWindow):
 
     def update_sensor_table(self, sensor_types: list[int], regs: list[int], calibration_masks: list[int]):
         """Обновляем показания датчиков и связанные элементы UI."""
-        sensor_types = self._swap_regs_for_ui(sensor_types)
-        regs = self._swap_regs_for_ui(regs)
+        # типы датчиков привязаны к тем же индексам, что и регистры 0x0012..0x0019,
+        # поэтому оставляем их без перестановки, а маски калибровки продолжаем
+        # отображать в порядке UI
+        sensor_types_ui = sensor_types
         calibration_masks = self._swap_regs_for_ui(calibration_masks)
-        self._latest_sensor_types = sensor_types
+        self._latest_sensor_types = sensor_types_ui
+        # показания датчиков строго соответствуют порядку регистров 0x0012..0x0019,
+        # поэтому не меняем их местами даже при активном SWAP_1_2_ENABLED
         self._latest_sensor_values = regs
         self._latest_calibration_masks = calibration_masks[:]
 
-        for widget, raw_value, sensor_type in zip(self.sensor_value_widgets, regs, sensor_types):
+        for widget, raw_value, sensor_type in zip(self.sensor_value_widgets, regs, sensor_types_ui):
             if widget is None:
                 continue
             scaled_value = self._apply_sensor_scaling(raw_value, sensor_type)
