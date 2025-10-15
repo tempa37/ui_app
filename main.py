@@ -56,6 +56,18 @@ REG_STOP = 0x002A
 REG_PASSWORD = 0x002B
 REG_USART_ID = 0x002C
 
+# --- особые типы датчиков -----------------------------------------------
+SENSOR_TYPE_REGISTER_VOLTAGE = 0x06
+SENSOR_TYPE_CANONICAL_VOLTAGE = 0x00
+
+
+def normalize_sensor_type(value: int) -> int:
+    """Преобразует специальный код датчика напряжения к каноническому значению."""
+
+    if (value & 0xFF) == SENSOR_TYPE_REGISTER_VOLTAGE:
+        return (value & ~0xFF) | SENSOR_TYPE_CANONICAL_VOLTAGE
+    return value
+
 # --- настройки USART для автоподключения и отправки 0x2A ---------
 # используются при приёме пакета автоподключения и во время
 # обновления прошивки
@@ -185,7 +197,8 @@ class RegisterPoller(QObject):
                 sensor_regs = self._read_registers(REG_SENSOR_TYPE_BASE, REG_SENSOR_POLL_COUNT)
                 if sensor_regs is None:
                     continue
-                sensor_types = sensor_regs[:REG_SENSOR_TYPE_COUNT]
+                raw_sensor_types = sensor_regs[:REG_SENSOR_TYPE_COUNT]
+                sensor_types = [normalize_sensor_type(value) for value in raw_sensor_types]
                 sensor_values = sensor_regs[REG_SENSOR_TYPE_COUNT:]
 
                 status_regs = self._read_registers(REG_CAL_STATUS_START, REG_CAL_STATUS_COUNT)
@@ -833,10 +846,11 @@ class UMVH(QMainWindow):
 
     def _remember_calibration_target(self, mode: int, port: int, sensor: int) -> bool:
         """Записываем выбор порта/датчика и сохраняем его в состоянии."""
-        if not self._write_calibration_register(mode, port, sensor):
+        sensor_canonical = normalize_sensor_type(sensor)
+        if not self._write_calibration_register(mode, port, sensor_canonical):
             return False
         self._calibration_port = port
-        self._calibration_sensor = sensor
+        self._calibration_sensor = sensor_canonical
         self._update_calibration_headers()
         return True
 
@@ -948,7 +962,10 @@ class UMVH(QMainWindow):
         if sensor is None:
             return
         sensor_code = sensor & 0xFF
-        allowed_sensor_codes = {0x00, 0x01, 0x02, 0x04}
+        if sensor_code == SENSOR_TYPE_CANONICAL_VOLTAGE:
+            QMessageBox.warning(self, "Калибровка", "В порту отсутствует датчик")
+            return
+        allowed_sensor_codes = {0x01, 0x02, 0x04, SENSOR_TYPE_REGISTER_VOLTAGE}
         if sensor_code not in allowed_sensor_codes:
             QMessageBox.warning(
                 self,
@@ -956,6 +973,8 @@ class UMVH(QMainWindow):
                 "в порту стоит датчик который нельзя откалибровать",
             )
             return
+        if sensor_code == SENSOR_TYPE_REGISTER_VOLTAGE:
+            sensor = normalize_sensor_type(sensor)
         if not self._remember_calibration_target(0, port, sensor):
             return
         self._set_calibration_page(self.ui.page_14)
@@ -1533,7 +1552,7 @@ class UMVH(QMainWindow):
         # типы датчиков привязаны к тем же индексам, что и регистры 0x0012..0x0019,
         # поэтому оставляем их без перестановки, а маски калибровки продолжаем
         # отображать в порядке UI
-        sensor_types_ui = sensor_types
+        sensor_types_ui = [normalize_sensor_type(value) for value in sensor_types]
         calibration_masks = self._swap_regs_for_ui(calibration_masks)
         self._latest_sensor_types = sensor_types_ui
         # показания датчиков строго соответствуют порядку регистров 0x0012..0x0019,
