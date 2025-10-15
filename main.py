@@ -908,6 +908,14 @@ class UMVH(QMainWindow):
             return value / 10
         return value
 
+    @staticmethod
+    def _format_namur_value(value: int) -> str:
+        state = (value >> 12) & 0xF
+        if state == 0x3:
+            frequency = value & 0x0FFF
+            return str(frequency)
+        return f"0x{state:02X}"
+
     def _format_scaled_sensor_value(self, value: int, sensor: int | None) -> str | None:
         if sensor is None:
             return None
@@ -1573,6 +1581,10 @@ class UMVH(QMainWindow):
 
         for widget, raw_value, sensor_type in zip(self.sensor_value_widgets, regs, sensor_types_ui):
             if widget is None:
+                continue
+            sensor_code = sensor_type & 0xFF
+            if sensor_code == 0x01:
+                widget.setPlainText(self._format_namur_value(raw_value))
                 continue
             scaled_value = self._apply_sensor_scaling(raw_value, sensor_type)
             widget.setPlainText(str(scaled_value))
