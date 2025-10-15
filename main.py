@@ -647,15 +647,6 @@ class UMVH(QMainWindow):
                     continue
                 widget.blockSignals(state)
 
-    def _swap_regs_for_ui(self, regs: list[int]) -> list[int]:
-        """Device→UI: перед отображением меняем местами строки портов 1↔2."""
-        if not self.SWAP_1_2_ENABLED:
-            return regs
-        if len(regs) >= 2:
-            regs = regs.copy()
-            regs[0], regs[1] = regs[1], regs[0]  # 0→порт1, 1→порт2
-        return regs
-
     # --- калибровка ---------------------------------------------------
     def _init_calibration_connections(self):
         """Настраиваем обработчики кнопок области калибровки."""
@@ -1530,9 +1521,6 @@ class UMVH(QMainWindow):
 
     def update_sensor_table(self, sensor_types: list[int], regs: list[int], calibration_masks: list[int]):
         """Обновляем показания датчиков и связанные элементы UI."""
-        sensor_types = self._swap_regs_for_ui(sensor_types)
-        regs = self._swap_regs_for_ui(regs)
-        calibration_masks = self._swap_regs_for_ui(calibration_masks)
         self._latest_sensor_types = sensor_types
         self._latest_sensor_values = regs
         self._latest_calibration_masks = calibration_masks[:]
