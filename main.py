@@ -854,26 +854,34 @@ class UMVH(QMainWindow):
         self._update_calibration_headers()
         return True
 
-    def _send_password(self, text: str) -> bool:
+    def _validate_password_input(self, text: str) -> tuple[bool, int | None]:
         pwd = text.strip()
         if not pwd:
-            self._last_calibration_password = ""
-            return True
+            return True, None
         try:
             value = int(pwd, 0)
         except ValueError:
             QMessageBox.warning(self, "Пароль", "Неверный формат пароля.")
-            return False
+            return False, None
         if not (0 <= value <= 0xFFFF):
             QMessageBox.warning(self, "Пароль", "Пароль должен быть в диапазоне 0..65535.")
-            return False
+            return False, None
         if value != 30105:
             QMessageBox.warning(self, "Пароль", "пароль введен неверно")
+            return False, None
+        return True, value
+
+    def _send_password(self, text: str) -> bool:
+        is_valid, value = self._validate_password_input(text)
+        if not is_valid:
             return False
+        if value is None:
+            self._last_calibration_password = ""
+            return True
         if not self._write_register(REG_PASSWORD, value):
             self._handle_comm_error()
             return False
-        self._last_calibration_password = pwd
+        self._last_calibration_password = text.strip()
         return True
 
     def _get_sensor_type_from_device(self, port: int) -> int | None:
@@ -1698,16 +1706,12 @@ class UMVH(QMainWindow):
         regs = self._changed_regs.copy()
 
         # 2) Пароль добавляем всегда, даже если других изменений нет
-        pwd_text = self.ui.textEditSP.toPlainText().strip()
-        if pwd_text:
-            try:
-                # int(..., 0) позволяет "1234" и "0x1234"
-                pwd_val = int(pwd_text, 0)
-                if 0 <= pwd_val <= 0xFFFF:
-                    regs[REG_PASSWORD] = pwd_val
-            except ValueError:
-                # Неверный формат пароля — просто игнорируем
-                pass
+        pwd_text = self.ui.textEditSP.toPlainText()
+        is_valid_pwd, pwd_value = self._validate_password_input(pwd_text)
+        if not is_valid_pwd:
+            return
+        if pwd_value is not None:
+            regs[REG_PASSWORD] = pwd_value
 
         # 3) Если после всего нечего отправлять — выходим
         if not regs:
