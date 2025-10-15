@@ -948,7 +948,8 @@ class UMVH(QMainWindow):
         if sensor is None:
             return
         sensor_code = sensor & 0xFF
-        allowed_sensor_codes = {0x00, 0x01, 0x02, 0x04}
+        # 0x06 — датчик напряжения, 0x00 означает отсутствие датчика
+        allowed_sensor_codes = {0x01, 0x02, 0x04, 0x06}
         if sensor_code not in allowed_sensor_codes:
             QMessageBox.warning(
                 self,
