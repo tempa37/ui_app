@@ -948,8 +948,19 @@ class UMVH(QMainWindow):
         if sensor is None:
             return
         sensor_code = sensor & 0xFF
+        if sensor_code == 0x00:
+            QMessageBox.warning(
+                self,
+                "Калибровка",
+                "в порту отсутствует датчик",
+            )
+            return
+
+        # Датчик напряжения приходит как 0x06, но для проверки допустимости
+        # его необходимо трактовать как прежнее значение 0x00.
         allowed_sensor_codes = {0x00, 0x01, 0x02, 0x04}
-        if sensor_code not in allowed_sensor_codes:
+        sensor_code_for_check = 0x00 if sensor_code == 0x06 else sensor_code
+        if sensor_code_for_check not in allowed_sensor_codes:
             QMessageBox.warning(
                 self,
                 "Калибровка",
