@@ -867,6 +867,9 @@ class UMVH(QMainWindow):
         if not (0 <= value <= 0xFFFF):
             QMessageBox.warning(self, "Пароль", "Пароль должен быть в диапазоне 0..65535.")
             return False
+        if value != 30105:
+            QMessageBox.warning(self, "Пароль", "пароль введен неверно")
+            return False
         if not self._write_register(REG_PASSWORD, value):
             self._handle_comm_error()
             return False
