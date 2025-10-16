@@ -1011,6 +1011,13 @@ class UMVH(QMainWindow):
                 "в порту стоит датчик который нельзя откалибровать",
             )
             return
+        if sensor_code == 0x01:
+            QMessageBox.warning(
+                self,
+                "Калибровка",
+                "NAMUR можно откалибровать только по 4м точкам",
+            )
+            return
         if sensor_code == SENSOR_TYPE_REGISTER_VOLTAGE:
             sensor = normalize_sensor_type(sensor)
         if not self._remember_calibration_target(0, port, sensor):
