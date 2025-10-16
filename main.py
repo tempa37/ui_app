@@ -738,12 +738,38 @@ class UMVH(QMainWindow):
             self._apply_scale_hint(getattr(self.ui, "textBrowser_70", None))
         elif page is getattr(self.ui, "page_18", None):
             self._apply_scale_hint(getattr(self.ui, "textBrowser_72", None))
+        if page is getattr(self.ui, "page_20", None):
+            self._update_four_point_labels_for_sensor()
         self._update_four_point_value_edit_state()
 
     def _update_text_browser(self, browser: QTextBrowser | None, value: str):
         if browser is None:
             return
         browser.setPlainText(value)
+
+    def _update_four_point_labels_for_sensor(self):
+        """Обновляем подписи точек для четырёхточечной калибровки."""
+
+        defaults = {
+            "textBrowser_100": "точка x1",
+            "textBrowser_97": "точка x2",
+            "textBrowser_99": "точка y1",
+            "textBrowser_98": "точка y2",
+        }
+        namur_overrides = {
+            "textBrowser_100": "Обрыв",
+            "textBrowser_97": "Норма (+20/-50%)",
+            "textBrowser_99": "Сработал (+20/-15%)",
+            "textBrowser_98": "КЗ (+5/-10%)",
+        }
+
+        sensor_code = (self._calibration_sensor & 0xFF) if self._calibration_sensor is not None else None
+        labels = namur_overrides if sensor_code == 0x01 else defaults
+
+        for name, default_text in defaults.items():
+            text = labels.get(name, default_text)
+            browser = getattr(self.ui, name, None)
+            self._update_text_browser(browser, text)
 
     def _apply_scale_hint(self, browser: QTextBrowser | None):
         if browser is None:
@@ -806,20 +832,13 @@ class UMVH(QMainWindow):
         self._update_four_point_value_edit_state()
 
     def _update_four_point_value_edit_state(self):
-        page_20 = getattr(self.ui, "page_20", None)
         spin_x1 = getattr(self.ui, "spinBox_20", None)
         spin_x2 = getattr(self.ui, "spinBox_18", None)
-        if not all((page_20, spin_x1, spin_x2)):
+        if not all((spin_x1, spin_x2)):
             return
 
-        on_page_20 = self.ui.stackedWidget_4.currentWidget() is page_20
-        is_namur_sensor = (
-            self._calibration_sensor is not None
-            and (self._calibration_sensor & 0xFF) == 0x01
-        )
-        enabled = not (on_page_20 and is_namur_sensor)
         for widget in (spin_x1, spin_x2):
-            widget.setEnabled(enabled)
+            widget.setEnabled(True)
 
     def _write_calibration_register(self, mode: int, port: int, sensor: int) -> bool:
         port_device = self._map_port_ui_to_device(port)
