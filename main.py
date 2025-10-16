@@ -955,6 +955,35 @@ class UMVH(QMainWindow):
         dy = y2 - y1
         return dx * dy < 0
 
+    @staticmethod
+    def _calculate_percent_range(value: int, positive: float, negative: float) -> tuple[float, float]:
+        """Возвращает диапазон значения с указанными процентами отклонения."""
+
+        lower = float(value) * (1 - negative)
+        upper = float(value) * (1 + positive)
+        if lower > upper:
+            lower, upper = upper, lower
+        return lower, upper
+
+    def _namur_calibration_ranges_intersect(self, values: dict[int, int]) -> bool:
+        """Проверяем, что диапазоны NAMUR не пересекаются друг с другом."""
+
+        sensor_code = (self._calibration_sensor & 0xFF) if self._calibration_sensor is not None else None
+        if sensor_code != 0x01:
+            return False
+
+        ranges = []
+        ranges.append(self._calculate_percent_range(values.get(REG_CAL_POINT_X1, 0), 0.0, 0.0))
+        ranges.append(self._calculate_percent_range(values.get(REG_CAL_POINT_X2, 0), 0.20, 0.50))
+        ranges.append(self._calculate_percent_range(values.get(REG_CAL_POINT_Y1, 0), 0.20, 0.15))
+        ranges.append(self._calculate_percent_range(values.get(REG_CAL_POINT_Y2, 0), 0.05, 0.10))
+
+        for idx, current in enumerate(ranges):
+            for other in ranges[:idx]:
+                if current[0] <= other[1] and other[0] <= current[1]:
+                    return True
+        return False
+
     def _update_live_sensor_widgets(self):
         port = self._calibration_port
         if not port:
@@ -1204,6 +1233,9 @@ class UMVH(QMainWindow):
             REG_CAL_POINT_Y1: self.ui.spinBox_19.value(),
             REG_CAL_POINT_Y2: self.ui.spinBox_17.value(),
         }
+        if self._namur_calibration_ranges_intersect(values):
+            QMessageBox.warning(self, "Калибровка", "Диапазоны точек пересекаются")
+            return
         for reg, value in values.items():
             if not self._write_register(reg, value):
                 self._handle_comm_error()
