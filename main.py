@@ -738,12 +738,38 @@ class UMVH(QMainWindow):
             self._apply_scale_hint(getattr(self.ui, "textBrowser_70", None))
         elif page is getattr(self.ui, "page_18", None):
             self._apply_scale_hint(getattr(self.ui, "textBrowser_72", None))
+        if page is getattr(self.ui, "page_20", None):
+            self._update_four_point_labels_for_sensor()
         self._update_four_point_value_edit_state()
 
     def _update_text_browser(self, browser: QTextBrowser | None, value: str):
         if browser is None:
             return
         browser.setPlainText(value)
+
+    def _update_four_point_labels_for_sensor(self):
+        """Обновляем подписи точек для четырёхточечной калибровки."""
+
+        defaults = {
+            "textBrowser_100": "точка x1",
+            "textBrowser_97": "точка x2",
+            "textBrowser_99": "точка y1",
+            "textBrowser_98": "точка y2",
+        }
+        namur_overrides = {
+            "textBrowser_100": "Обрыв",
+            "textBrowser_97": "Норма (+20/-50%)",
+            "textBrowser_99": "Сработал (+20/-15%)",
+            "textBrowser_98": "КЗ (+5/-10%)",
+        }
+
+        sensor_code = (self._calibration_sensor & 0xFF) if self._calibration_sensor is not None else None
+        labels = namur_overrides if sensor_code == 0x01 else defaults
+
+        for name, default_text in defaults.items():
+            text = labels.get(name, default_text)
+            browser = getattr(self.ui, name, None)
+            self._update_text_browser(browser, text)
 
     def _apply_scale_hint(self, browser: QTextBrowser | None):
         if browser is None:
