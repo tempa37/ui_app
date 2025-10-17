@@ -2154,6 +2154,12 @@ class Ui_MainWindow(object):
 
         self.gridLayout_6.addWidget(self.s8s0x04_3, 8, 0, 1, 1)
 
+        self.pushButton_22 = QPushButton(self.frame_10)
+        self.pushButton_22.setObjectName(u"pushButton_22")
+        self.pushButton_22.setFont(font)
+
+        self.gridLayout_6.addWidget(self.pushButton_22, 0, 5, 1, 1)
+
 
         self.gridLayout_7.addWidget(self.frame_10, 0, 1, 1, 1)
 
@@ -3188,7 +3194,7 @@ class Ui_MainWindow(object):
         self.retranslateUi(MainWindow)
 
         self.stackedWidget.setCurrentIndex(1)
-        self.stackedWidget_4.setCurrentIndex(0)
+        self.stackedWidget_4.setCurrentIndex(3)
         self.stackedWidget_2.setCurrentIndex(2)
 
 
@@ -4131,7 +4137,7 @@ class Ui_MainWindow(object):
 "li.unchecked::marker { content: \"\\2610\"; }\n"
 "li.checked::marker { content: \"\\2612\"; }\n"
 "</style></head><body style=\" font-family:'Noto Sans SC'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
-"<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">\u041f\u043e\u043a\u0430\u0437\u0430\u043d\u0438\u044f</p></body></html>", None))
+"<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Data</p></body></html>", None))
         self.s4s0x04_3.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
@@ -4172,6 +4178,7 @@ class Ui_MainWindow(object):
 "li.checked::marker { content: \"\\2612\"; }\n"
 "</style></head><body style=\" font-family:'Noto Sans SC'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
 "<p align=\"center\" style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>", None))
+        self.pushButton_22.setText(QCoreApplication.translate("MainWindow", u"<-", None))
         self.comboBox_2.setItemText(0, QCoreApplication.translate("MainWindow", u"7", None))
         self.comboBox_2.setItemText(1, QCoreApplication.translate("MainWindow", u"8", None))
 
