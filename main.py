@@ -798,7 +798,7 @@ class UMVH(QMainWindow):
         if sensor is None:
             return ""
         code = sensor & 0xFF
-        if code in (0x04, 0x06):
+        if code in (SENSOR_TYPE_CANONICAL_VOLTAGE, 0x04, 0x06):
             return "100"
         if code == 0x02:
             return "10"
@@ -930,7 +930,7 @@ class UMVH(QMainWindow):
     @staticmethod
     def _apply_sensor_scaling(value: int, sensor_type: int) -> float | int:
         code = sensor_type & 0xFF
-        if code in (0x04, 0x06):
+        if code in (SENSOR_TYPE_CANONICAL_VOLTAGE, 0x04, 0x06):
             return value / 100
         if code == 0x02:
             return value / 10
@@ -948,7 +948,7 @@ class UMVH(QMainWindow):
         if sensor is None:
             return None
         code = sensor & 0xFF
-        if code in (0x04, 0x06):
+        if code in (SENSOR_TYPE_CANONICAL_VOLTAGE, 0x04, 0x06):
             return f"{value / 100:.2f}"
         if code == 0x02:
             return f"{value / 10:.1f}"
