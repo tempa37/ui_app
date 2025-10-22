@@ -513,6 +513,10 @@ class UMVH(QMainWindow):
         self.sensor_value_widgets = [
             getattr(self.ui, f"s{row}s0x04_3") for row in range(1, REG_SENSOR_READ_COUNT + 1)
         ]
+        for spinner_name in ("spinBox_11", "spinBox_12", "spinBox_3"):
+            spinner = getattr(self.ui, spinner_name, None)
+            if spinner is not None:
+                spinner.setRange(-0x8000, 0x7FFF)
         self._calibration_matrix_cells: dict[int, dict[int, QTextBrowser]] = {}
         self._calibration_cell_defaults: dict[QTextBrowser, tuple[str, str]] = {}
         self._calibration_cell_states: dict[QTextBrowser, bool] = {}
@@ -919,6 +923,11 @@ class UMVH(QMainWindow):
         return 0
 
     @staticmethod
+    def _to_signed_16(value: int) -> int:
+        value &= 0xFFFF
+        return value - 0x10000 if value & 0x8000 else value
+
+    @staticmethod
     def _apply_sensor_scaling(value: int, sensor_type: int) -> float | int:
         code = sensor_type & 0xFF
         if code in (0x04, 0x06):
@@ -1004,7 +1013,8 @@ class UMVH(QMainWindow):
                 result = y1
             else:
                 result = y1 + (value - x1) * (y2 - y1) / (x2 - x1)
-            result = max(0, min(int(round(result)), 0xFFFF))
+            result = int(round(result))
+            result = max(-0x8000, min(result, 0x7FFF))
             block = self.ui.spinBox_3.blockSignals(True)
             self.ui.spinBox_3.setValue(result)
             formatted = self._format_scaled_sensor_value(result, self._calibration_sensor)
@@ -1634,18 +1644,27 @@ class UMVH(QMainWindow):
         self._latest_sensor_types = sensor_types_ui
         # показания датчиков строго соответствуют порядку регистров 0x0012..0x0019,
         # поэтому не меняем их местами даже при активном SWAP_1_2_ENABLED
-        self._latest_sensor_values = regs
         self._latest_calibration_masks = calibration_masks[:]
 
-        for widget, raw_value, sensor_type in zip(self.sensor_value_widgets, regs, sensor_types_ui):
+        converted_values: list[int] = []
+        for idx, raw_value in enumerate(regs):
+            sensor_type = sensor_types_ui[idx] if idx < len(sensor_types_ui) else 0
+            sensor_code = sensor_type & 0xFF
+            value = self._to_signed_16(raw_value) if sensor_code == 0x02 else raw_value
+            converted_values.append(value)
+
+            widget = self.sensor_value_widgets[idx] if idx < len(self.sensor_value_widgets) else None
             if widget is None:
                 continue
-            sensor_code = sensor_type & 0xFF
             if sensor_code == 0x01:
                 widget.setPlainText(self._format_namur_value(raw_value))
                 continue
-            scaled_value = self._apply_sensor_scaling(raw_value, sensor_type)
+            scaled_value = self._apply_sensor_scaling(value, sensor_type)
             widget.setPlainText(str(scaled_value))
+
+        # показания датчиков строго соответствуют порядку регистров 0x0012..0x0019,
+        # поэтому не меняем их местами даже при активном SWAP_1_2_ENABLED
+        self._latest_sensor_values = converted_values
 
         self._update_live_sensor_widgets()
         self._update_calibration_matrix(calibration_masks)
