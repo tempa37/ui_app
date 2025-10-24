@@ -1,3 +1,4 @@
+import os
 import sys
 import threading
 from contextlib import contextmanager
@@ -35,6 +36,8 @@ MAX_PAYLOAD_SIZE   = MAX_PACKET_SIZE - HEADER_SIZE - CRC_SIZE
 
 MAX_RETRIES        = 3
 RETRY_DELAY        = 1
+
+MAX_FIRMWARE_FILE_SIZE = 24 * 1024  # 24 КБ
 
 # --- карта регистров ---------------------------------------------------
 REG_SENSOR_TYPE_BASE = 0x000A  # тип датчика для портов 1-8
@@ -1695,7 +1698,7 @@ class UMVH(QMainWindow):
     # --- \u043e\u0431\u043d\u043e\u0432\u043b\u0435\u043d\u0438\u0435 \u041f\u041e ---------------------------------
     def select_firmware_file(self):
         filename, _ = QFileDialog.getOpenFileName(self, "Select firmware", "", "Hex files (*.hex);;All files (*)")
-        if filename:
+        if filename and self._validate_firmware_size(filename):
             self.start_firmware_update(filename)
 
     def start_firmware_update(self, filename: str):
@@ -1743,7 +1746,7 @@ class UMVH(QMainWindow):
     # --- обновление из загрузчика ---------------------------------
     def select_bootloader_file(self):
         filename, _ = QFileDialog.getOpenFileName(self, "Select firmware", "", "Hex files (*.hex);;All files (*)")
-        if filename:
+        if filename and self._validate_firmware_size(filename):
             self.start_bootloader_update(filename)
 
     def start_bootloader_update(self, filename: str):
@@ -1785,6 +1788,19 @@ class UMVH(QMainWindow):
         self.switch_to(self.ui.page)
         self.bl_updater = None
         self.bl_update_thread = None
+
+    def _validate_firmware_size(self, filename: str) -> bool:
+        try:
+            file_size = os.path.getsize(filename)
+        except OSError as exc:
+            QMessageBox.warning(self, "Предупреждение", f"Не удалось проверить размер файла: {exc}")
+            return False
+
+        if file_size > MAX_FIRMWARE_FILE_SIZE:
+            QMessageBox.warning(self, "Предупреждение", "Файл слишком большой")
+            return False
+
+        return True
 
     def apply_settings(self):
         """Отправляет изменённые настройки на устройство (в т.ч. только пароль)."""
