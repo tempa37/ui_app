@@ -26,24 +26,24 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(1289, 889)
-        MainWindow.setMinimumSize(QSize(1025, 812))
+        MainWindow.resize(1058, 859)
+        MainWindow.setMinimumSize(QSize(1058, 859))
         MainWindow.setLayoutDirection(Qt.LayoutDirection.RightToLeft)
         MainWindow.setStyleSheet(u"background-color: rgb(89, 89, 89);\n"
 "\n"
 "font-family: Noto Sans SC")
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
-        self.centralwidget.setMinimumSize(QSize(1023, 812))
+        self.centralwidget.setMinimumSize(QSize(850, 820))
         self.centralwidget.setLayoutDirection(Qt.LayoutDirection.RightToLeft)
         self.centralwidget.setStyleSheet(u"QComboBox {\n"
 "    combobox-popup: 0;        /* \u0437\u0430\u043f\u0440\u0435\u0442 \u043e\u0442\u0434\u0435\u043b\u044c\u043d\u043e\u0433\u043e \u043e\u043a\u043d\u0430-popup */\n"
 "}")
-        self.gridLayout_3 = QGridLayout(self.centralwidget)
-        self.gridLayout_3.setObjectName(u"gridLayout_3")
+        self.horizontalLayout_2 = QHBoxLayout(self.centralwidget)
+        self.horizontalLayout_2.setObjectName(u"horizontalLayout_2")
         self.frame = QFrame(self.centralwidget)
         self.frame.setObjectName(u"frame")
-        self.frame.setMinimumSize(QSize(1025, 812))
+        self.frame.setMinimumSize(QSize(900, 820))
         self.frame.setFrameShape(QFrame.Shape.StyledPanel)
         self.frame.setFrameShadow(QFrame.Shadow.Raised)
         self.gridLayout_4 = QGridLayout(self.frame)
@@ -54,10 +54,11 @@ class Ui_MainWindow(object):
 
         self.stackedWidget = QStackedWidget(self.frame)
         self.stackedWidget.setObjectName(u"stackedWidget")
-        self.stackedWidget.setMinimumSize(QSize(1025, 60))
+        self.stackedWidget.setMinimumSize(QSize(600, 60))
         self.stackedWidget.setLayoutDirection(Qt.LayoutDirection.RightToLeft)
         self.page = QWidget()
         self.page.setObjectName(u"page")
+        self.page.setMinimumSize(QSize(900, 0))
         self.page.setStyleSheet(u"/* ===== QComboBox: \u043f\u043e\u043b\u043d\u044b\u0439 \u0441\u0442\u0438\u043b\u044c \u0431\u0435\u0437 \u0440\u0435\u0441\u0443\u0440\u0441\u043e\u0432 ===== */\n"
 "QFrame#qt_combo_box_popup {\n"
 "    background: transparent;   /* \u2190 \u0444\u043e\u043d \u043f\u043e\u043b\u043d\u043e\u0441\u0442\u044c\u044e \u201c\u0434\u044b\u0440\u044f\u0432\u044b\u0439\u201d */\n"
@@ -350,74 +351,25 @@ class Ui_MainWindow(object):
 "")
         self.gridLayout_9 = QGridLayout(self.page)
         self.gridLayout_9.setObjectName(u"gridLayout_9")
-        self.stackedWidget_3 = QStackedWidget(self.page)
-        self.stackedWidget_3.setObjectName(u"stackedWidget_3")
-        self.page_10 = QWidget()
-        self.page_10.setObjectName(u"page_10")
-        self.page_10.setStyleSheet(u"/* \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 \u041f\u0420\u041e\u0413\u0420\u0415\u0421\u0421-\u0411\u0410\u0420 \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 */\n"
-"\n"
-"/* \u00ab\u0437\u0430\u043f\u043e\u043b\u043d\u0435\u043d\u043d\u0430\u044f\u00bb \u0447\u0430\u0441\u0442\u044c (\u0433\u043e\u0440\u0438\u0437\u043e\u043d\u0442\u0430\u043b\u044c\u043d\u0430\u044f) */\n"
-"QProgressBar::chunk {\n"
-"    background: #2d97ff;         /* \u0432\u0430\u0448 \u0444\u0438\u0440\u043c\u0435\u043d\u043d\u044b\u0439 \u0441\u0438\u043d\u0438\u0439                 */\n"
-"    border-radius: 12px;         /* \u0447\u0442\u043e\u0431\u044b \u043a\u0440\u0430\u0439 \u0437\u0430\u043f\u043e\u043b\u043d\u0435\u043d\u0438\u044f \u0442\u043e\u0436\u0435 \u0431\u044b\u043b \u043a\u0440\u0443\u0433\u043b\u044b\u043c */\n"
-"	\n"
-"}\n"
-"\n"
-"/* \u2500\u2500 QProgressBar \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500"
-                        "\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500*/\n"
-"QProgressBar {\n"
-"    border: 2px solid #909090;   /* \u0442\u0430\u043a\u0430\u044f \u0436\u0435 \u0440\u0430\u043c\u043a\u0430, \u043a\u0430\u043a \u0432 \u0434\u0440\u0443\u0433\u0438\u0445 \u043a\u043e\u043d\u0442\u0440\u043e\u043b\u0430\u0445 */\n"
-"    border-radius: 12px;\n"
-"    background: #404040;         /* \u043e\u0431\u0449\u0438\u0439 \u0442\u0451\u043c\u043d\u043e-\u0441\u0435\u0440\u044b\u0439 \u0444\u043e\u043d */\n"
-"    min-height: 24px;\n"
-"\n"
-"    text-align: center;          /* \u043f\u0440\u043e\u0446\u0435\u043d\u0442/\u0442\u0435\u043a\u0441\u0442 \u043f\u043e \u0446\u0435\u043d\u0442\u0440\u0443 */\n"
-"    color: white;                /* \u0431\u0435\u043b\u044b\u0435 \u0431\u0443\u043a\u0432\u044b \u043f\u043e\u0432\u0435\u0440\u0445 \u0441\u0438\u043d\u0435\u0433\u043e */\n"
-"}\n"
-"")
-        self.progressBar_2 = QProgressBar(self.page_10)
-        self.progressBar_2.setObjectName(u"progressBar_2")
-        self.progressBar_2.setGeometry(QRect(210, 67, 591, 31))
-        self.progressBar_2.setLayoutDirection(Qt.LayoutDirection.LeftToRight)
-        self.progressBar_2.setValue(24)
-        self.stackedWidget_3.addWidget(self.page_10)
-        self.page_12 = QWidget()
-        self.page_12.setObjectName(u"page_12")
-        self.textBrowser_10 = QTextBrowser(self.page_12)
-        self.textBrowser_10.setObjectName(u"textBrowser_10")
-        self.textBrowser_10.setGeometry(QRect(210, 50, 601, 71))
-        self.stackedWidget_3.addWidget(self.page_12)
-        self.page_13 = QWidget()
-        self.page_13.setObjectName(u"page_13")
-        self.textBrowser_11 = QTextBrowser(self.page_13)
-        self.textBrowser_11.setObjectName(u"textBrowser_11")
-        self.textBrowser_11.setGeometry(QRect(210, 50, 601, 71))
-        self.stackedWidget_3.addWidget(self.page_13)
-        self.page_11 = QWidget()
-        self.page_11.setObjectName(u"page_11")
-        self.pushButton_7 = QPushButton(self.page_11)
-        self.pushButton_7.setObjectName(u"pushButton_7")
-        self.pushButton_7.setGeometry(QRect(200, 40, 200, 70))
-        sizePolicy = QSizePolicy(QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Preferred)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.pushButton_7.sizePolicy().hasHeightForWidth())
-        self.pushButton_7.setSizePolicy(sizePolicy)
-        self.pushButton_7.setMinimumSize(QSize(200, 70))
-        self.pushButton_7.setMaximumSize(QSize(0, 0))
-        self.stackedWidget_3.addWidget(self.page_11)
+        self.frame_14 = QFrame(self.page)
+        self.frame_14.setObjectName(u"frame_14")
+        self.frame_14.setMinimumSize(QSize(0, 100))
+        self.frame_14.setFrameShape(QFrame.Shape.StyledPanel)
+        self.frame_14.setFrameShadow(QFrame.Shadow.Raised)
 
-        self.gridLayout_9.addWidget(self.stackedWidget_3, 1, 0, 1, 1)
+        self.gridLayout_9.addWidget(self.frame_14, 2, 0, 1, 1)
 
         self.verticalLayout = QVBoxLayout()
         self.verticalLayout.setObjectName(u"verticalLayout")
         self.textBrowser = QTextBrowser(self.page)
         self.textBrowser.setObjectName(u"textBrowser")
-        sizePolicy1 = QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Preferred)
-        sizePolicy1.setHorizontalStretch(0)
-        sizePolicy1.setVerticalStretch(0)
-        sizePolicy1.setHeightForWidth(self.textBrowser.sizePolicy().hasHeightForWidth())
-        self.textBrowser.setSizePolicy(sizePolicy1)
+        sizePolicy = QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Preferred)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.textBrowser.sizePolicy().hasHeightForWidth())
+        self.textBrowser.setSizePolicy(sizePolicy)
+        self.textBrowser.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        self.textBrowser.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
 
         self.verticalLayout.addWidget(self.textBrowser)
 
@@ -432,8 +384,11 @@ class Ui_MainWindow(object):
         self.pushButton_6 = QPushButton(self.splitter)
         self.pushButton_6.setObjectName(u"pushButton_6")
         self.pushButton_6.setEnabled(False)
-        sizePolicy.setHeightForWidth(self.pushButton_6.sizePolicy().hasHeightForWidth())
-        self.pushButton_6.setSizePolicy(sizePolicy)
+        sizePolicy1 = QSizePolicy(QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Preferred)
+        sizePolicy1.setHorizontalStretch(0)
+        sizePolicy1.setVerticalStretch(0)
+        sizePolicy1.setHeightForWidth(self.pushButton_6.sizePolicy().hasHeightForWidth())
+        self.pushButton_6.setSizePolicy(sizePolicy1)
         self.splitter.addWidget(self.pushButton_6)
 
         self.verticalLayout.addWidget(self.splitter)
@@ -464,8 +419,8 @@ class Ui_MainWindow(object):
 
         self.pushButton = QPushButton(self.page)
         self.pushButton.setObjectName(u"pushButton")
-        sizePolicy.setHeightForWidth(self.pushButton.sizePolicy().hasHeightForWidth())
-        self.pushButton.setSizePolicy(sizePolicy)
+        sizePolicy1.setHeightForWidth(self.pushButton.sizePolicy().hasHeightForWidth())
+        self.pushButton.setSizePolicy(sizePolicy1)
         self.pushButton.setMinimumSize(QSize(0, 4))
         self.pushButton.setMaximumSize(QSize(200, 70))
 
@@ -481,8 +436,8 @@ class Ui_MainWindow(object):
 
         self.pushButton_2 = QPushButton(self.page)
         self.pushButton_2.setObjectName(u"pushButton_2")
-        sizePolicy.setHeightForWidth(self.pushButton_2.sizePolicy().hasHeightForWidth())
-        self.pushButton_2.setSizePolicy(sizePolicy)
+        sizePolicy1.setHeightForWidth(self.pushButton_2.sizePolicy().hasHeightForWidth())
+        self.pushButton_2.setSizePolicy(sizePolicy1)
         self.pushButton_2.setMinimumSize(QSize(0, 0))
         self.pushButton_2.setMaximumSize(QSize(200, 70))
 
@@ -501,13 +456,135 @@ class Ui_MainWindow(object):
 
         self.gridLayout_9.addLayout(self.verticalLayout, 0, 0, 1, 1)
 
-        self.frame_14 = QFrame(self.page)
-        self.frame_14.setObjectName(u"frame_14")
-        self.frame_14.setMinimumSize(QSize(0, 100))
-        self.frame_14.setFrameShape(QFrame.Shape.StyledPanel)
-        self.frame_14.setFrameShadow(QFrame.Shadow.Raised)
+        self.stackedWidget_3 = QStackedWidget(self.page)
+        self.stackedWidget_3.setObjectName(u"stackedWidget_3")
+        self.page_10 = QWidget()
+        self.page_10.setObjectName(u"page_10")
+        self.page_10.setStyleSheet(u"/* \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 \u041f\u0420\u041e\u0413\u0420\u0415\u0421\u0421-\u0411\u0410\u0420 \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 */\n"
+"\n"
+"/* \u00ab\u0437\u0430\u043f\u043e\u043b\u043d\u0435\u043d\u043d\u0430\u044f\u00bb \u0447\u0430\u0441\u0442\u044c (\u0433\u043e\u0440\u0438\u0437\u043e\u043d\u0442\u0430\u043b\u044c\u043d\u0430\u044f) */\n"
+"QProgressBar::chunk {\n"
+"    background: #2d97ff;         /* \u0432\u0430\u0448 \u0444\u0438\u0440\u043c\u0435\u043d\u043d\u044b\u0439 \u0441\u0438\u043d\u0438\u0439                 */\n"
+"    border-radius: 12px;         /* \u0447\u0442\u043e\u0431\u044b \u043a\u0440\u0430\u0439 \u0437\u0430\u043f\u043e\u043b\u043d\u0435\u043d\u0438\u044f \u0442\u043e\u0436\u0435 \u0431\u044b\u043b \u043a\u0440\u0443\u0433\u043b\u044b\u043c */\n"
+"	\n"
+"}\n"
+"\n"
+"/* \u2500\u2500 QProgressBar \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500"
+                        "\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500*/\n"
+"QProgressBar {\n"
+"    border: 2px solid #909090;   /* \u0442\u0430\u043a\u0430\u044f \u0436\u0435 \u0440\u0430\u043c\u043a\u0430, \u043a\u0430\u043a \u0432 \u0434\u0440\u0443\u0433\u0438\u0445 \u043a\u043e\u043d\u0442\u0440\u043e\u043b\u0430\u0445 */\n"
+"    border-radius: 12px;\n"
+"    background: #404040;         /* \u043e\u0431\u0449\u0438\u0439 \u0442\u0451\u043c\u043d\u043e-\u0441\u0435\u0440\u044b\u0439 \u0444\u043e\u043d */\n"
+"    min-height: 24px;\n"
+"\n"
+"    text-align: center;          /* \u043f\u0440\u043e\u0446\u0435\u043d\u0442/\u0442\u0435\u043a\u0441\u0442 \u043f\u043e \u0446\u0435\u043d\u0442\u0440\u0443 */\n"
+"    color: white;                /* \u0431\u0435\u043b\u044b\u0435 \u0431\u0443\u043a\u0432\u044b \u043f\u043e\u0432\u0435\u0440\u0445 \u0441\u0438\u043d\u0435\u0433\u043e */\n"
+"}\n"
+"")
+        self.horizontalLayout_3 = QHBoxLayout(self.page_10)
+        self.horizontalLayout_3.setObjectName(u"horizontalLayout_3")
+        self.frame_15 = QFrame(self.page_10)
+        self.frame_15.setObjectName(u"frame_15")
+        self.frame_15.setMinimumSize(QSize(150, 0))
+        self.frame_15.setFrameShape(QFrame.Shape.StyledPanel)
+        self.frame_15.setFrameShadow(QFrame.Shadow.Raised)
 
-        self.gridLayout_9.addWidget(self.frame_14, 2, 0, 1, 1)
+        self.horizontalLayout_3.addWidget(self.frame_15)
+
+        self.progressBar_2 = QProgressBar(self.page_10)
+        self.progressBar_2.setObjectName(u"progressBar_2")
+        self.progressBar_2.setLayoutDirection(Qt.LayoutDirection.LeftToRight)
+        self.progressBar_2.setValue(24)
+
+        self.horizontalLayout_3.addWidget(self.progressBar_2)
+
+        self.frame_16 = QFrame(self.page_10)
+        self.frame_16.setObjectName(u"frame_16")
+        self.frame_16.setMinimumSize(QSize(150, 0))
+        self.frame_16.setFrameShape(QFrame.Shape.StyledPanel)
+        self.frame_16.setFrameShadow(QFrame.Shadow.Raised)
+
+        self.horizontalLayout_3.addWidget(self.frame_16)
+
+        self.stackedWidget_3.addWidget(self.page_10)
+        self.page_12 = QWidget()
+        self.page_12.setObjectName(u"page_12")
+        self.gridLayout_11 = QGridLayout(self.page_12)
+        self.gridLayout_11.setObjectName(u"gridLayout_11")
+        self.frame_20 = QFrame(self.page_12)
+        self.frame_20.setObjectName(u"frame_20")
+        self.frame_20.setFrameShape(QFrame.Shape.StyledPanel)
+        self.frame_20.setFrameShadow(QFrame.Shadow.Raised)
+
+        self.gridLayout_11.addWidget(self.frame_20, 0, 0, 1, 1)
+
+        self.textBrowser_10 = QTextBrowser(self.page_12)
+        self.textBrowser_10.setObjectName(u"textBrowser_10")
+
+        self.gridLayout_11.addWidget(self.textBrowser_10, 0, 1, 1, 1)
+
+        self.frame_19 = QFrame(self.page_12)
+        self.frame_19.setObjectName(u"frame_19")
+        self.frame_19.setFrameShape(QFrame.Shape.StyledPanel)
+        self.frame_19.setFrameShadow(QFrame.Shadow.Raised)
+
+        self.gridLayout_11.addWidget(self.frame_19, 0, 2, 1, 1)
+
+        self.stackedWidget_3.addWidget(self.page_12)
+        self.page_13 = QWidget()
+        self.page_13.setObjectName(u"page_13")
+        self.gridLayout_12 = QGridLayout(self.page_13)
+        self.gridLayout_12.setObjectName(u"gridLayout_12")
+        self.frame_21 = QFrame(self.page_13)
+        self.frame_21.setObjectName(u"frame_21")
+        self.frame_21.setFrameShape(QFrame.Shape.StyledPanel)
+        self.frame_21.setFrameShadow(QFrame.Shadow.Raised)
+
+        self.gridLayout_12.addWidget(self.frame_21, 0, 0, 1, 1)
+
+        self.textBrowser_11 = QTextBrowser(self.page_13)
+        self.textBrowser_11.setObjectName(u"textBrowser_11")
+
+        self.gridLayout_12.addWidget(self.textBrowser_11, 0, 1, 1, 1)
+
+        self.frame_23 = QFrame(self.page_13)
+        self.frame_23.setObjectName(u"frame_23")
+        self.frame_23.setFrameShape(QFrame.Shape.StyledPanel)
+        self.frame_23.setFrameShadow(QFrame.Shadow.Raised)
+
+        self.gridLayout_12.addWidget(self.frame_23, 0, 2, 1, 1)
+
+        self.stackedWidget_3.addWidget(self.page_13)
+        self.page_11 = QWidget()
+        self.page_11.setObjectName(u"page_11")
+        self.gridLayout_3 = QGridLayout(self.page_11)
+        self.gridLayout_3.setObjectName(u"gridLayout_3")
+        self.frame_17 = QFrame(self.page_11)
+        self.frame_17.setObjectName(u"frame_17")
+        self.frame_17.setFrameShape(QFrame.Shape.StyledPanel)
+        self.frame_17.setFrameShadow(QFrame.Shadow.Raised)
+
+        self.gridLayout_3.addWidget(self.frame_17, 0, 0, 1, 1)
+
+        self.pushButton_7 = QPushButton(self.page_11)
+        self.pushButton_7.setObjectName(u"pushButton_7")
+        sizePolicy1.setHeightForWidth(self.pushButton_7.sizePolicy().hasHeightForWidth())
+        self.pushButton_7.setSizePolicy(sizePolicy1)
+        self.pushButton_7.setMinimumSize(QSize(200, 70))
+        self.pushButton_7.setMaximumSize(QSize(220, 77))
+
+        self.gridLayout_3.addWidget(self.pushButton_7, 0, 1, 1, 1)
+
+        self.frame_18 = QFrame(self.page_11)
+        self.frame_18.setObjectName(u"frame_18")
+        self.frame_18.setFrameShape(QFrame.Shape.StyledPanel)
+        self.frame_18.setFrameShadow(QFrame.Shadow.Raised)
+
+        self.gridLayout_3.addWidget(self.frame_18, 0, 2, 1, 1)
+
+        self.stackedWidget_3.addWidget(self.page_11)
+
+        self.gridLayout_9.addWidget(self.stackedWidget_3, 1, 0, 1, 1)
 
         self.stackedWidget.addWidget(self.page)
         self.page_4 = QWidget()
@@ -816,7 +893,7 @@ class Ui_MainWindow(object):
         self.gridLayout_5.setObjectName(u"gridLayout_5")
         self.frame_9 = QFrame(self.page_4)
         self.frame_9.setObjectName(u"frame_9")
-        self.frame_9.setMinimumSize(QSize(1007, 817))
+        self.frame_9.setMinimumSize(QSize(900, 820))
         self.frame_9.setBaseSize(QSize(1005, 787))
         self.frame_9.setFrameShape(QFrame.Shape.StyledPanel)
         self.frame_9.setFrameShadow(QFrame.Shadow.Raised)
@@ -851,6 +928,8 @@ class Ui_MainWindow(object):
         self.textBrowser_65.setSizePolicy(sizePolicy3)
         self.textBrowser_65.setMinimumSize(QSize(97, 0))
         self.textBrowser_65.setMaximumSize(QSize(16777215, 40))
+        self.textBrowser_65.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        self.textBrowser_65.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
 
         self.gridLayout_8.addWidget(self.textBrowser_65, 4, 1, 1, 1)
 
@@ -922,6 +1001,8 @@ class Ui_MainWindow(object):
         self.textBrowser_62.setSizePolicy(sizePolicy3)
         self.textBrowser_62.setMinimumSize(QSize(97, 0))
         self.textBrowser_62.setMaximumSize(QSize(16777215, 40))
+        self.textBrowser_62.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        self.textBrowser_62.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
 
         self.gridLayout_8.addWidget(self.textBrowser_62, 1, 1, 1, 1)
 
@@ -931,6 +1012,8 @@ class Ui_MainWindow(object):
         self.textBrowser_66.setSizePolicy(sizePolicy3)
         self.textBrowser_66.setMinimumSize(QSize(97, 0))
         self.textBrowser_66.setMaximumSize(QSize(16777215, 40))
+        self.textBrowser_66.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        self.textBrowser_66.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
 
         self.gridLayout_8.addWidget(self.textBrowser_66, 5, 1, 1, 1)
 
@@ -940,6 +1023,8 @@ class Ui_MainWindow(object):
         self.textBrowser_63.setSizePolicy(sizePolicy3)
         self.textBrowser_63.setMinimumSize(QSize(97, 0))
         self.textBrowser_63.setMaximumSize(QSize(16777215, 40))
+        self.textBrowser_63.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        self.textBrowser_63.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
 
         self.gridLayout_8.addWidget(self.textBrowser_63, 2, 1, 1, 1)
 
@@ -960,6 +1045,8 @@ class Ui_MainWindow(object):
         self.textBrowser_64.setSizePolicy(sizePolicy3)
         self.textBrowser_64.setMinimumSize(QSize(97, 0))
         self.textBrowser_64.setMaximumSize(QSize(16777215, 40))
+        self.textBrowser_64.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        self.textBrowser_64.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
 
         self.gridLayout_8.addWidget(self.textBrowser_64, 3, 1, 1, 1)
 
@@ -1065,6 +1152,8 @@ class Ui_MainWindow(object):
         self.textBrowser_112.setSizePolicy(sizePolicy3)
         self.textBrowser_112.setMinimumSize(QSize(97, 0))
         self.textBrowser_112.setMaximumSize(QSize(16777215, 40))
+        self.textBrowser_112.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        self.textBrowser_112.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
         self.textBrowser_113 = QTextBrowser(self.page_14)
         self.textBrowser_113.setObjectName(u"textBrowser_113")
         self.textBrowser_113.setGeometry(QRect(130, 70, 97, 40))
@@ -1072,6 +1161,8 @@ class Ui_MainWindow(object):
         self.textBrowser_113.setSizePolicy(sizePolicy3)
         self.textBrowser_113.setMinimumSize(QSize(97, 0))
         self.textBrowser_113.setMaximumSize(QSize(16777215, 40))
+        self.textBrowser_113.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        self.textBrowser_113.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
         self.textBrowser_114 = QTextBrowser(self.page_14)
         self.textBrowser_114.setObjectName(u"textBrowser_114")
         self.textBrowser_114.setGeometry(QRect(360, 70, 97, 40))
@@ -1079,6 +1170,8 @@ class Ui_MainWindow(object):
         self.textBrowser_114.setSizePolicy(sizePolicy3)
         self.textBrowser_114.setMinimumSize(QSize(97, 0))
         self.textBrowser_114.setMaximumSize(QSize(16777215, 40))
+        self.textBrowser_114.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        self.textBrowser_114.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
         self.textBrowser_115 = QTextBrowser(self.page_14)
         self.textBrowser_115.setObjectName(u"textBrowser_115")
         self.textBrowser_115.setGeometry(QRect(260, 70, 97, 40))
@@ -1086,6 +1179,8 @@ class Ui_MainWindow(object):
         self.textBrowser_115.setSizePolicy(sizePolicy3)
         self.textBrowser_115.setMinimumSize(QSize(97, 0))
         self.textBrowser_115.setMaximumSize(QSize(16777215, 40))
+        self.textBrowser_115.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        self.textBrowser_115.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
         self.stackedWidget_4.addWidget(self.page_14)
         self.page_17 = QWidget()
         self.page_17.setObjectName(u"page_17")
@@ -1120,6 +1215,8 @@ class Ui_MainWindow(object):
         self.textBrowser_67.setSizePolicy(sizePolicy3)
         self.textBrowser_67.setMinimumSize(QSize(97, 0))
         self.textBrowser_67.setMaximumSize(QSize(16777215, 40))
+        self.textBrowser_67.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        self.textBrowser_67.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
         self.pushButton_8 = QPushButton(self.page_17)
         self.pushButton_8.setObjectName(u"pushButton_8")
         self.pushButton_8.setGeometry(QRect(250, 110, 231, 41))
@@ -1155,6 +1252,8 @@ class Ui_MainWindow(object):
         self.textBrowser_68.setSizePolicy(sizePolicy3)
         self.textBrowser_68.setMinimumSize(QSize(97, 0))
         self.textBrowser_68.setMaximumSize(QSize(16777215, 40))
+        self.textBrowser_68.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        self.textBrowser_68.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
         self.textBrowser_69 = QTextBrowser(self.page_15)
         self.textBrowser_69.setObjectName(u"textBrowser_69")
         self.textBrowser_69.setGeometry(QRect(140, 60, 97, 40))
@@ -1162,6 +1261,8 @@ class Ui_MainWindow(object):
         self.textBrowser_69.setSizePolicy(sizePolicy3)
         self.textBrowser_69.setMinimumSize(QSize(97, 0))
         self.textBrowser_69.setMaximumSize(QSize(16777215, 40))
+        self.textBrowser_69.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        self.textBrowser_69.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
         self.textBrowser_70 = QTextBrowser(self.page_15)
         self.textBrowser_70.setObjectName(u"textBrowser_70")
         self.textBrowser_70.setGeometry(QRect(260, 110, 221, 40))
@@ -1169,6 +1270,8 @@ class Ui_MainWindow(object):
         self.textBrowser_70.setSizePolicy(sizePolicy3)
         self.textBrowser_70.setMinimumSize(QSize(97, 0))
         self.textBrowser_70.setMaximumSize(QSize(16777215, 40))
+        self.textBrowser_70.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        self.textBrowser_70.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
         self.spinBox_11 = QSpinBox(self.page_15)
         self.spinBox_11.setObjectName(u"spinBox_11")
         self.spinBox_11.setGeometry(QRect(40, 160, 211, 42))
@@ -1184,6 +1287,8 @@ class Ui_MainWindow(object):
         self.textBrowser_71.setSizePolicy(sizePolicy3)
         self.textBrowser_71.setMinimumSize(QSize(97, 0))
         self.textBrowser_71.setMaximumSize(QSize(16777215, 40))
+        self.textBrowser_71.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        self.textBrowser_71.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
         self.pushButton_16 = QPushButton(self.page_15)
         self.pushButton_16.setObjectName(u"pushButton_16")
         self.pushButton_16.setGeometry(QRect(260, 210, 221, 39))
@@ -1195,6 +1300,8 @@ class Ui_MainWindow(object):
         self.textBrowser_88.setSizePolicy(sizePolicy3)
         self.textBrowser_88.setMinimumSize(QSize(97, 0))
         self.textBrowser_88.setMaximumSize(QSize(16777215, 40))
+        self.textBrowser_88.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        self.textBrowser_88.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
         self.textBrowser_89 = QTextBrowser(self.page_15)
         self.textBrowser_89.setObjectName(u"textBrowser_89")
         self.textBrowser_89.setGeometry(QRect(360, 60, 97, 40))
@@ -1202,6 +1309,8 @@ class Ui_MainWindow(object):
         self.textBrowser_89.setSizePolicy(sizePolicy3)
         self.textBrowser_89.setMinimumSize(QSize(97, 0))
         self.textBrowser_89.setMaximumSize(QSize(16777215, 40))
+        self.textBrowser_89.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        self.textBrowser_89.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
         self.pushButton_19 = QPushButton(self.page_15)
         self.pushButton_19.setObjectName(u"pushButton_19")
         self.pushButton_19.setGeometry(QRect(40, 210, 211, 39))
@@ -1224,6 +1333,8 @@ class Ui_MainWindow(object):
         self.textBrowser_72.setSizePolicy(sizePolicy3)
         self.textBrowser_72.setMinimumSize(QSize(97, 0))
         self.textBrowser_72.setMaximumSize(QSize(16777215, 40))
+        self.textBrowser_72.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        self.textBrowser_72.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
         self.spinBox_13 = QSpinBox(self.page_18)
         self.spinBox_13.setObjectName(u"spinBox_13")
         self.spinBox_13.setGeometry(QRect(40, 110, 211, 42))
@@ -1239,6 +1350,8 @@ class Ui_MainWindow(object):
         self.textBrowser_77.setSizePolicy(sizePolicy3)
         self.textBrowser_77.setMinimumSize(QSize(97, 0))
         self.textBrowser_77.setMaximumSize(QSize(16777215, 40))
+        self.textBrowser_77.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        self.textBrowser_77.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
         self.textBrowser_79 = QTextBrowser(self.page_18)
         self.textBrowser_79.setObjectName(u"textBrowser_79")
         self.textBrowser_79.setGeometry(QRect(40, 10, 439, 44))
@@ -1255,6 +1368,8 @@ class Ui_MainWindow(object):
         self.textBrowser_80.setSizePolicy(sizePolicy3)
         self.textBrowser_80.setMinimumSize(QSize(97, 0))
         self.textBrowser_80.setMaximumSize(QSize(16777215, 40))
+        self.textBrowser_80.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        self.textBrowser_80.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
         self.textBrowser_81 = QTextBrowser(self.page_18)
         self.textBrowser_81.setObjectName(u"textBrowser_81")
         self.textBrowser_81.setGeometry(QRect(140, 60, 97, 40))
@@ -1262,6 +1377,8 @@ class Ui_MainWindow(object):
         self.textBrowser_81.setSizePolicy(sizePolicy3)
         self.textBrowser_81.setMinimumSize(QSize(97, 0))
         self.textBrowser_81.setMaximumSize(QSize(16777215, 40))
+        self.textBrowser_81.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        self.textBrowser_81.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
         self.pushButton_17 = QPushButton(self.page_18)
         self.pushButton_17.setObjectName(u"pushButton_17")
         self.pushButton_17.setGeometry(QRect(260, 210, 221, 39))
@@ -1273,6 +1390,8 @@ class Ui_MainWindow(object):
         self.textBrowser_86.setSizePolicy(sizePolicy3)
         self.textBrowser_86.setMinimumSize(QSize(97, 0))
         self.textBrowser_86.setMaximumSize(QSize(16777215, 40))
+        self.textBrowser_86.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        self.textBrowser_86.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
         self.textBrowser_87 = QTextBrowser(self.page_18)
         self.textBrowser_87.setObjectName(u"textBrowser_87")
         self.textBrowser_87.setGeometry(QRect(360, 60, 97, 40))
@@ -1280,6 +1399,8 @@ class Ui_MainWindow(object):
         self.textBrowser_87.setSizePolicy(sizePolicy3)
         self.textBrowser_87.setMinimumSize(QSize(97, 0))
         self.textBrowser_87.setMaximumSize(QSize(16777215, 40))
+        self.textBrowser_87.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        self.textBrowser_87.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
         self.pushButton_20 = QPushButton(self.page_18)
         self.pushButton_20.setObjectName(u"pushButton_20")
         self.pushButton_20.setGeometry(QRect(40, 210, 211, 39))
@@ -1298,6 +1419,8 @@ class Ui_MainWindow(object):
         self.textBrowser_84.setSizePolicy(sizePolicy3)
         self.textBrowser_84.setMinimumSize(QSize(97, 0))
         self.textBrowser_84.setMaximumSize(QSize(16777215, 40))
+        self.textBrowser_84.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        self.textBrowser_84.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
         self.textEditSP_3 = QTextEdit(self.page_19)
         self.textEditSP_3.setObjectName(u"textEditSP_3")
         self.textEditSP_3.setGeometry(QRect(40, 170, 321, 40))
@@ -1331,6 +1454,8 @@ class Ui_MainWindow(object):
         self.textBrowser_85.setSizePolicy(sizePolicy3)
         self.textBrowser_85.setMinimumSize(QSize(97, 0))
         self.textBrowser_85.setMaximumSize(QSize(16777215, 40))
+        self.textBrowser_85.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        self.textBrowser_85.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
         self.textBrowser_90 = QTextBrowser(self.page_19)
         self.textBrowser_90.setObjectName(u"textBrowser_90")
         self.textBrowser_90.setGeometry(QRect(140, 60, 97, 40))
@@ -1338,6 +1463,8 @@ class Ui_MainWindow(object):
         self.textBrowser_90.setSizePolicy(sizePolicy3)
         self.textBrowser_90.setMinimumSize(QSize(97, 0))
         self.textBrowser_90.setMaximumSize(QSize(16777215, 40))
+        self.textBrowser_90.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        self.textBrowser_90.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
         self.textBrowser_91 = QTextBrowser(self.page_19)
         self.textBrowser_91.setObjectName(u"textBrowser_91")
         self.textBrowser_91.setGeometry(QRect(250, 60, 101, 40))
@@ -1345,6 +1472,8 @@ class Ui_MainWindow(object):
         self.textBrowser_91.setSizePolicy(sizePolicy3)
         self.textBrowser_91.setMinimumSize(QSize(97, 0))
         self.textBrowser_91.setMaximumSize(QSize(16777215, 40))
+        self.textBrowser_91.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        self.textBrowser_91.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
         self.textBrowser_92 = QTextBrowser(self.page_19)
         self.textBrowser_92.setObjectName(u"textBrowser_92")
         self.textBrowser_92.setGeometry(QRect(40, 60, 97, 40))
@@ -1352,6 +1481,8 @@ class Ui_MainWindow(object):
         self.textBrowser_92.setSizePolicy(sizePolicy3)
         self.textBrowser_92.setMinimumSize(QSize(97, 0))
         self.textBrowser_92.setMaximumSize(QSize(16777215, 40))
+        self.textBrowser_92.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        self.textBrowser_92.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
         self.textBrowser_93 = QTextBrowser(self.page_19)
         self.textBrowser_93.setObjectName(u"textBrowser_93")
         self.textBrowser_93.setGeometry(QRect(360, 60, 111, 40))
@@ -1359,6 +1490,8 @@ class Ui_MainWindow(object):
         self.textBrowser_93.setSizePolicy(sizePolicy3)
         self.textBrowser_93.setMinimumSize(QSize(97, 0))
         self.textBrowser_93.setMaximumSize(QSize(16777215, 40))
+        self.textBrowser_93.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        self.textBrowser_93.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
         self.pushButton_21 = QPushButton(self.page_19)
         self.pushButton_21.setObjectName(u"pushButton_21")
         self.pushButton_21.setGeometry(QRect(40, 220, 201, 41))
@@ -1397,6 +1530,8 @@ class Ui_MainWindow(object):
         self.textBrowser_101.setSizePolicy(sizePolicy3)
         self.textBrowser_101.setMinimumSize(QSize(97, 0))
         self.textBrowser_101.setMaximumSize(QSize(16777215, 40))
+        self.textBrowser_101.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        self.textBrowser_101.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
         self.textBrowser_102 = QTextBrowser(self.page_22)
         self.textBrowser_102.setObjectName(u"textBrowser_102")
         self.textBrowser_102.setGeometry(QRect(30, 20, 439, 44))
@@ -1421,6 +1556,8 @@ class Ui_MainWindow(object):
         self.textBrowser_103.setSizePolicy(sizePolicy3)
         self.textBrowser_103.setMinimumSize(QSize(97, 0))
         self.textBrowser_103.setMaximumSize(QSize(16777215, 40))
+        self.textBrowser_103.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        self.textBrowser_103.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
         self.comboBox_12 = QComboBox(self.page_22)
         self.comboBox_12.addItem("")
         self.comboBox_12.addItem("")
@@ -1506,6 +1643,8 @@ class Ui_MainWindow(object):
         self.textBrowser_97.setSizePolicy(sizePolicy3)
         self.textBrowser_97.setMinimumSize(QSize(97, 0))
         self.textBrowser_97.setMaximumSize(QSize(16777215, 40))
+        self.textBrowser_97.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        self.textBrowser_97.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
         self.textBrowser_98 = QTextBrowser(self.page_20)
         self.textBrowser_98.setObjectName(u"textBrowser_98")
         self.textBrowser_98.setGeometry(QRect(250, 180, 233, 40))
@@ -1513,6 +1652,8 @@ class Ui_MainWindow(object):
         self.textBrowser_98.setSizePolicy(sizePolicy3)
         self.textBrowser_98.setMinimumSize(QSize(97, 0))
         self.textBrowser_98.setMaximumSize(QSize(16777215, 40))
+        self.textBrowser_98.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        self.textBrowser_98.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
         self.textBrowser_99 = QTextBrowser(self.page_20)
         self.textBrowser_99.setObjectName(u"textBrowser_99")
         self.textBrowser_99.setGeometry(QRect(0, 180, 233, 40))
@@ -1520,6 +1661,8 @@ class Ui_MainWindow(object):
         self.textBrowser_99.setSizePolicy(sizePolicy3)
         self.textBrowser_99.setMinimumSize(QSize(97, 0))
         self.textBrowser_99.setMaximumSize(QSize(16777215, 40))
+        self.textBrowser_99.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        self.textBrowser_99.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
         self.textBrowser_100 = QTextBrowser(self.page_20)
         self.textBrowser_100.setObjectName(u"textBrowser_100")
         self.textBrowser_100.setGeometry(QRect(0, 80, 233, 40))
@@ -1527,6 +1670,8 @@ class Ui_MainWindow(object):
         self.textBrowser_100.setSizePolicy(sizePolicy3)
         self.textBrowser_100.setMinimumSize(QSize(97, 0))
         self.textBrowser_100.setMaximumSize(QSize(16777215, 40))
+        self.textBrowser_100.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        self.textBrowser_100.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
         self.pushButton_28 = QPushButton(self.page_20)
         self.pushButton_28.setObjectName(u"pushButton_28")
         self.pushButton_28.setGeometry(QRect(250, 230, 231, 41))
@@ -1545,6 +1690,8 @@ class Ui_MainWindow(object):
         self.textBrowser_95.setSizePolicy(sizePolicy3)
         self.textBrowser_95.setMinimumSize(QSize(97, 0))
         self.textBrowser_95.setMaximumSize(QSize(16777215, 40))
+        self.textBrowser_95.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        self.textBrowser_95.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
         self.textEditSP_4 = QTextEdit(self.page_21)
         self.textEditSP_4.setObjectName(u"textEditSP_4")
         self.textEditSP_4.setGeometry(QRect(40, 130, 321, 40))
@@ -1585,6 +1732,8 @@ class Ui_MainWindow(object):
         self.textBrowser_104.setSizePolicy(sizePolicy3)
         self.textBrowser_104.setMinimumSize(QSize(97, 0))
         self.textBrowser_104.setMaximumSize(QSize(16777215, 40))
+        self.textBrowser_104.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        self.textBrowser_104.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
         self.textBrowser_105 = QTextBrowser(self.page_21)
         self.textBrowser_105.setObjectName(u"textBrowser_105")
         self.textBrowser_105.setGeometry(QRect(360, 80, 111, 40))
@@ -1592,6 +1741,8 @@ class Ui_MainWindow(object):
         self.textBrowser_105.setSizePolicy(sizePolicy3)
         self.textBrowser_105.setMinimumSize(QSize(97, 0))
         self.textBrowser_105.setMaximumSize(QSize(16777215, 40))
+        self.textBrowser_105.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        self.textBrowser_105.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
         self.textBrowser_106 = QTextBrowser(self.page_21)
         self.textBrowser_106.setObjectName(u"textBrowser_106")
         self.textBrowser_106.setGeometry(QRect(40, 80, 97, 40))
@@ -1599,6 +1750,8 @@ class Ui_MainWindow(object):
         self.textBrowser_106.setSizePolicy(sizePolicy3)
         self.textBrowser_106.setMinimumSize(QSize(97, 0))
         self.textBrowser_106.setMaximumSize(QSize(16777215, 40))
+        self.textBrowser_106.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        self.textBrowser_106.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
         self.textBrowser_107 = QTextBrowser(self.page_21)
         self.textBrowser_107.setObjectName(u"textBrowser_107")
         self.textBrowser_107.setGeometry(QRect(140, 80, 97, 40))
@@ -1606,6 +1759,8 @@ class Ui_MainWindow(object):
         self.textBrowser_107.setSizePolicy(sizePolicy3)
         self.textBrowser_107.setMinimumSize(QSize(97, 0))
         self.textBrowser_107.setMaximumSize(QSize(16777215, 40))
+        self.textBrowser_107.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        self.textBrowser_107.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
         self.pushButton_31 = QPushButton(self.page_21)
         self.pushButton_31.setObjectName(u"pushButton_31")
         self.pushButton_31.setGeometry(QRect(40, 180, 201, 71))
@@ -1620,6 +1775,8 @@ class Ui_MainWindow(object):
         self.textBrowser_108.setSizePolicy(sizePolicy3)
         self.textBrowser_108.setMinimumSize(QSize(97, 0))
         self.textBrowser_108.setMaximumSize(QSize(16777215, 40))
+        self.textBrowser_108.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        self.textBrowser_108.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
         self.pushButton_26 = QPushButton(self.page_23)
         self.pushButton_26.setObjectName(u"pushButton_26")
         self.pushButton_26.setGeometry(QRect(40, 230, 201, 41))
@@ -1670,6 +1827,8 @@ class Ui_MainWindow(object):
         self.textBrowser_110.setSizePolicy(sizePolicy3)
         self.textBrowser_110.setMinimumSize(QSize(97, 0))
         self.textBrowser_110.setMaximumSize(QSize(16777215, 40))
+        self.textBrowser_110.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        self.textBrowser_110.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
         self.textBrowser_111 = QTextBrowser(self.page_23)
         self.textBrowser_111.setObjectName(u"textBrowser_111")
         self.textBrowser_111.setGeometry(QRect(370, 180, 111, 40))
@@ -1677,6 +1836,8 @@ class Ui_MainWindow(object):
         self.textBrowser_111.setSizePolicy(sizePolicy3)
         self.textBrowser_111.setMinimumSize(QSize(97, 0))
         self.textBrowser_111.setMaximumSize(QSize(16777215, 40))
+        self.textBrowser_111.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        self.textBrowser_111.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
         self.textEditSP_5 = QTextEdit(self.page_23)
         self.textEditSP_5.setObjectName(u"textEditSP_5")
         self.textEditSP_5.setGeometry(QRect(40, 180, 321, 40))
@@ -1737,6 +1898,8 @@ class Ui_MainWindow(object):
         self.textBrowser_73.setSizePolicy(sizePolicy3)
         self.textBrowser_73.setMinimumSize(QSize(97, 0))
         self.textBrowser_73.setMaximumSize(QSize(16777215, 40))
+        self.textBrowser_73.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        self.textBrowser_73.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
         self.stackedWidget_2 = QStackedWidget(self.frame_13)
         self.stackedWidget_2.setObjectName(u"stackedWidget_2")
         self.stackedWidget_2.setGeometry(QRect(10, 160, 431, 101))
@@ -1824,30 +1987,40 @@ class Ui_MainWindow(object):
         self.textBrowser_25.setObjectName(u"textBrowser_25")
         self.textBrowser_25.setMinimumSize(QSize(0, 0))
         self.textBrowser_25.setStyleSheet(u"background-color:rgb(140, 140, 140);")
+        self.textBrowser_25.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        self.textBrowser_25.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
 
         self.gridLayout_6.addWidget(self.textBrowser_25, 0, 1, 1, 1)
 
         self.s7s0x00 = QTextBrowser(self.frame_10)
         self.s7s0x00.setObjectName(u"s7s0x00")
         self.s7s0x00.setMinimumSize(QSize(0, 0))
+        self.s7s0x00.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        self.s7s0x00.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
 
         self.gridLayout_6.addWidget(self.s7s0x00, 7, 4, 1, 1)
 
         self.s2s0x04 = QTextBrowser(self.frame_10)
         self.s2s0x04.setObjectName(u"s2s0x04")
         self.s2s0x04.setMinimumSize(QSize(0, 0))
+        self.s2s0x04.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        self.s2s0x04.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
 
         self.gridLayout_6.addWidget(self.s2s0x04, 2, 1, 1, 1)
 
         self.s2s0x00 = QTextBrowser(self.frame_10)
         self.s2s0x00.setObjectName(u"s2s0x00")
         self.s2s0x00.setMinimumSize(QSize(0, 0))
+        self.s2s0x00.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        self.s2s0x00.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
 
         self.gridLayout_6.addWidget(self.s2s0x00, 2, 4, 1, 1)
 
         self.s4s0x02 = QTextBrowser(self.frame_10)
         self.s4s0x02.setObjectName(u"s4s0x02")
         self.s4s0x02.setMinimumSize(QSize(0, 0))
+        self.s4s0x02.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        self.s4s0x02.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
 
         self.gridLayout_6.addWidget(self.s4s0x02, 4, 2, 1, 1)
 
@@ -1855,6 +2028,8 @@ class Ui_MainWindow(object):
         self.textBrowser_34.setObjectName(u"textBrowser_34")
         self.textBrowser_34.setMinimumSize(QSize(0, 0))
         self.textBrowser_34.setStyleSheet(u"background-color:rgb(140, 140, 140);")
+        self.textBrowser_34.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        self.textBrowser_34.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
 
         self.gridLayout_6.addWidget(self.textBrowser_34, 2, 5, 1, 1)
 
@@ -1862,6 +2037,8 @@ class Ui_MainWindow(object):
         self.textBrowser_27.setObjectName(u"textBrowser_27")
         self.textBrowser_27.setMinimumSize(QSize(0, 0))
         self.textBrowser_27.setStyleSheet(u"background-color:rgb(140, 140, 140);")
+        self.textBrowser_27.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        self.textBrowser_27.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
 
         self.gridLayout_6.addWidget(self.textBrowser_27, 0, 3, 1, 1)
 
@@ -1869,48 +2046,64 @@ class Ui_MainWindow(object):
         self.textBrowser_50.setObjectName(u"textBrowser_50")
         self.textBrowser_50.setMinimumSize(QSize(0, 0))
         self.textBrowser_50.setStyleSheet(u"background-color:rgb(140, 140, 140);")
+        self.textBrowser_50.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        self.textBrowser_50.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
 
         self.gridLayout_6.addWidget(self.textBrowser_50, 6, 5, 1, 1)
 
         self.s5s0x02 = QTextBrowser(self.frame_10)
         self.s5s0x02.setObjectName(u"s5s0x02")
         self.s5s0x02.setMinimumSize(QSize(0, 0))
+        self.s5s0x02.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        self.s5s0x02.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
 
         self.gridLayout_6.addWidget(self.s5s0x02, 5, 2, 1, 1)
 
         self.s1s0x01 = QTextBrowser(self.frame_10)
         self.s1s0x01.setObjectName(u"s1s0x01")
         self.s1s0x01.setMinimumSize(QSize(0, 0))
+        self.s1s0x01.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        self.s1s0x01.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
 
         self.gridLayout_6.addWidget(self.s1s0x01, 1, 3, 1, 1)
 
         self.s6s0x00 = QTextBrowser(self.frame_10)
         self.s6s0x00.setObjectName(u"s6s0x00")
         self.s6s0x00.setMinimumSize(QSize(0, 0))
+        self.s6s0x00.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        self.s6s0x00.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
 
         self.gridLayout_6.addWidget(self.s6s0x00, 6, 4, 1, 1)
 
         self.s3s0x04 = QTextBrowser(self.frame_10)
         self.s3s0x04.setObjectName(u"s3s0x04")
         self.s3s0x04.setMinimumSize(QSize(0, 0))
+        self.s3s0x04.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        self.s3s0x04.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
 
         self.gridLayout_6.addWidget(self.s3s0x04, 3, 1, 1, 1)
 
         self.s8s0x04 = QTextBrowser(self.frame_10)
         self.s8s0x04.setObjectName(u"s8s0x04")
         self.s8s0x04.setMinimumSize(QSize(0, 0))
+        self.s8s0x04.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        self.s8s0x04.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
 
         self.gridLayout_6.addWidget(self.s8s0x04, 8, 1, 1, 1)
 
         self.s7s0x04 = QTextBrowser(self.frame_10)
         self.s7s0x04.setObjectName(u"s7s0x04")
         self.s7s0x04.setMinimumSize(QSize(0, 0))
+        self.s7s0x04.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        self.s7s0x04.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
 
         self.gridLayout_6.addWidget(self.s7s0x04, 7, 1, 1, 1)
 
         self.s4s0x01 = QTextBrowser(self.frame_10)
         self.s4s0x01.setObjectName(u"s4s0x01")
         self.s4s0x01.setMinimumSize(QSize(0, 0))
+        self.s4s0x01.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        self.s4s0x01.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
 
         self.gridLayout_6.addWidget(self.s4s0x01, 4, 3, 1, 1)
 
@@ -1918,36 +2111,48 @@ class Ui_MainWindow(object):
         self.textBrowser_58.setObjectName(u"textBrowser_58")
         self.textBrowser_58.setMinimumSize(QSize(0, 0))
         self.textBrowser_58.setStyleSheet(u"background-color:rgb(140, 140, 140);")
+        self.textBrowser_58.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        self.textBrowser_58.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
 
         self.gridLayout_6.addWidget(self.textBrowser_58, 8, 5, 1, 1)
 
         self.s5s0x01 = QTextBrowser(self.frame_10)
         self.s5s0x01.setObjectName(u"s5s0x01")
         self.s5s0x01.setMinimumSize(QSize(0, 0))
+        self.s5s0x01.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        self.s5s0x01.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
 
         self.gridLayout_6.addWidget(self.s5s0x01, 5, 3, 1, 1)
 
         self.s5s0x04 = QTextBrowser(self.frame_10)
         self.s5s0x04.setObjectName(u"s5s0x04")
         self.s5s0x04.setMinimumSize(QSize(0, 0))
+        self.s5s0x04.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        self.s5s0x04.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
 
         self.gridLayout_6.addWidget(self.s5s0x04, 5, 1, 1, 1)
 
         self.s5s0x00 = QTextBrowser(self.frame_10)
         self.s5s0x00.setObjectName(u"s5s0x00")
         self.s5s0x00.setMinimumSize(QSize(0, 0))
+        self.s5s0x00.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        self.s5s0x00.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
 
         self.gridLayout_6.addWidget(self.s5s0x00, 5, 4, 1, 1)
 
         self.s2s0x02 = QTextBrowser(self.frame_10)
         self.s2s0x02.setObjectName(u"s2s0x02")
         self.s2s0x02.setMinimumSize(QSize(0, 0))
+        self.s2s0x02.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        self.s2s0x02.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
 
         self.gridLayout_6.addWidget(self.s2s0x02, 2, 2, 1, 1)
 
         self.s4s0x04 = QTextBrowser(self.frame_10)
         self.s4s0x04.setObjectName(u"s4s0x04")
         self.s4s0x04.setMinimumSize(QSize(0, 0))
+        self.s4s0x04.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        self.s4s0x04.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
 
         self.gridLayout_6.addWidget(self.s4s0x04, 4, 1, 1, 1)
 
@@ -1955,6 +2160,8 @@ class Ui_MainWindow(object):
         self.textBrowser_28.setObjectName(u"textBrowser_28")
         self.textBrowser_28.setMinimumSize(QSize(0, 0))
         self.textBrowser_28.setStyleSheet(u"background-color:rgb(140, 140, 140);")
+        self.textBrowser_28.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        self.textBrowser_28.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
 
         self.gridLayout_6.addWidget(self.textBrowser_28, 0, 4, 1, 1)
 
@@ -1962,42 +2169,56 @@ class Ui_MainWindow(object):
         self.textBrowser_41.setObjectName(u"textBrowser_41")
         self.textBrowser_41.setMinimumSize(QSize(0, 0))
         self.textBrowser_41.setStyleSheet(u"background-color:rgb(140, 140, 140);")
+        self.textBrowser_41.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        self.textBrowser_41.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
 
         self.gridLayout_6.addWidget(self.textBrowser_41, 3, 5, 1, 1)
 
         self.s3s0x01 = QTextBrowser(self.frame_10)
         self.s3s0x01.setObjectName(u"s3s0x01")
         self.s3s0x01.setMinimumSize(QSize(0, 0))
+        self.s3s0x01.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        self.s3s0x01.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
 
         self.gridLayout_6.addWidget(self.s3s0x01, 3, 3, 1, 1)
 
         self.s4s0x00 = QTextBrowser(self.frame_10)
         self.s4s0x00.setObjectName(u"s4s0x00")
         self.s4s0x00.setMinimumSize(QSize(0, 0))
+        self.s4s0x00.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        self.s4s0x00.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
 
         self.gridLayout_6.addWidget(self.s4s0x00, 4, 4, 1, 1)
 
         self.s7s0x01 = QTextBrowser(self.frame_10)
         self.s7s0x01.setObjectName(u"s7s0x01")
         self.s7s0x01.setMinimumSize(QSize(0, 0))
+        self.s7s0x01.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        self.s7s0x01.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
 
         self.gridLayout_6.addWidget(self.s7s0x01, 7, 3, 1, 1)
 
         self.s7s0x02 = QTextBrowser(self.frame_10)
         self.s7s0x02.setObjectName(u"s7s0x02")
         self.s7s0x02.setMinimumSize(QSize(0, 0))
+        self.s7s0x02.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        self.s7s0x02.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
 
         self.gridLayout_6.addWidget(self.s7s0x02, 7, 2, 1, 1)
 
         self.s1s0x02 = QTextBrowser(self.frame_10)
         self.s1s0x02.setObjectName(u"s1s0x02")
         self.s1s0x02.setMinimumSize(QSize(0, 0))
+        self.s1s0x02.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        self.s1s0x02.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
 
         self.gridLayout_6.addWidget(self.s1s0x02, 1, 2, 1, 1)
 
         self.s8s0x01 = QTextBrowser(self.frame_10)
         self.s8s0x01.setObjectName(u"s8s0x01")
         self.s8s0x01.setMinimumSize(QSize(0, 0))
+        self.s8s0x01.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        self.s8s0x01.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
 
         self.gridLayout_6.addWidget(self.s8s0x01, 8, 3, 1, 1)
 
@@ -2005,6 +2226,8 @@ class Ui_MainWindow(object):
         self.textBrowser_49.setObjectName(u"textBrowser_49")
         self.textBrowser_49.setMinimumSize(QSize(0, 0))
         self.textBrowser_49.setStyleSheet(u"background-color:rgb(140, 140, 140);")
+        self.textBrowser_49.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        self.textBrowser_49.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
 
         self.gridLayout_6.addWidget(self.textBrowser_49, 5, 5, 1, 1)
 
@@ -2012,18 +2235,24 @@ class Ui_MainWindow(object):
         self.textBrowser_33.setObjectName(u"textBrowser_33")
         self.textBrowser_33.setMinimumSize(QSize(0, 0))
         self.textBrowser_33.setStyleSheet(u"background-color:rgb(140, 140, 140);")
+        self.textBrowser_33.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        self.textBrowser_33.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
 
         self.gridLayout_6.addWidget(self.textBrowser_33, 1, 5, 1, 1)
 
         self.s8s0x00 = QTextBrowser(self.frame_10)
         self.s8s0x00.setObjectName(u"s8s0x00")
         self.s8s0x00.setMinimumSize(QSize(0, 0))
+        self.s8s0x00.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        self.s8s0x00.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
 
         self.gridLayout_6.addWidget(self.s8s0x00, 8, 4, 1, 1)
 
         self.s3s0x00 = QTextBrowser(self.frame_10)
         self.s3s0x00.setObjectName(u"s3s0x00")
         self.s3s0x00.setMinimumSize(QSize(0, 0))
+        self.s3s0x00.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        self.s3s0x00.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
 
         self.gridLayout_6.addWidget(self.s3s0x00, 3, 4, 1, 1)
 
@@ -2031,6 +2260,8 @@ class Ui_MainWindow(object):
         self.s1s0x00.setObjectName(u"s1s0x00")
         self.s1s0x00.setMinimumSize(QSize(0, 0))
         self.s1s0x00.setStyleSheet(u"")
+        self.s1s0x00.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        self.s1s0x00.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
 
         self.gridLayout_6.addWidget(self.s1s0x00, 1, 4, 1, 1)
 
@@ -2038,6 +2269,8 @@ class Ui_MainWindow(object):
         self.textBrowser_57.setObjectName(u"textBrowser_57")
         self.textBrowser_57.setMinimumSize(QSize(0, 0))
         self.textBrowser_57.setStyleSheet(u"background-color:rgb(140, 140, 140);")
+        self.textBrowser_57.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        self.textBrowser_57.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
 
         self.gridLayout_6.addWidget(self.textBrowser_57, 7, 5, 1, 1)
 
@@ -2045,12 +2278,16 @@ class Ui_MainWindow(object):
         self.textBrowser_42.setObjectName(u"textBrowser_42")
         self.textBrowser_42.setMinimumSize(QSize(0, 0))
         self.textBrowser_42.setStyleSheet(u"background-color:rgb(140, 140, 140);")
+        self.textBrowser_42.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        self.textBrowser_42.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
 
         self.gridLayout_6.addWidget(self.textBrowser_42, 4, 5, 1, 1)
 
         self.s6s0x02 = QTextBrowser(self.frame_10)
         self.s6s0x02.setObjectName(u"s6s0x02")
         self.s6s0x02.setMinimumSize(QSize(0, 0))
+        self.s6s0x02.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        self.s6s0x02.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
 
         self.gridLayout_6.addWidget(self.s6s0x02, 6, 2, 1, 1)
 
@@ -2058,30 +2295,40 @@ class Ui_MainWindow(object):
         self.s2s0x01.setObjectName(u"s2s0x01")
         self.s2s0x01.setMinimumSize(QSize(0, 0))
         self.s2s0x01.setStyleSheet(u"")
+        self.s2s0x01.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        self.s2s0x01.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
 
         self.gridLayout_6.addWidget(self.s2s0x01, 2, 3, 1, 1)
 
         self.s3s0x02 = QTextBrowser(self.frame_10)
         self.s3s0x02.setObjectName(u"s3s0x02")
         self.s3s0x02.setMinimumSize(QSize(0, 0))
+        self.s3s0x02.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        self.s3s0x02.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
 
         self.gridLayout_6.addWidget(self.s3s0x02, 3, 2, 1, 1)
 
         self.s1s0x04 = QTextBrowser(self.frame_10)
         self.s1s0x04.setObjectName(u"s1s0x04")
         self.s1s0x04.setMinimumSize(QSize(0, 0))
+        self.s1s0x04.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        self.s1s0x04.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
 
         self.gridLayout_6.addWidget(self.s1s0x04, 1, 1, 1, 1)
 
         self.s6s0x04 = QTextBrowser(self.frame_10)
         self.s6s0x04.setObjectName(u"s6s0x04")
         self.s6s0x04.setMinimumSize(QSize(0, 0))
+        self.s6s0x04.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        self.s6s0x04.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
 
         self.gridLayout_6.addWidget(self.s6s0x04, 6, 1, 1, 1)
 
         self.s8s0x02 = QTextBrowser(self.frame_10)
         self.s8s0x02.setObjectName(u"s8s0x02")
         self.s8s0x02.setMinimumSize(QSize(0, 0))
+        self.s8s0x02.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        self.s8s0x02.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
 
         self.gridLayout_6.addWidget(self.s8s0x02, 8, 2, 1, 1)
 
@@ -2089,6 +2336,8 @@ class Ui_MainWindow(object):
         self.textBrowser_26.setObjectName(u"textBrowser_26")
         self.textBrowser_26.setMinimumSize(QSize(0, 0))
         self.textBrowser_26.setStyleSheet(u"background-color:rgb(140, 140, 140);")
+        self.textBrowser_26.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        self.textBrowser_26.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
 
         self.gridLayout_6.addWidget(self.textBrowser_26, 0, 2, 1, 1)
 
@@ -2096,24 +2345,32 @@ class Ui_MainWindow(object):
         self.s6s0x01.setObjectName(u"s6s0x01")
         self.s6s0x01.setMinimumSize(QSize(0, 0))
         self.s6s0x01.setStyleSheet(u"")
+        self.s6s0x01.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        self.s6s0x01.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
 
         self.gridLayout_6.addWidget(self.s6s0x01, 6, 3, 1, 1)
 
         self.s3s0x04_3 = QTextBrowser(self.frame_10)
         self.s3s0x04_3.setObjectName(u"s3s0x04_3")
         self.s3s0x04_3.setMinimumSize(QSize(0, 0))
+        self.s3s0x04_3.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        self.s3s0x04_3.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
 
         self.gridLayout_6.addWidget(self.s3s0x04_3, 3, 0, 1, 1)
 
         self.s2s0x04_3 = QTextBrowser(self.frame_10)
         self.s2s0x04_3.setObjectName(u"s2s0x04_3")
         self.s2s0x04_3.setMinimumSize(QSize(0, 0))
+        self.s2s0x04_3.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        self.s2s0x04_3.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
 
         self.gridLayout_6.addWidget(self.s2s0x04_3, 2, 0, 1, 1)
 
         self.s1s0x04_3 = QTextBrowser(self.frame_10)
         self.s1s0x04_3.setObjectName(u"s1s0x04_3")
         self.s1s0x04_3.setMinimumSize(QSize(0, 0))
+        self.s1s0x04_3.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        self.s1s0x04_3.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
 
         self.gridLayout_6.addWidget(self.s1s0x04_3, 1, 0, 1, 1)
 
@@ -2121,36 +2378,48 @@ class Ui_MainWindow(object):
         self.textBrowser_37.setObjectName(u"textBrowser_37")
         self.textBrowser_37.setMinimumSize(QSize(0, 0))
         self.textBrowser_37.setStyleSheet(u"background-color:rgb(140, 140, 140);")
+        self.textBrowser_37.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        self.textBrowser_37.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
 
         self.gridLayout_6.addWidget(self.textBrowser_37, 0, 0, 1, 1)
 
         self.s4s0x04_3 = QTextBrowser(self.frame_10)
         self.s4s0x04_3.setObjectName(u"s4s0x04_3")
         self.s4s0x04_3.setMinimumSize(QSize(0, 0))
+        self.s4s0x04_3.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        self.s4s0x04_3.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
 
         self.gridLayout_6.addWidget(self.s4s0x04_3, 4, 0, 1, 1)
 
         self.s5s0x04_3 = QTextBrowser(self.frame_10)
         self.s5s0x04_3.setObjectName(u"s5s0x04_3")
         self.s5s0x04_3.setMinimumSize(QSize(0, 0))
+        self.s5s0x04_3.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        self.s5s0x04_3.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
 
         self.gridLayout_6.addWidget(self.s5s0x04_3, 5, 0, 1, 1)
 
         self.s6s0x04_3 = QTextBrowser(self.frame_10)
         self.s6s0x04_3.setObjectName(u"s6s0x04_3")
         self.s6s0x04_3.setMinimumSize(QSize(0, 0))
+        self.s6s0x04_3.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        self.s6s0x04_3.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
 
         self.gridLayout_6.addWidget(self.s6s0x04_3, 6, 0, 1, 1)
 
         self.s7s0x04_3 = QTextBrowser(self.frame_10)
         self.s7s0x04_3.setObjectName(u"s7s0x04_3")
         self.s7s0x04_3.setMinimumSize(QSize(0, 0))
+        self.s7s0x04_3.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        self.s7s0x04_3.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
 
         self.gridLayout_6.addWidget(self.s7s0x04_3, 7, 0, 1, 1)
 
         self.s8s0x04_3 = QTextBrowser(self.frame_10)
         self.s8s0x04_3.setObjectName(u"s8s0x04_3")
         self.s8s0x04_3.setMinimumSize(QSize(0, 0))
+        self.s8s0x04_3.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        self.s8s0x04_3.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
 
         self.gridLayout_6.addWidget(self.s8s0x04_3, 8, 0, 1, 1)
 
@@ -2507,6 +2776,8 @@ class Ui_MainWindow(object):
 
         self.textBrowser_5 = QTextBrowser(self.page_3)
         self.textBrowser_5.setObjectName(u"textBrowser_5")
+        self.textBrowser_5.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        self.textBrowser_5.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
 
         self.gridLayout_2.addWidget(self.textBrowser_5, 1, 0, 1, 1)
 
@@ -2521,6 +2792,8 @@ class Ui_MainWindow(object):
 
         self.textBrowser_9 = QTextBrowser(self.page_3)
         self.textBrowser_9.setObjectName(u"textBrowser_9")
+        self.textBrowser_9.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        self.textBrowser_9.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
 
         self.gridLayout_2.addWidget(self.textBrowser_9, 2, 0, 1, 1)
 
@@ -2577,21 +2850,29 @@ class Ui_MainWindow(object):
 
         self.textBrowser_7 = QTextBrowser(self.page_3)
         self.textBrowser_7.setObjectName(u"textBrowser_7")
+        self.textBrowser_7.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        self.textBrowser_7.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
 
         self.gridLayout_2.addWidget(self.textBrowser_7, 3, 0, 1, 1)
 
         self.textBrowser_4 = QTextBrowser(self.page_3)
         self.textBrowser_4.setObjectName(u"textBrowser_4")
+        self.textBrowser_4.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        self.textBrowser_4.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
 
         self.gridLayout_2.addWidget(self.textBrowser_4, 0, 0, 1, 2)
 
         self.textBrowser_8 = QTextBrowser(self.page_3)
         self.textBrowser_8.setObjectName(u"textBrowser_8")
+        self.textBrowser_8.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        self.textBrowser_8.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
 
         self.gridLayout_2.addWidget(self.textBrowser_8, 5, 0, 1, 1)
 
         self.textBrowser_6 = QTextBrowser(self.page_3)
         self.textBrowser_6.setObjectName(u"textBrowser_6")
+        self.textBrowser_6.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        self.textBrowser_6.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
 
         self.gridLayout_2.addWidget(self.textBrowser_6, 4, 0, 1, 1)
 
@@ -2865,6 +3146,8 @@ class Ui_MainWindow(object):
         sizePolicy8.setHeightForWidth(self.textBrowser_2.sizePolicy().hasHeightForWidth())
         self.textBrowser_2.setSizePolicy(sizePolicy8)
         self.textBrowser_2.setMinimumSize(QSize(500, 0))
+        self.textBrowser_2.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        self.textBrowser_2.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
 
         self.gridLayout.addWidget(self.textBrowser_2, 0, 0, 1, 1)
 
@@ -3179,23 +3462,26 @@ class Ui_MainWindow(object):
         self.textBrowser_3 = QTextBrowser(self.page_5)
         self.textBrowser_3.setObjectName(u"textBrowser_3")
         self.textBrowser_3.setMaximumSize(QSize(400, 200))
+        self.textBrowser_3.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        self.textBrowser_3.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
 
         self.gridLayout_10.addWidget(self.textBrowser_3, 0, 0, 1, 1)
 
         self.stackedWidget.addWidget(self.page_5)
 
-        self.gridLayout_4.addWidget(self.stackedWidget, 0, 1, 1, 1)
+        self.gridLayout_4.addWidget(self.stackedWidget, 2, 1, 1, 1)
 
 
-        self.gridLayout_3.addWidget(self.frame, 0, 0, 1, 1)
+        self.horizontalLayout_2.addWidget(self.frame)
 
         MainWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(MainWindow)
 
-        self.stackedWidget.setCurrentIndex(1)
-        self.stackedWidget_4.setCurrentIndex(3)
-        self.stackedWidget_2.setCurrentIndex(2)
+        self.stackedWidget.setCurrentIndex(0)
+        self.stackedWidget_3.setCurrentIndex(3)
+        self.stackedWidget_4.setCurrentIndex(9)
+        self.stackedWidget_2.setCurrentIndex(0)
 
 
         QMetaObject.connectSlotsByName(MainWindow)
@@ -3203,6 +3489,17 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"UMVH_Configurator", None))
+        self.textBrowser.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"hr { height: 1px; border-width: 0; }\n"
+"li.unchecked::marker { content: \"\\2610\"; }\n"
+"li.checked::marker { content: \"\\2612\"; }\n"
+"</style></head><body style=\" font-family:'Noto Sans SC'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
+"<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:18pt;\">\u0412\u044b\u0431\u0435\u0440\u0435\u0442\u0435 \u0441\u043f\u043e\u0441\u043e\u0431 \u043f\u043e\u0434\u043a\u043b\u044e\u0447\u0435\u043d\u0438\u044f \u0423\u041c\u0412\u0425</span></p></body></html>", None))
+        self.pushButton_6.setText(QCoreApplication.translate("MainWindow", u"\u0412\u044b\u0431\u0435\u0440\u0435\u0442\u0435 COM \u043f\u043e\u0440\u0442", None))
+        self.pushButton.setText(QCoreApplication.translate("MainWindow", u"\u0410\u0432\u0442\u043e\u043f\u043e\u0434\u043a\u043b\u044e\u0447\u0435\u043d\u0438\u0435", None))
+        self.pushButton_2.setText(QCoreApplication.translate("MainWindow", u"\u0420\u0443\u0447\u043d\u043e\u0435 \u043f\u043e\u0434\u043a\u043b\u044e\u0447\u0435\u043d\u0438\u0435", None))
         self.textBrowser_10.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
@@ -3220,17 +3517,6 @@ class Ui_MainWindow(object):
 "</style></head><body style=\" font-family:'Noto Sans SC'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
 "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:14pt;\">\u041f\u0440\u043e\u0438\u0437\u043e\u0448\u043b\u0430 \u043e\u0448\u0438\u0431\u043a\u0430 \u043e\u0431\u043d\u043e\u0432\u043b\u0435\u043d\u0438\u044f</span></p></body></html>", None))
         self.pushButton_7.setText(QCoreApplication.translate("MainWindow", u"\u041e\u0431\u043d\u043e\u0432\u043b\u0435\u043d\u0438\u0435 \u041f\u041e \u0438\u0437 \u0437\u0430\u0433\u0440\u0443\u0437\u0447\u0438\u043a\u0430", None))
-        self.textBrowser.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
-"<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
-"p, li { white-space: pre-wrap; }\n"
-"hr { height: 1px; border-width: 0; }\n"
-"li.unchecked::marker { content: \"\\2610\"; }\n"
-"li.checked::marker { content: \"\\2612\"; }\n"
-"</style></head><body style=\" font-family:'Noto Sans SC'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
-"<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:18pt;\">\u0412\u044b\u0431\u0435\u0440\u0435\u0442\u0435 \u0441\u043f\u043e\u0441\u043e\u0431 \u043f\u043e\u0434\u043a\u043b\u044e\u0447\u0435\u043d\u0438\u044f \u0423\u041c\u0412\u0425</span></p></body></html>", None))
-        self.pushButton_6.setText(QCoreApplication.translate("MainWindow", u"\u0412\u044b\u0431\u0435\u0440\u0435\u0442\u0435 COM \u043f\u043e\u0440\u0442", None))
-        self.pushButton.setText(QCoreApplication.translate("MainWindow", u"\u0410\u0432\u0442\u043e\u043f\u043e\u0434\u043a\u043b\u044e\u0447\u0435\u043d\u0438\u0435", None))
-        self.pushButton_2.setText(QCoreApplication.translate("MainWindow", u"\u0420\u0443\u0447\u043d\u043e\u0435 \u043f\u043e\u0434\u043a\u043b\u044e\u0447\u0435\u043d\u0438\u0435", None))
         self.textBrowser_65.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
@@ -3512,7 +3798,8 @@ class Ui_MainWindow(object):
 "li.unchecked::marker { content: \"\\2610\"; }\n"
 "li.checked::marker { content: \"\\2612\"; }\n"
 "</style></head><body style=\" font-family:'Noto Sans SC'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
-"<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">\u041f\u043e\u043a\u0430\u0437\u0430\u043d\u0438\u044f \u0434\u0430\u0442\u0447\u0438\u043a\u0430</p></body></html>", None))
+"<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">\u041f\u043e\u043a\u0430\u0437\u0430\u043d\u0438\u044f \u0434\u0430\u0442\u0447\u0438\u043a\u0430</p>\n"
+"<p align=\"center\" style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>", None))
         self.textBrowser_90.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
