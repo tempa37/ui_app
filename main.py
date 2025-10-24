@@ -1,3 +1,4 @@
+import os
 import sys
 import threading
 from contextlib import contextmanager
@@ -1743,8 +1744,20 @@ class UMVH(QMainWindow):
     # --- обновление из загрузчика ---------------------------------
     def select_bootloader_file(self):
         filename, _ = QFileDialog.getOpenFileName(self, "Select firmware", "", "Hex files (*.hex);;All files (*)")
-        if filename:
-            self.start_bootloader_update(filename)
+        if not filename:
+            return
+
+        try:
+            file_size = os.path.getsize(filename)
+        except OSError:
+            QMessageBox.warning(self, "Предупреждение", "Не удалось получить размер файла")
+            return
+
+        if file_size > 24 * 1024:
+            QMessageBox.warning(self, "Предупреждение", "Файл слишком большой")
+            return
+
+        self.start_bootloader_update(filename)
 
     def start_bootloader_update(self, filename: str):
         if not self.selected_port:
