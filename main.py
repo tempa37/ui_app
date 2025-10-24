@@ -1,3 +1,4 @@
+import os
 import sys
 import threading
 from contextlib import contextmanager
@@ -35,6 +36,8 @@ MAX_PAYLOAD_SIZE   = MAX_PACKET_SIZE - HEADER_SIZE - CRC_SIZE
 
 MAX_RETRIES        = 3
 RETRY_DELAY        = 1
+
+MAX_BOOTLOADER_FILE_SIZE = 24 * 1024  # 24 КБ
 
 # --- карта регистров ---------------------------------------------------
 REG_SENSOR_TYPE_BASE = 0x000A  # тип датчика для портов 1-8
@@ -1744,6 +1747,13 @@ class UMVH(QMainWindow):
     def select_bootloader_file(self):
         filename, _ = QFileDialog.getOpenFileName(self, "Select firmware", "", "Hex files (*.hex);;All files (*)")
         if filename:
+            try:
+                if os.path.getsize(filename) > MAX_BOOTLOADER_FILE_SIZE:
+                    QMessageBox.warning(self, "Предупреждение", "Файл слишком большой")
+                    return
+            except OSError:
+                QMessageBox.warning(self, "Предупреждение", "Не удалось проверить размер файла")
+                return
             self.start_bootloader_update(filename)
 
     def start_bootloader_update(self, filename: str):
