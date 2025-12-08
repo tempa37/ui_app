@@ -83,7 +83,7 @@ font-family: Noto Sans SC</string>
           <enum>Qt::LayoutDirection::RightToLeft</enum>
          </property>
          <property name="currentIndex">
-          <number>0</number>
+          <number>1</number>
          </property>
          <widget class="QWidget" name="page">
           <property name="minimumSize">
@@ -559,7 +559,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
            <item row="1" column="0">
             <widget class="QStackedWidget" name="stackedWidget_3">
              <property name="currentIndex">
-              <number>3</number>
+              <number>0</number>
              </property>
              <widget class="QWidget" name="page_10">
               <property name="styleSheet">
@@ -1534,6 +1534,19 @@ li.checked::marker { content: &quot;\2612&quot;; }
                    </property>
                   </widget>
                  </item>
+                 <item row="6" column="1">
+                  <widget class="QPushButton" name="pushButton_32">
+                   <property name="font">
+                    <font>
+                     <family>Noto Sans SC</family>
+                     <pointsize>14</pointsize>
+                    </font>
+                   </property>
+                   <property name="text">
+                    <string>тест реле</string>
+                   </property>
+                  </widget>
+                 </item>
                 </layout>
                </widget>
               </item>
@@ -1564,7 +1577,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                   <enum>Qt::LayoutDirection::LeftToRight</enum>
                  </property>
                  <property name="currentIndex">
-                  <number>9</number>
+                  <number>3</number>
                  </property>
                  <widget class="QWidget" name="page_16">
                   <property name="contextMenuPolicy">

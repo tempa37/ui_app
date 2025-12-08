@@ -1050,6 +1050,15 @@ class Ui_MainWindow(object):
 
         self.gridLayout_8.addWidget(self.textBrowser_64, 3, 1, 1, 1)
 
+        self.pushButton_32 = QPushButton(self.frame_11)
+        self.pushButton_32.setObjectName(u"pushButton_32")
+        font = QFont()
+        font.setFamilies([u"Noto Sans SC"])
+        font.setPointSize(14)
+        self.pushButton_32.setFont(font)
+
+        self.gridLayout_8.addWidget(self.pushButton_32, 6, 1, 1, 1)
+
 
         self.gridLayout_7.addWidget(self.frame_11, 0, 0, 1, 1)
 
@@ -1090,9 +1099,6 @@ class Ui_MainWindow(object):
         self.pushButton_10 = QPushButton(self.page_16)
         self.pushButton_10.setObjectName(u"pushButton_10")
         self.pushButton_10.setGeometry(QRect(30, 20, 431, 71))
-        font = QFont()
-        font.setFamilies([u"Noto Sans SC"])
-        font.setPointSize(14)
         self.pushButton_10.setFont(font)
         self.pushButton_12 = QPushButton(self.page_16)
         self.pushButton_12.setObjectName(u"pushButton_12")
@@ -3478,9 +3484,9 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
 
-        self.stackedWidget.setCurrentIndex(0)
-        self.stackedWidget_3.setCurrentIndex(3)
-        self.stackedWidget_4.setCurrentIndex(9)
+        self.stackedWidget.setCurrentIndex(1)
+        self.stackedWidget_3.setCurrentIndex(0)
+        self.stackedWidget_4.setCurrentIndex(3)
         self.stackedWidget_2.setCurrentIndex(0)
 
 
@@ -3591,6 +3597,7 @@ class Ui_MainWindow(object):
 "li.checked::marker { content: \"\\2612\"; }\n"
 "</style></head><body style=\" font-family:'Noto Sans SC'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">\u0427\u0435\u0442\u043d\u043e\u0441\u0442\u044c</p></body></html>", None))
+        self.pushButton_32.setText(QCoreApplication.translate("MainWindow", u"\u0442\u0435\u0441\u0442 \u0440\u0435\u043b\u0435", None))
         self.pushButton_10.setText(QCoreApplication.translate("MainWindow", u"\u041a\u0430\u043b\u0438\u0431\u0440\u043e\u0432\u043a\u0430 \u043f\u043e 2 \u0442\u043e\u0447\u043a\u0430\u043c", None))
         self.pushButton_12.setText(QCoreApplication.translate("MainWindow", u"\u041a\u0430\u043b\u0438\u0431\u0440\u043e\u0432\u043a\u0430 \u043f\u043e 4 \u0442\u043e\u0447\u043a\u0430\u043c", None))
         self.pushButton_23.setText(QCoreApplication.translate("MainWindow", u"\u041e\u0447\u0438\u0441\u0442\u0438\u0442\u044c \u043a\u0430\u043b\u0438\u0431\u0440\u043e\u0432\u043a\u0443", None))
