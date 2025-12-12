@@ -2745,7 +2745,6 @@ class Ui_MainWindow(object):
 
         self.comboBox_2 = QComboBox(self.page_3)
         self.comboBox_2.addItem("")
-        self.comboBox_2.addItem("")
         self.comboBox_2.setObjectName(u"comboBox_2")
         sizePolicy6 = QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Maximum)
         sizePolicy6.setHorizontalStretch(0)
@@ -3484,7 +3483,7 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
 
-        self.stackedWidget.setCurrentIndex(1)
+        self.stackedWidget.setCurrentIndex(2)
         self.stackedWidget_3.setCurrentIndex(0)
         self.stackedWidget_4.setCurrentIndex(3)
         self.stackedWidget_2.setCurrentIndex(0)
@@ -3534,7 +3533,7 @@ class Ui_MainWindow(object):
         self.comboBox_8.setItemText(0, QCoreApplication.translate("MainWindow", u"1", None))
         self.comboBox_8.setItemText(1, QCoreApplication.translate("MainWindow", u"2", None))
 
-        self.comboBox_6.setItemText(0, QCoreApplication.translate("MainWindow", u"7", None))
+        self.comboBox_6.setItemText(0, QCoreApplication.translate("MainWindow", u"9", None))
         self.comboBox_6.setItemText(1, QCoreApplication.translate("MainWindow", u"8", None))
 
         self.comboBox_7.setItemText(0, QCoreApplication.translate("MainWindow", u"\u041d\u0435\u0442", None))
@@ -4473,8 +4472,7 @@ class Ui_MainWindow(object):
 "</style></head><body style=\" font-family:'Noto Sans SC'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
 "<p align=\"center\" style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>", None))
         self.pushButton_22.setText(QCoreApplication.translate("MainWindow", u"<-", None))
-        self.comboBox_2.setItemText(0, QCoreApplication.translate("MainWindow", u"7", None))
-        self.comboBox_2.setItemText(1, QCoreApplication.translate("MainWindow", u"8", None))
+        self.comboBox_2.setItemText(0, QCoreApplication.translate("MainWindow", u"8", None))
 
         self.textBrowser_5.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"

@@ -512,6 +512,10 @@ class UMVH(QMainWindow):
         self._latest_sensor_types: list[int] = [0] * REG_SENSOR_TYPE_COUNT
         self._latest_sensor_values: list[int] = [0] * REG_SENSOR_READ_COUNT
         self._latest_calibration_masks: list[int] = [0] * REG_CAL_STATUS_COUNT
+        self._relay_ports: list[int] = []  # список портов с датчиком 0x101
+
+        if hasattr(self.ui, 'pushButton_32'):
+            self.ui.pushButton_32.setVisible(False)
 
         self.sensor_value_widgets = [
             getattr(self.ui, f"s{row}s0x04_3") for row in range(1, REG_SENSOR_READ_COUNT + 1)
@@ -590,6 +594,11 @@ class UMVH(QMainWindow):
         reset_button = getattr(self.ui, "pushButton_22", None)
         if reset_button is not None:
             reset_button.clicked.connect(self.reset_application_state)
+
+        # Подключаем обработчик кнопки управления реле
+        if hasattr(self.ui, 'pushButton_32'):
+            self.ui.pushButton_32.clicked.connect(self.toggle_relays)
+
         self._init_calibration_connections()
 
     def switch_to(self, page_widget):
@@ -1327,7 +1336,18 @@ class UMVH(QMainWindow):
     # ------------------------------------------------------------------
     def start_auto_connect(self):
         """Запуск автоподключения и переход на страницу ожидания."""
+
+        if hasattr(self, '_text_browser2_defaults'):
+            # Восстанавливаем HTML, чтобы сохранить форматирование/цвет/шрифт
+            self.ui.textBrowser_2.setHtml(self._text_browser2_defaults[1])
+        else:
+            # Если вдруг defaults не инициализировались, пишем просто текст
+            self.ui.textBrowser_2.setText("Подключите устройство к ПК и перезагрузите")
+
         self._set_autoconnect_defaults()  # при входе на страницу выставляем базовые параметры 115200 8N1
+
+
+
         self.switch_to(self.ui.page_2)
         if not self.selected_port:
             return
@@ -1340,6 +1360,7 @@ class UMVH(QMainWindow):
         self.worker.finished.connect(self._auto_connect_finished)
         self.worker.error.connect(self._auto_connect_error)
         self.worker.finished.connect(self.worker_thread.quit)
+        self.worker.error.connect(self.worker_thread.quit)  # <--- Убиваем поток при ошибке!
         self.worker_thread.start()
 
     def _set_autoconnect_defaults(self):
@@ -1380,7 +1401,7 @@ class UMVH(QMainWindow):
             ser = serial.Serial(
                 self.selected_port,
                 baudrate=baud,
-                bytesize=serial.EIGHTBITS if bits == 8 else serial.SEVENBITS,
+                bytesize=serial.EIGHTBITS,
                 parity=parity_val,
                 stopbits=serial.STOPBITS_TWO if stop == 2 else serial.STOPBITS_ONE,
                 timeout=1,
@@ -1426,7 +1447,7 @@ class UMVH(QMainWindow):
             self.serial_port = serial.Serial(
                 self.selected_port,
                 baudrate=settings["baud"],
-                bytesize=serial.EIGHTBITS if settings["bits"] == 8 else serial.SEVENBITS,
+                bytesize=serial.EIGHTBITS,
                 parity={0: serial.PARITY_NONE, 1: serial.PARITY_ODD, 2: serial.PARITY_EVEN}.get(settings["parity"], serial.PARITY_NONE),
                 stopbits=serial.STOPBITS_TWO if settings["stop"] == 2 else serial.STOPBITS_ONE,
                 timeout=1,
@@ -1492,7 +1513,7 @@ class UMVH(QMainWindow):
             self.serial_port = serial.Serial(
                 self.selected_port,
                 baudrate=cfg["baud"],
-                bytesize=serial.EIGHTBITS if cfg["bits"] == 8 else serial.SEVENBITS,
+                bytesize=serial.EIGHTBITS ,
                 parity={0: serial.PARITY_NONE, 1: serial.PARITY_ODD, 2: serial.PARITY_EVEN}.get(cfg["parity"], serial.PARITY_NONE),
                 stopbits=serial.STOPBITS_TWO if cfg["stop"] == 2 else serial.STOPBITS_ONE,
                 timeout=1,
@@ -1608,6 +1629,10 @@ class UMVH(QMainWindow):
         if hasattr(self.ui, "stackedWidget_3") and hasattr(self.ui, "page_11"):
             self.ui.stackedWidget_3.setCurrentWidget(self.ui.page_11)
 
+        self._latest_calibration_masks = [0] * REG_CAL_STATUS_COUNT
+        self._relay_ports = []
+        if hasattr(self.ui, 'pushButton_32'):
+            self.ui.pushButton_32.setVisible(False)
         self._set_autoconnect_defaults()
         self.populate_com_ports()
         self.switch_to(self.ui.page)
@@ -1669,8 +1694,58 @@ class UMVH(QMainWindow):
         # поэтому не меняем их местами даже при активном SWAP_1_2_ENABLED
         self._latest_sensor_values = converted_values
 
+        self._check_relay_sensors(sensor_types_ui)
+
         self._update_live_sensor_widgets()
         self._update_calibration_matrix(calibration_masks)
+
+    def _check_relay_sensors(self, sensor_types: list[int]):
+        """Проверяет наличие датчиков реле 0x101 и управляет видимостью кнопки."""
+        if not hasattr(self.ui, 'pushButton_32'):
+            return
+
+        # Находим все порты с датчиком 0x101
+        relay_ports = []
+        for port_index, sensor_type in enumerate(sensor_types, start=1):
+            if sensor_type == 0x05:
+                relay_ports.append(port_index)
+
+        # Сохраняем список портов с реле
+        self._relay_ports = relay_ports
+
+        # Показываем кнопку только если есть хотя бы одно реле
+        self.ui.pushButton_32.setVisible(len(relay_ports) > 0)
+
+    def toggle_relays(self):
+        """Переключает состояние всех реле (датчик 0x101)."""
+        if not self._relay_ports:
+            return
+
+        if not self.serial_port:
+            self._handle_comm_error()
+            return
+
+        # Проходим по всем портам с реле
+        for port in self._relay_ports:
+            # Индекс в массиве показаний (port - 1)
+            value_index = port - 1
+
+            # Получаем текущее состояние из последних показаний
+            if value_index >= len(self._latest_sensor_values):
+                continue
+
+            current_state = self._latest_sensor_values[value_index]
+
+            # Новое состояние: если 0, то 1; иначе 0
+            new_state = 0x0001 if current_state == 0 else 0x0000
+
+            # Адрес регистра состояния для этого порта
+            reg_address = REG_SENSOR_READ_START + (port - 1)
+
+            # Отправляем команду 0x05 (Write Single Coil)
+            if not self._write_coil(reg_address, new_state):
+                self._handle_comm_error()
+                return
 
     def _update_calibration_matrix(self, masks: list[int]):
         for port_index, mask in enumerate(masks, start=1):
@@ -1885,6 +1960,27 @@ class UMVH(QMainWindow):
             return recv_crc == calc_crc
         except serial.SerialException:
             return False
+
+    def _write_coil(self, addr: int, value: int) -> bool:
+            """Запись одного coil Modbus функцией 0x05."""
+            if not self.serial_port:
+                return False
+            try:
+                slave = self.serial_config.get('usart_id', 1)
+                # Функция 0x05, значение 0xFF00 для ON или 0x0000 для OFF
+                coil_value = 0xFF00 if value else 0x0000
+                req = struct.pack('>BBHH', slave, 5, addr, coil_value)
+                crc = AutoConnectWorker._calc_crc(req)
+                with self._serial_lock:
+                    self.serial_port.write(req + crc.to_bytes(2, 'little'))
+                    resp = self.serial_port.read(8)
+                if len(resp) != 8:
+                    return False
+                recv_crc = int.from_bytes(resp[-2:], 'little')
+                calc_crc = AutoConnectWorker._calc_crc(resp[:-2])
+                return recv_crc == calc_crc
+            except serial.SerialException:
+                return False
 
     def _handle_comm_error(self):
         """Отображает страницу ошибки и возвращается на главную."""
