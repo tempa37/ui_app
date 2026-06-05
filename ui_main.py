@@ -20,7 +20,7 @@ from PySide6.QtWidgets import (QApplication, QComboBox, QFrame, QGridLayout,
     QSizePolicy, QSpacerItem, QSpinBox, QSplitter,
     QStackedWidget, QTextBrowser, QTextEdit, QVBoxLayout,
     QWidget)
-import myicon
+import myIcon_rc
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
