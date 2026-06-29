@@ -5,11 +5,14 @@ from contextlib import contextmanager
 
 from PySide6.QtCore    import Qt, QObject, Signal, QThread
 from PySide6.QtWidgets import (
+    QAbstractSpinBox,
     QApplication,
     QMainWindow,
     QComboBox,
     QFileDialog,
     QMessageBox,
+    QPushButton,
+    QSpinBox,
     QTextBrowser,
     QWidget,
 )
@@ -58,6 +61,7 @@ REG_PARITY = 0x0029
 REG_STOP = 0x002A
 REG_PASSWORD = 0x002B
 REG_USART_ID = 0x002C
+REG_NAMUR_RAW_MASK = 0x002D
 
 # --- особые типы датчиков -----------------------------------------------
 SENSOR_TYPE_REGISTER_VOLTAGE = 0x06
@@ -451,6 +455,7 @@ class UMVH(QMainWindow):
         super().__init__()
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
+        self._remove_unused_four_point_spinboxes()
 
         self.setWindowIcon(QIcon(":/icons/app"))
         # при старте показываем страницу выбора файла
@@ -513,9 +518,18 @@ class UMVH(QMainWindow):
         self._latest_sensor_values: list[int] = [0] * REG_SENSOR_READ_COUNT
         self._latest_calibration_masks: list[int] = [0] * REG_CAL_STATUS_COUNT
         self._relay_ports: list[int] = []  # список портов с датчиком 0x101
+        self._relay_active = False
+        self._relay_timer = QTimer(self)
+        self._relay_timer.setInterval(1000)
+        self._relay_timer.timeout.connect(self._send_relay_on_command)
+        self._relay_button_default_text = ""
+        self._namur_raw_mask_bit: int | None = None
+        self._namur_capture_buttons: dict[QSpinBox, QPushButton] = {}
+        self._namur_capture_style = "QSpinBox { padding-right: 40px; }"
 
         if hasattr(self.ui, 'pushButton_32'):
             self.ui.pushButton_32.setVisible(False)
+            self._relay_button_default_text = self.ui.pushButton_32.text()
 
         self.sensor_value_widgets = [
             getattr(self.ui, f"s{row}s0x04_3") for row in range(1, REG_SENSOR_READ_COUNT + 1)
@@ -600,6 +614,145 @@ class UMVH(QMainWindow):
             self.ui.pushButton_32.clicked.connect(self.toggle_relays)
 
         self._init_calibration_connections()
+
+    def _remove_unused_four_point_spinboxes(self):
+        for name in ("spinBox_16", "spinBox_15", "spinBox_9", "spinBox_14"):
+            widget = getattr(self.ui, name, None)
+            if widget is None:
+                continue
+            widget.setParent(None)
+            widget.deleteLater()
+            setattr(self.ui, name, None)
+
+    def _four_point_namur_sequence(self) -> tuple[tuple[str, QSpinBox, int], ...]:
+        return (
+            ("x1", self.ui.spinBox_20, REG_CAL_POINT_X1),
+            ("x2", self.ui.spinBox_18, REG_CAL_POINT_X2),
+            ("y1", self.ui.spinBox_19, REG_CAL_POINT_Y1),
+            ("y2", self.ui.spinBox_17, REG_CAL_POINT_Y2),
+        )
+
+    def _is_four_point_namur(self) -> bool:
+        if self._calibration_sensor is None:
+            return False
+        return self._current_calibration == "4pt" and (self._calibration_sensor & 0xFF) == 0x01
+
+    def _get_or_create_namur_capture_button(self, spinbox: QSpinBox) -> QPushButton:
+        button = self._namur_capture_buttons.get(spinbox)
+        if button is not None:
+            return button
+        button = QPushButton("\u2714", spinbox)
+        button.setCursor(Qt.PointingHandCursor)
+        button.setFocusPolicy(Qt.NoFocus)
+        button.setStyleSheet("""
+            QPushButton {
+                background: #808080;
+                border: 0;
+                border-left: 1px solid #b4b4b4;
+                border-top-right-radius: 12px;
+                border-bottom-right-radius: 12px;
+                color: white;
+                font-size: 18px;
+                font-weight: 700;
+            }
+            QPushButton:pressed {
+                background: #6d6d6d;
+            }
+        """)
+        button.clicked.connect(self._capture_current_namur_four_point)
+        self._namur_capture_buttons[spinbox] = button
+        return button
+
+    def _place_namur_capture_button(self, spinbox: QSpinBox, button: QPushButton):
+        width = 38
+        button.setGeometry(max(0, spinbox.width() - width), 0, width, spinbox.height())
+        button.raise_()
+
+    def _update_namur_four_point_controls(self):
+        sequence = self._four_point_namur_sequence()
+        if not self._is_four_point_namur() or self.ui.stackedWidget_4.currentWidget() is not self.ui.page_20:
+            for _, spinbox, _ in sequence:
+                spinbox.setReadOnly(False)
+                spinbox.setButtonSymbols(QAbstractSpinBox.ButtonSymbols.UpDownArrows)
+                spinbox.setStyleSheet("")
+                button = self._namur_capture_buttons.get(spinbox)
+                if button is not None:
+                    button.hide()
+            return
+
+        active_spinbox = None
+        for key, spinbox, _ in sequence:
+            if self._four_point_data.get(key) is None:
+                active_spinbox = spinbox
+                break
+
+        for key, spinbox, _ in sequence:
+            spinbox.setReadOnly(True)
+            spinbox.setButtonSymbols(QAbstractSpinBox.ButtonSymbols.NoButtons)
+            spinbox.setStyleSheet(self._namur_capture_style if spinbox is active_spinbox else "")
+            button = self._get_or_create_namur_capture_button(spinbox)
+            if spinbox is active_spinbox:
+                self._place_namur_capture_button(spinbox, button)
+                button.show()
+            else:
+                button.hide()
+
+        self._update_live_namur_four_point_widget()
+
+    def _update_live_namur_four_point_widget(self):
+        if not self._is_four_point_namur() or self.ui.stackedWidget_4.currentWidget() is not self.ui.page_20:
+            return
+        value = self._get_latest_sensor_value(self._calibration_port)
+        for key, spinbox, _ in self._four_point_namur_sequence():
+            if self._four_point_data.get(key) is None:
+                block = spinbox.blockSignals(True)
+                spinbox.setValue(value)
+                spinbox.blockSignals(block)
+                break
+
+    def _capture_current_namur_four_point(self):
+        if not self._is_four_point_namur():
+            return
+        for key, spinbox, _ in self._four_point_namur_sequence():
+            if self._four_point_data.get(key) is None:
+                self._four_point_data[key] = spinbox.value()
+                break
+        else:
+            return
+
+        if all(self._four_point_data.get(key) is not None for key, _, _ in self._four_point_namur_sequence()):
+            self._four_point_to_password()
+            return
+        self._update_namur_four_point_controls()
+
+    def _set_namur_raw_mode(self, enabled: bool) -> bool:
+        bit = None
+        if enabled and self._calibration_port:
+            port_device = self._map_port_ui_to_device(self._calibration_port)
+            bit = 1 << max(0, port_device - 1)
+
+        if enabled and bit is not None:
+            current = self._read_register(REG_NAMUR_RAW_MASK)
+            if current is None:
+                current = 0
+            if self._write_register(REG_NAMUR_RAW_MASK, current | bit):
+                self._namur_raw_mask_bit = bit
+                return True
+            else:
+                self._handle_comm_error()
+                return False
+
+        previous_bit = self._namur_raw_mask_bit
+        self._namur_raw_mask_bit = None
+        if previous_bit is None:
+            return True
+        current = self._read_register(REG_NAMUR_RAW_MASK)
+        if current is None:
+            current = previous_bit
+        if not self._write_register(REG_NAMUR_RAW_MASK, current & ~previous_bit):
+            self._handle_comm_error()
+            return False
+        return True
 
     def switch_to(self, page_widget):
         self.ui.stackedWidget.setCurrentWidget(page_widget)
@@ -717,6 +870,7 @@ class UMVH(QMainWindow):
 
     def _reset_calibration_state(self):
         """Возвращаем зону калибровки в исходное состояние."""
+        self._set_namur_raw_mode(False)
         self._current_calibration = None
         self._calibration_port = None
         self._calibration_sensor = None
@@ -757,6 +911,7 @@ class UMVH(QMainWindow):
         if page is getattr(self.ui, "page_20", None):
             self._update_four_point_labels_for_sensor()
         self._update_four_point_value_edit_state()
+        self._update_namur_four_point_controls()
 
     def _update_text_browser(self, browser: QTextBrowser | None, value: str):
         if browser is None:
@@ -1241,13 +1396,23 @@ class UMVH(QMainWindow):
         port = int(port_text)
         if not self._remember_calibration_target(1, port, sensor_code):
             return
+        self._four_point_data.update({"x1": None, "y1": None, "x2": None, "y2": None})
+        if not self._set_namur_raw_mode((sensor_code & 0xFF) == 0x01):
+            return
         self._set_calibration_page(self.ui.page_20)
 
     def _four_point_back_to_select(self):
+        if not self._set_namur_raw_mode(False):
+            return
         self._set_calibration_page(self.ui.page_22)
 
     def _four_point_to_password(self):
         if not self._calibration_port:
+            return
+        if self._is_four_point_namur() and any(
+            self._four_point_data.get(key) is None for key, _, _ in self._four_point_namur_sequence()
+        ):
+            QMessageBox.warning(self, "Калибровка", "Заполните все 4 raw ADC точки.")
             return
         values = {
             REG_CAL_POINT_X1: self.ui.spinBox_20.value(),
@@ -1257,6 +1422,9 @@ class UMVH(QMainWindow):
         }
         if self._namur_calibration_ranges_intersect(values):
             QMessageBox.warning(self, "Калибровка", "Диапазоны точек пересекаются")
+            if self._is_four_point_namur():
+                self._four_point_data.update({"x1": None, "y1": None, "x2": None, "y2": None})
+                self._update_namur_four_point_controls()
             return
         for reg, value in values.items():
             if not self._write_register(reg, value):
@@ -1528,6 +1696,8 @@ class UMVH(QMainWindow):
 
     def stop_auto_connect(self):
         """Останавливаем поток автоподключения и возвращаемся на главную."""
+        self._stop_relay_mode()
+        self._set_namur_raw_mode(False)
         if self.worker:
             self.worker.stop()
         if self.worker_thread:
@@ -1538,6 +1708,8 @@ class UMVH(QMainWindow):
 
     def reset_application_state(self):
         """Возвращаем приложение в исходное состояние и освобождаем ресурсы."""
+        self._stop_relay_mode()
+        self._set_namur_raw_mode(False)
         if self.worker:
             self.worker.stop()
         if self.worker_thread:
@@ -1697,6 +1869,7 @@ class UMVH(QMainWindow):
         self._check_relay_sensors(sensor_types_ui)
 
         self._update_live_sensor_widgets()
+        self._update_live_namur_four_point_widget()
         self._update_calibration_matrix(calibration_masks)
 
     def _check_relay_sensors(self, sensor_types: list[int]):
@@ -1712,12 +1885,18 @@ class UMVH(QMainWindow):
 
         # Сохраняем список портов с реле
         self._relay_ports = relay_ports
+        if not relay_ports:
+            self._stop_relay_mode()
 
         # Показываем кнопку только если есть хотя бы одно реле
         self.ui.pushButton_32.setVisible(len(relay_ports) > 0)
 
     def toggle_relays(self):
-        """Переключает состояние всех реле (датчик 0x101)."""
+        """Запускает или останавливает периодическую команду включения реле."""
+        if self._relay_active:
+            self._stop_relay_mode()
+            return
+
         if not self._relay_ports:
             return
 
@@ -1725,27 +1904,36 @@ class UMVH(QMainWindow):
             self._handle_comm_error()
             return
 
-        # Проходим по всем портам с реле
+        self._relay_active = True
+        if hasattr(self.ui, 'pushButton_32'):
+            self.ui.pushButton_32.setText("остановить реле")
+        if not self._send_relay_on_command():
+            self._stop_relay_mode()
+            return
+        self._relay_timer.start()
+
+    def _stop_relay_mode(self):
+        if self._relay_timer.isActive():
+            self._relay_timer.stop()
+        self._relay_active = False
+        if hasattr(self.ui, 'pushButton_32'):
+            self.ui.pushButton_32.setText(self._relay_button_default_text or "тест реле")
+
+    def _send_relay_on_command(self) -> bool:
+        if not self._relay_ports:
+            return False
+        if not self.serial_port:
+            self._handle_comm_error()
+            return False
+
         for port in self._relay_ports:
-            # Индекс в массиве показаний (port - 1)
-            value_index = port - 1
-
-            # Получаем текущее состояние из последних показаний
-            if value_index >= len(self._latest_sensor_values):
-                continue
-
-            current_state = self._latest_sensor_values[value_index]
-
-            # Новое состояние: если 0, то 1; иначе 0
-            new_state = 0x0001 if current_state == 0 else 0x0000
-
             # Адрес регистра состояния для этого порта
             reg_address = REG_SENSOR_READ_START + (port - 1)
 
-            # Отправляем команду 0x05 (Write Single Coil)
-            if not self._write_coil(reg_address, new_state):
+            if not self._write_coil(reg_address, 0x0001):
                 self._handle_comm_error()
-                return
+                return False
+        return True
 
     def _update_calibration_matrix(self, masks: list[int]):
         for port_index, mask in enumerate(masks, start=1):
@@ -1984,6 +2172,8 @@ class UMVH(QMainWindow):
 
     def _handle_comm_error(self):
         """Отображает страницу ошибки и возвращается на главную."""
+        self._stop_relay_mode()
+        self._namur_raw_mask_bit = None
         self.stop_polling()
         if self.update_thread:
             self.update_thread.quit()
@@ -2000,6 +2190,8 @@ class UMVH(QMainWindow):
 
     def closeEvent(self, event):
         """Гарантируем остановку потоков при закрытии окна."""
+        self._stop_relay_mode()
+        self._set_namur_raw_mode(False)
         self.stop_polling()
         if self.update_thread:
             self.update_thread.quit()
