@@ -3,7 +3,7 @@ import sys
 import threading
 from contextlib import contextmanager
 
-from PySide6.QtCore    import Qt, QObject, Signal, QThread
+from PySide6.QtCore    import Qt, QObject, Signal, QThread, QEvent
 from PySide6.QtWidgets import (
     QAbstractSpinBox,
     QApplication,
@@ -14,6 +14,7 @@ from PySide6.QtWidgets import (
     QPushButton,
     QSpinBox,
     QTextBrowser,
+    QToolTip,
     QWidget,
 )
 from PySide6.QtCore import QTimer
@@ -204,8 +205,7 @@ class RegisterPoller(QObject):
                 sensor_regs = self._read_registers(REG_SENSOR_TYPE_BASE, REG_SENSOR_POLL_COUNT)
                 if sensor_regs is None:
                     continue
-                raw_sensor_types = sensor_regs[:REG_SENSOR_TYPE_COUNT]
-                sensor_types = [normalize_sensor_type(value) for value in raw_sensor_types]
+                sensor_types = sensor_regs[:REG_SENSOR_TYPE_COUNT]
                 sensor_values = sensor_regs[REG_SENSOR_TYPE_COUNT:]
 
                 status_regs = self._read_registers(REG_CAL_STATUS_START, REG_CAL_STATUS_COUNT)
@@ -525,7 +525,7 @@ class UMVH(QMainWindow):
         self._relay_button_default_text = ""
         self._namur_raw_mask_bit: int | None = None
         self._namur_capture_buttons: dict[QSpinBox, QPushButton] = {}
-        self._namur_capture_style = "QSpinBox { padding-right: 40px; }"
+        self._namur_capture_style = "QSpinBox { padding-right: 42px; }"
 
         if hasattr(self.ui, 'pushButton_32'):
             self.ui.pushButton_32.setVisible(False)
@@ -534,10 +534,18 @@ class UMVH(QMainWindow):
         self.sensor_value_widgets = [
             getattr(self.ui, f"s{row}s0x04_3") for row in range(1, REG_SENSOR_READ_COUNT + 1)
         ]
+        self._sensor_value_tooltips: dict[QTextBrowser, str] = {}
+        for widget in self.sensor_value_widgets:
+            if widget is None:
+                continue
+            widget.installEventFilter(self)
+            widget.viewport().installEventFilter(self)
         for spinner_name in ("spinBox_11", "spinBox_12", "spinBox_3"):
             spinner = getattr(self.ui, spinner_name, None)
             if spinner is not None:
                 spinner.setRange(-0x8000, 0x7FFF)
+                spinner.setReadOnly(True)
+                spinner.setButtonSymbols(QAbstractSpinBox.ButtonSymbols.NoButtons)
         self._calibration_matrix_cells: dict[int, dict[int, QTextBrowser]] = {}
         self._calibration_cell_defaults: dict[QTextBrowser, tuple[str, str]] = {}
         self._calibration_cell_states: dict[QTextBrowser, bool] = {}
@@ -641,22 +649,26 @@ class UMVH(QMainWindow):
         button = self._namur_capture_buttons.get(spinbox)
         if button is not None:
             return button
-        button = QPushButton("\u2714", spinbox)
+        button = QPushButton("\u2713", spinbox)
         button.setCursor(Qt.PointingHandCursor)
         button.setFocusPolicy(Qt.NoFocus)
+        button.setToolTip("Запомнить текущее ADC значение")
         button.setStyleSheet("""
             QPushButton {
-                background: #808080;
-                border: 0;
-                border-left: 1px solid #b4b4b4;
-                border-top-right-radius: 12px;
-                border-bottom-right-radius: 12px;
+                background: #777777;
+                border: 1px solid #a8a8a8;
+                border-radius: 14px;
                 color: white;
-                font-size: 18px;
+                font-size: 17px;
                 font-weight: 700;
+                padding: 0;
+            }
+            QPushButton:hover {
+                background: #858585;
             }
             QPushButton:pressed {
-                background: #6d6d6d;
+                background: #666666;
+                padding-top: 1px;
             }
         """)
         button.clicked.connect(self._capture_current_namur_four_point)
@@ -664,8 +676,11 @@ class UMVH(QMainWindow):
         return button
 
     def _place_namur_capture_button(self, spinbox: QSpinBox, button: QPushButton):
-        width = 38
-        button.setGeometry(max(0, spinbox.width() - width), 0, width, spinbox.height())
+        size = 28
+        margin = 8
+        x = max(0, spinbox.width() - size - margin)
+        y = max(0, (spinbox.height() - size) // 2)
+        button.setGeometry(x, y, size, size)
         button.raise_()
 
     def _update_namur_four_point_controls(self):
@@ -908,6 +923,12 @@ class UMVH(QMainWindow):
             self._apply_scale_hint(getattr(self.ui, "textBrowser_70", None))
         elif page is getattr(self.ui, "page_18", None):
             self._apply_scale_hint(getattr(self.ui, "textBrowser_72", None))
+        if page in (
+            getattr(self.ui, "page_15", None),
+            getattr(self.ui, "page_18", None),
+            getattr(self.ui, "page_19", None),
+        ):
+            self._update_two_point_calibration_help()
         if page is getattr(self.ui, "page_20", None):
             self._update_four_point_labels_for_sensor()
         self._update_four_point_value_edit_state()
@@ -917,6 +938,114 @@ class UMVH(QMainWindow):
         if browser is None:
             return
         browser.setPlainText(value)
+
+    def eventFilter(self, watched, event):
+        if event.type() == QEvent.Type.ToolTip:
+            widget = watched if isinstance(watched, QTextBrowser) else watched.parent()
+            if isinstance(widget, QTextBrowser) and widget in self._sensor_value_tooltips:
+                tooltip = self._sensor_value_tooltips.get(widget, "")
+                if tooltip:
+                    QToolTip.showText(event.globalPos(), tooltip, widget)
+                else:
+                    QToolTip.hideText()
+                return True
+        return super().eventFilter(watched, event)
+
+    def _set_sensor_value_tooltip(self, widget: QTextBrowser | None, tooltip: str):
+        if widget is None:
+            return
+        self._sensor_value_tooltips[widget] = tooltip
+        widget.setToolTip(tooltip)
+        widget.viewport().setToolTip(tooltip)
+
+    def _two_point_sensor_help(self) -> dict[str, str]:
+        code = (self._calibration_sensor & 0xFF) if self._calibration_sensor is not None else None
+        if code in (SENSOR_TYPE_CANONICAL_VOLTAGE, SENSOR_TYPE_REGISTER_VOLTAGE, 0x06):
+            return {
+                "unit": "mA",
+                "scale": "x100",
+                "label_hint": "Эталон в сотых mA (400 = 4mA)",
+                "kind": "ток",
+                "example": "пример: 4.00 mA вводится как 400",
+                "source": "Подайте на вход известный ток.",
+            }
+        if code == 0x04:
+            return {
+                "unit": "V",
+                "scale": "x100",
+                "label_hint": "Эталон в сотых V (1000 = 10V)",
+                "kind": "напряжение",
+                "example": "пример: 10.00 V вводится как 1000",
+                "source": "Подайте на вход известное напряжение.",
+            }
+        if code == 0x02:
+            return {
+                "unit": "°C",
+                "scale": "x10",
+                "label_hint": "Эталон в десятых °C (250 = 25°C)",
+                "kind": "температуру",
+                "example": "пример: 25.0 °C вводится как 250",
+                "source": "Задайте известную температуру датчика.",
+            }
+        return {
+            "unit": "ед.",
+            "scale": "",
+            "label_hint": "значение",
+            "kind": "эталонное значение",
+            "example": "введите значение в формате, который хранится в регистре",
+            "source": "Подайте на вход известное значение.",
+        }
+
+    def _two_point_y_label(self, point: int) -> str:
+        help_info = self._two_point_sensor_help()
+        return help_info["label_hint"]
+
+    def _two_point_y_tooltip(self, point: int) -> str:
+        help_info = self._two_point_sensor_help()
+        return (
+            f"Точка {point}.\n"
+            f"{help_info['source']}\n"
+            f"В это поле вводится эталонное значение, а не ADC.\n"
+            f"{help_info['example']}."
+        )
+
+    def _update_two_point_calibration_help(self):
+        help_info = self._two_point_sensor_help()
+
+        page = self.ui.stackedWidget_4.currentWidget()
+        if page is getattr(self.ui, "page_15", None):
+            self._update_text_browser(getattr(self.ui, "textBrowser_76", None), f"Точка 1: введите эталон ({help_info['unit']})")
+        elif page is getattr(self.ui, "page_18", None):
+            self._update_text_browser(getattr(self.ui, "textBrowser_79", None), f"Точка 2: введите эталон ({help_info['unit']})")
+        elif page is getattr(self.ui, "page_19", None):
+            self._update_text_browser(getattr(self.ui, "textBrowser_94", None), "Проверьте результат и примените")
+
+        self._update_text_browser(getattr(self.ui, "textBrowser_70", None), self._two_point_y_label(1))
+        self._update_text_browser(getattr(self.ui, "textBrowser_72", None), self._two_point_y_label(2))
+        self._update_text_browser(getattr(self.ui, "textBrowser_71", None), "Автозахват ADC X1")
+        self._update_text_browser(getattr(self.ui, "textBrowser_80", None), "Автозахват ADC X2")
+        self._update_text_browser(getattr(self.ui, "textBrowser_85", None), f"Расчетное значение, {help_info['unit']}")
+
+        x_tooltip = (
+            "Это текущее сырое значение ADC.\n"
+            "Вводить его руками не нужно: устройство само запишет X при сохранении Y."
+        )
+        result_tooltip = (
+            "Проверочное значение после калибровки.\n"
+            f"Масштаб такой же: {help_info['example']}."
+        )
+        for point, y_spinbox, x_spinbox in (
+            (1, getattr(self.ui, "spinBox_10", None), getattr(self.ui, "spinBox_11", None)),
+            (2, getattr(self.ui, "spinBox_13", None), getattr(self.ui, "spinBox_12", None)),
+        ):
+            if y_spinbox is not None:
+                y_spinbox.setToolTip(self._two_point_y_tooltip(point))
+            if x_spinbox is not None:
+                x_spinbox.setToolTip(x_tooltip)
+
+        result_spinbox = getattr(self.ui, "spinBox_3", None)
+        if result_spinbox is not None:
+            result_spinbox.setToolTip(result_tooltip)
 
     def _update_four_point_labels_for_sensor(self):
         """Обновляем подписи точек для четырёхточечной калибровки."""
@@ -1097,19 +1226,85 @@ class UMVH(QMainWindow):
     @staticmethod
     def _apply_sensor_scaling(value: int, sensor_type: int) -> float | int:
         code = sensor_type & 0xFF
-        if code in (SENSOR_TYPE_CANONICAL_VOLTAGE, 0x04, 0x06):
+        if code in (0x04, SENSOR_TYPE_REGISTER_VOLTAGE):
             return value / 100
         if code == 0x02:
             return value / 10
         return value
 
     @staticmethod
+    def _format_data_value(value: int, sensor_type: int) -> str:
+        code = sensor_type & 0xFF
+        if code == SENSOR_TYPE_CANONICAL_VOLTAGE:
+            return "n/a"
+        if code in (0x04, SENSOR_TYPE_REGISTER_VOLTAGE):
+            return f"{value / 100:.2f}"
+        if code == 0x02:
+            return f"{value / 10:.1f}"
+        return str(value)
+
+    @staticmethod
     def _format_namur_value(value: int) -> str:
         state = (value >> 12) & 0xF
-        if state == 0x3:
-            frequency = value & 0x0FFF
-            return str(frequency)
-        return f"0x{state:02X}"
+        frequency = value & 0x0FFF
+        return f"0x{state:02X} / {frequency} Hz"
+
+    def _is_namur_raw_mode_for_port(self, port: int) -> bool:
+        if self._namur_raw_mask_bit is None:
+            return False
+        port_device = self._map_port_ui_to_device(port)
+        bit = 1 << max(0, port_device - 1)
+        return bool(self._namur_raw_mask_bit & bit)
+
+    @staticmethod
+    def _data_sensor_name(sensor_type: int) -> str:
+        code = sensor_type & 0xFF
+        if code == SENSOR_TYPE_REGISTER_VOLTAGE:
+            return "4-20 mA"
+        if code == 0x04:
+            return "0-10 V"
+        if code == 0x02:
+            return "Pt100"
+        if code == 0x07:
+            return "частотный"
+        if code == 0x01:
+            return "NAMUR"
+        if code == 0x03:
+            return "сухой контакт"
+        if code == 0x05:
+            return "реле"
+        if code == SENSOR_TYPE_CANONICAL_VOLTAGE:
+            return "нет датчика"
+        return f"неизвестный 0x{code:02X}"
+
+    def _data_tooltip_for_sensor(self, port: int, sensor_type: int, raw_value: int) -> str:
+        code = sensor_type & 0xFF
+        prefix = f"Порт {port}. DATA:\nВ порту датчик - {self._data_sensor_name(sensor_type)}"
+
+        if code == SENSOR_TYPE_CANONICAL_VOLTAGE:
+            return f"{prefix}\nDATA не имеет физической единицы: порт пустой."
+        if code == SENSOR_TYPE_REGISTER_VOLTAGE:
+            return f"{prefix}\nНа экране: mA (миллиамперы), 2 знака после запятой.\nВ регистре: сотые mA."
+        if code == 0x04:
+            return f"{prefix}\nНа экране: V (вольты), 2 знака после запятой.\nВ регистре: сотые V."
+        if code == 0x02:
+            return f"{prefix}\nНа экране: °C (градусы Цельсия), 1 знак после запятой.\nВ регистре: десятые °C."
+        if code == 0x07:
+            return f"{prefix}\nНа экране: Hz (герцы).\nВ регистре: целые Hz."
+        if code == 0x01:
+            if self._is_namur_raw_mode_for_port(port):
+                return f"{prefix}\nNAMUR raw-режим: сырое значение ADC 0..4095."
+            state = (raw_value >> 12) & 0xF
+            frequency = raw_value & 0x0FFF
+            return (
+                f"{prefix}\nНа экране: состояние 0x{state:02X} / частота {frequency} Hz.\n"
+                "Старшие 4 бита: состояние, младшие 12 бит: частота."
+            )
+        if code == 0x03:
+            return f"{prefix}\nСухой контакт: код состояния."
+        if code == 0x05:
+            return f"{prefix}\nРеле: 0 = выключено, 1 = включено."
+        return f"{prefix}\nНеизвестный тип датчика 0x{code:02X}."
 
     def _format_scaled_sensor_value(self, value: int, sensor: int | None) -> str | None:
         if sensor is None:
@@ -1762,6 +1957,7 @@ class UMVH(QMainWindow):
         for widget in self.sensor_value_widgets:
             if widget is not None:
                 widget.clear()
+                self._set_sensor_value_tooltip(widget, "")
 
         self._reset_calibration_state()
 
@@ -1839,7 +2035,8 @@ class UMVH(QMainWindow):
         # типы датчиков привязаны к тем же индексам, что и регистры 0x0012..0x0019,
         # поэтому оставляем их без перестановки, а маски калибровки продолжаем
         # отображать в порядке UI
-        sensor_types_ui = [normalize_sensor_type(value) for value in sensor_types]
+        sensor_types_raw = sensor_types[:]
+        sensor_types_ui = [normalize_sensor_type(value) for value in sensor_types_raw]
         calibration_masks = self._swap_regs_for_ui(calibration_masks)
         self._latest_sensor_types = sensor_types_ui
         # показания датчиков строго соответствуют порядку регистров 0x0012..0x0019,
@@ -1848,19 +2045,21 @@ class UMVH(QMainWindow):
 
         converted_values: list[int] = []
         for idx, raw_value in enumerate(regs):
-            sensor_type = sensor_types_ui[idx] if idx < len(sensor_types_ui) else 0
-            sensor_code = sensor_type & 0xFF
-            value = self._to_signed_16(raw_value) if sensor_code == 0x02 else raw_value
+            raw_sensor_type = sensor_types_raw[idx] if idx < len(sensor_types_raw) else 0
+            raw_sensor_code = raw_sensor_type & 0xFF
+            value = self._to_signed_16(raw_value) if raw_sensor_code == 0x02 else raw_value
             converted_values.append(value)
 
             widget = self.sensor_value_widgets[idx] if idx < len(self.sensor_value_widgets) else None
             if widget is None:
                 continue
-            if sensor_code == 0x01:
+            tooltip = self._data_tooltip_for_sensor(idx + 1, raw_sensor_type, raw_value)
+            if raw_sensor_code == 0x01:
                 widget.setPlainText(self._format_namur_value(raw_value))
+                self._set_sensor_value_tooltip(widget, tooltip)
                 continue
-            scaled_value = self._apply_sensor_scaling(value, sensor_type)
-            widget.setPlainText(str(scaled_value))
+            widget.setPlainText(self._format_data_value(value, raw_sensor_type))
+            self._set_sensor_value_tooltip(widget, tooltip)
 
         # показания датчиков строго соответствуют порядку регистров 0x0012..0x0019,
         # поэтому не меняем их местами даже при активном SWAP_1_2_ENABLED
