@@ -964,7 +964,7 @@ class UMVH(QMainWindow):
             return {
                 "unit": "mA",
                 "scale": "x100",
-                "label_hint": "Эталон в сотых mA (400 = 4mA)",
+                "label_hint": "Эталон, mA * 100 (400 = 4mA)",
                 "kind": "ток",
                 "example": "пример: 4.00 mA вводится как 400",
                 "source": "Подайте на вход известный ток.",
@@ -973,7 +973,7 @@ class UMVH(QMainWindow):
             return {
                 "unit": "V",
                 "scale": "x100",
-                "label_hint": "Эталон в сотых V (1000 = 10V)",
+                "label_hint": "Эталон, V * 100 (1000 = 10V)",
                 "kind": "напряжение",
                 "example": "пример: 10.00 V вводится как 1000",
                 "source": "Подайте на вход известное напряжение.",
@@ -982,7 +982,7 @@ class UMVH(QMainWindow):
             return {
                 "unit": "°C",
                 "scale": "x10",
-                "label_hint": "Эталон в десятых °C (250 = 25°C)",
+                "label_hint": "Эталон, °C * 10 (250 = 25°C)",
                 "kind": "температуру",
                 "example": "пример: 25.0 °C вводится как 250",
                 "source": "Задайте известную температуру датчика.",
